@@ -1,16 +1,10 @@
 ---
-# Source: redis/templates/health-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: release-name-redis-health
-  namespace: "dev-enablement"
+  name: redis-health
   labels:
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis
-    app.kubernetes.io/version: 7.2.2
-    helm.sh/chart: redis-18.1.6
+    app: redis
 data:
   ping_readiness_local.sh: |-
     #!/bin/bash

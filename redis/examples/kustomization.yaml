@@ -1,0 +1,57 @@
+secretGenerator:
+  - name: redis
+    envs:
+      - secrets/redis-secret.txt
+
+resources:
+  - github.com/utilitywarehouse/shared-kubernetes-manifests//redis/base?ref=v0.0.1
+
+patches:
+  - target:
+      kind: StatefulSet
+      name: redis-master
+    patch: |-
+      # change default storage volume
+      - op: replace
+        path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+        value: "10Gi"
+        # change default requested cpu
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "100m"
+        # change default requested memory
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "1Gi"
+        # change default limit of memory
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "5Gi"
+        # change default limit of CPU
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "1000m"
+  - target:
+      kind: StatefulSet
+      name: redis-replicas
+    patch: |-
+      # change default storage volume
+      - op: replace
+        path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+        value: "10Gi"
+        # change default requested cpu
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "100m"
+        # change default requested memory
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "1Gi"
+        # change default limit of memory
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "5Gi"
+        # change default limit of CPU
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "1000m"
