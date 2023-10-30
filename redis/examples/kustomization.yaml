@@ -4,8 +4,9 @@ secretGenerator:
       - secrets/redis-secret.txt
 
 resources:
-  #- github.com/utilitywarehouse/shared-kustomize-bases//redis/base?ref=v0.0.1-test
-  - ../base
+  - github.com/utilitywarehouse/shared-kustomize-bases//redis/base?ref=v0.0.1-test
+  # Or, to deploy from local version of this repository, you can just use
+  # - ../base
 
 patches:
   - target:
