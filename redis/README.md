@@ -1,6 +1,12 @@
 # Redis
 
-## Run
+## Deploy
+
+See examples directory
+
+## Redis-cli
+
+todo
 
 ## Source
 

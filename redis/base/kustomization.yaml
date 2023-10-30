@@ -10,7 +10,6 @@ resources:
   - headless-svc.yaml
   - health-configmap.yaml
   - scripts-configmap.yaml
-  - secret.yaml
   - serviceaccount.yaml
 
 images:

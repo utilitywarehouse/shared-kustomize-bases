@@ -4,7 +4,8 @@ secretGenerator:
       - secrets/redis-secret.txt
 
 resources:
-  - github.com/utilitywarehouse/shared-kubernetes-manifests//redis/base?ref=v0.0.1
+  #- github.com/utilitywarehouse/shared-kustomize-bases//redis/base?ref=v0.0.1-test
+  - ../base
 
 patches:
   - target:
@@ -33,7 +34,7 @@ patches:
         value: "1000m"
   - target:
       kind: StatefulSet
-      name: redis-replicas
+      name: redis-replica
     patch: |-
       # change default storage volume
       - op: replace

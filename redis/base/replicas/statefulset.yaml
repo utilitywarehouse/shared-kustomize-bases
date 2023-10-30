@@ -2,14 +2,14 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: redis-replicas
+  name: redis-replica
   labels:
     app: redis
     component: replica
   annotations:
     "app.uw.systems/description": "Redis Sentinel store- replica"
     "app.uw.systems/tier": "tier_1"
-    "app.uw.systems/repos.cockroachdb-manifests": "https://github.com/utilitywarehouse/shared-kubernetes-manifests"
+    "app.uw.systems/repos.cockroachdb-manifests": "https://github.com/utilitywarehouse/shared-kustomize-bases"
 spec:
   replicas: 1
   selector:
@@ -23,6 +23,7 @@ spec:
     metadata:
       labels:
         app: redis
+        component: replica
     spec:
       securityContext:
         fsGroup: 1001

@@ -9,7 +9,7 @@ metadata:
   annotations:
     "app.uw.systems/description": "Redis Sentinel store- master"
     "app.uw.systems/tier": "tier_1"
-    "app.uw.systems/repos.cockroachdb-manifests": "https://github.com/utilitywarehouse/shared-kubernetes-manifests"
+    "app.uw.systems/repos.cockroachdb-manifests": "https://github.com/utilitywarehouse/shared-kustomize-bases"
 spec:
   replicas: 1
   selector:
@@ -20,6 +20,10 @@ spec:
   updateStrategy:
     type: RollingUpdate
   template:
+    metadata:
+      labels:
+        app: redis
+        component: master
     spec:
       securityContext:
         fsGroup: 1001
