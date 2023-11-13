@@ -2,6 +2,8 @@
 
 mkdir -p ${NS}/${NAME}/upstream
 
+# todo: add opsLevel annotations
+
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/kafka#installing-the-chart
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm template ${BITNAMI_REDIS_RELEASE} bitnami/redis --version ${BITNAMI_REDIS_RELEASE} \
