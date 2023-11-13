@@ -36,5 +36,5 @@ patches:
         path: /spec/template/spec/affinity/nodeAffinity
     target:
       group: apps
-      version: v1 # Deployment | StatefulSet
+      version: v1
       kind: StatefulSet
