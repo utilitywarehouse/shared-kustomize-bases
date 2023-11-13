@@ -7,6 +7,9 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm template ${BITNAMI_REDIS_RELEASE} bitnami/redis --version ${BITNAMI_REDIS_RELEASE} \
 --set fullnameOverride=${NAME} \
 --set nameOverride=${NAME} \
+--set auth.existingSecret=${REDIS_SECRET_NAME} \
+--set master.resources.limits.cpu=1000m \
+--set master.resources.limits.memory=5Gi \
 --namespace ${NS}  > ${NS}/${NAME}/upstream/redis.yaml
 
 cat gen-yaml/clean-upstream-kustomize-template.yaml > ${NS}/${NAME}/upstream/kustomization.yaml
