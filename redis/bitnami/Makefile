@@ -1,6 +1,4 @@
 BITNAMI_REDIS_RELEASE=18.1.6
-VALUES_TLS="config/values-tls.yaml"
-VALUES_NON_TLS="config/values-non-tls.yaml"
 
 .PHONY: gen-dev-enablement-redis-shared
 gen-dev-enablement-redis-shared:
