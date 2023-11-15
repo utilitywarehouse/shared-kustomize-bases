@@ -12,3 +12,8 @@ other than master are just failover replicas. This grants high availability.
 (we don't have our manifests for it yet) is alternative to Sentinel- it allows just
 one database in one instance, but grants sharding. This might limit the availability of redis,
 but allows vertical scalling- great for huge datasets.
+
+
+## Parameters
+
+For help with OpsLevel annotations, see [this document](https://wiki.uw.systems/posts/ops-level-nz4v4ka0#habue-app-uw-systems-description).
