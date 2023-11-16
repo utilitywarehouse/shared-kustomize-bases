@@ -15,14 +15,14 @@ helm template "${NAME}" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set commonAnnotations."app\.uw\.systems\/tier"="${OPSLEVEL_APP_TIER}" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis" \
   --set auth.existingSecret="${REDIS_SECRET_NAME}" \
-  --set master.resources.requests.cpu="${MASTER_CPU_REQUEST}" \
-  --set master.resources.limits.cpu="${MASTER_CPU_LIMIT}" \
-  --set master.resources.requests.memory="${MASTER_MEMORY_REQUEST}" \
-  --set master.resources.limits.memory="${MASTER_MEMORY_LIMIT}" \
-  --set replica.resources.requests.cpu="${REPLICA_CPU_REQUEST}" \
-  --set replica.resources.limits.cpu="${REPLICA_CPU_LIMIT}" \
-  --set replica.resources.requests.memory="${REPLICA_MEMORY_REQUEST}" \
-  --set replica.resources.limits.memory="${REPLICA_MEMORY_LIMIT}" \
+  --set master.resources.requests.cpu="500m" \
+  --set master.resources.limits.cpu="1000m" \
+  --set master.resources.requests.memory="1Gi" \
+  --set master.resources.limits.memory="2Gi" \
+  --set replica.resources.requests.cpu="500m" \
+  --set replica.resources.limits.cpu="1000m" \
+  --set replica.resources.requests.memory="1Gi" \
+  --set replica.resources.limits.memory="2Gi" \
   --namespace "${NS}"  > "manifests/${NS}"/"${NAME}"/upstream/redis.yaml
 
 cp gen-yaml/clean-upstream-kustomize-template.yaml manifests/"${NS}"/"${NAME}"/upstream/kustomization.yaml

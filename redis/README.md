@@ -26,12 +26,4 @@ NAME="redis-shared" # Name of your Redis instance
 OPSLEVEL_APP_DESCRIPTION="cache for opslevel-k8s-deployer" # Description of your Redis in OpsLevel
 OPSLEVEL_APP_TIER="tier_4" # Tier of your Redis in OpsLevel- see https://wiki.uw.systems/posts/ops-level-nz4v4ka0#h1u0u-app-uw-systems-tier
 REDIS_SECRET_NAME="redis" # Name of the secret with your Redis password. See secret created in directory `example`.
-MASTER_CPU_LIMIT="1000m" # master node k8s CPU limit
-MASTER_CPU_REQUEST="500m" # master node k8s CPU request 
-MASTER_MEMORY_LIMIT="5Gi" # master node k8s memory limit 
-MASTER_MEMORY_REQUEST="2Gi" # master node k8s memory request 
-REPLICA_CPU_LIMIT="1000m" # replica node k8s CPU limit
-REPLICA_CPU_REQUEST="500m" # replica node k8s CPU request 
-REPLICA_MEMORY_LIMIT="5Gi" # replica node k8s memory limit 
-REPLICA_MEMORY_REQUEST="2Gi" # replica node k8s memory request 
 ```
