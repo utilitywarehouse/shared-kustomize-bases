@@ -2,7 +2,7 @@
 
 set -o errexit -o pipefail -o nounset
 
-mkdir -p ${NS}/${NAME}/upstream
+mkdir -p manifests/${NS}/${NAME}/upstream
 
 
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/redis
@@ -13,7 +13,7 @@ helm template "${NAME}" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set nameOverride="${NAME}" \
   --set commonAnnotations."app\.uw\.systems\/description"="${OPSLEVEL_APP_DESCRIPTION}" \
   --set commonAnnotations."app\.uw\.systems\/tier"="${OPSLEVEL_APP_TIER}" \
-  --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami" \
+  --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis" \
   --set auth.existingSecret="${REDIS_SECRET_NAME}" \
   --set master.resources.requests.cpu="${MASTER_CPU_REQUEST}" \
   --set master.resources.limits.cpu="${MASTER_CPU_LIMIT}" \
@@ -23,10 +23,10 @@ helm template "${NAME}" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set replica.resources.limits.cpu="${REPLICA_CPU_LIMIT}" \
   --set replica.resources.requests.memory="${REPLICA_MEMORY_REQUEST}" \
   --set replica.resources.limits.memory="${REPLICA_MEMORY_LIMIT}" \
-  --namespace "${NS}"  > "${NS}"/"${NAME}"/upstream/redis.yaml
+  --namespace "${NS}"  > "manifests/${NS}"/"${NAME}"/upstream/redis.yaml
 
-cp gen-yaml/clean-upstream-kustomize-template.yaml "${NS}"/"${NAME}"/upstream/kustomization.yaml
+cp gen-yaml/clean-upstream-kustomize-template.yaml manifests/"${NS}"/"${NAME}"/upstream/kustomization.yaml
 
 if [ ! -f "${NS}"/"${NAME}"/kustomization.yaml ]; then
-cp gen-yaml/namespace-kustomize-template.yaml "${NS}"/"${NAME}"/kustomization.yaml
+cp gen-yaml/namespace-kustomize-template.yaml manifests/"${NS}"/"${NAME}"/kustomization.yaml
 fi

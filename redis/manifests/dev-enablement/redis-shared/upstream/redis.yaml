@@ -14,7 +14,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 ---
 # Source: redis/templates/configmap.yaml
@@ -31,7 +31,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
   redis.conf: |-
@@ -68,7 +68,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
   ping_readiness_local.sh: |-
@@ -180,7 +180,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
   start-master.sh: |
@@ -266,7 +266,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
     
 spec:
@@ -295,7 +295,7 @@ metadata:
     app.kubernetes.io/component: master
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
@@ -326,7 +326,7 @@ metadata:
     app.kubernetes.io/component: replica
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
@@ -357,7 +357,7 @@ metadata:
     app.kubernetes.io/component: master
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
   replicas: 1
@@ -534,7 +534,7 @@ metadata:
     app.kubernetes.io/component: replica
   annotations:
     app.uw.systems/description: cache for opslevel-k8s-deployer
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis/bitnami
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
   replicas: 3

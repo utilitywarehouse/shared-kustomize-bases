@@ -22,4 +22,4 @@ gen-dev-enablement-redis-shared:
 		--env REPLICA_MEMORY_REQUEST="2Gi" \
 		--workdir=/opt/manifests \
 		--entrypoint=/bin/sh \
-		alpine/helm ./gen-yaml/gen
+		alpine/helm ./gen-yaml/gen.sh
