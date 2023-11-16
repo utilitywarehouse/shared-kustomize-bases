@@ -7,11 +7,15 @@ metadata:
   name: redis-shared
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 ---
 # Source: redis/templates/configmap.yaml
 apiVersion: v1
@@ -20,11 +24,15 @@ metadata:
   name: redis-shared-configuration
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 data:
   redis.conf: |-
     # User-supplied common configuration:
@@ -53,11 +61,15 @@ metadata:
   name: redis-shared-health
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 data:
   ping_readiness_local.sh: |-
     #!/bin/bash
@@ -161,11 +173,15 @@ metadata:
   name: redis-shared-scripts
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 data:
   start-master.sh: |
     #!/bin/bash
@@ -243,12 +259,15 @@ metadata:
   name: redis-shared-headless
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
     
 spec:
   type: ClusterIP
@@ -258,7 +277,7 @@ spec:
       port: 6379
       targetPort: redis
   selector:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/name: redis-shared
 ---
 # Source: redis/templates/master/service.yaml
@@ -268,12 +287,16 @@ metadata:
   name: redis-shared-master
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -284,7 +307,7 @@ spec:
       targetPort: redis
       nodePort: null
   selector:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/component: master
 ---
@@ -295,12 +318,16 @@ metadata:
   name: redis-shared-replicas
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -311,7 +338,7 @@ spec:
       targetPort: redis
       nodePort: null
   selector:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/component: replica
 ---
@@ -322,17 +349,21 @@ metadata:
   name: redis-shared-master
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: 18.1.6
+      app.kubernetes.io/instance: redis-shared
       app.kubernetes.io/name: redis-shared
       app.kubernetes.io/component: master
   serviceName: redis-shared-headless
@@ -341,7 +372,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: 18.1.6
+        app.kubernetes.io/instance: redis-shared
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: redis-shared
         app.kubernetes.io/version: 7.2.2
@@ -366,7 +397,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: 18.1.6
+                    app.kubernetes.io/instance: redis-shared
                     app.kubernetes.io/name: redis-shared
                     app.kubernetes.io/component: master
                 topologyKey: kubernetes.io/hostname
@@ -478,7 +509,7 @@ spec:
       metadata:
         name: redis-data
         labels:
-          app.kubernetes.io/instance: 18.1.6
+          app.kubernetes.io/instance: redis-shared
           app.kubernetes.io/name: redis-shared
           app.kubernetes.io/component: master
       spec:
@@ -495,17 +526,21 @@ metadata:
   name: redis-shared-replicas
   namespace: "dev-enablement"
   labels:
-    app.kubernetes.io/instance: 18.1.6
+    app.kubernetes.io/instance: redis-shared
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/instance: 18.1.6
+      app.kubernetes.io/instance: redis-shared
       app.kubernetes.io/name: redis-shared
       app.kubernetes.io/component: replica
   serviceName: redis-shared-headless
@@ -514,7 +549,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: 18.1.6
+        app.kubernetes.io/instance: redis-shared
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: redis-shared
         app.kubernetes.io/version: 7.2.2
@@ -539,7 +574,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: 18.1.6
+                    app.kubernetes.io/instance: redis-shared
                     app.kubernetes.io/name: redis-shared
                     app.kubernetes.io/component: replica
                 topologyKey: kubernetes.io/hostname
@@ -663,7 +698,7 @@ spec:
       metadata:
         name: redis-data
         labels:
-          app.kubernetes.io/instance: 18.1.6
+          app.kubernetes.io/instance: redis-shared
           app.kubernetes.io/name: redis-shared
           app.kubernetes.io/component: replica
       spec:
