@@ -4,6 +4,11 @@ set -o errexit -o pipefail -o nounset
 
 mkdir -p manifests/${NS}/${NAME}/upstream
 
+if [ "$USE_TLS" == "true" ]; then
+  CONFIG="config/values-tls.yaml"
+else
+  CONFIG="config/values-non-tls.yaml"
+fi
 
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/redis
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -23,7 +28,8 @@ helm template "${NAME}" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set replica.resources.limits.cpu="1000m" \
   --set replica.resources.requests.memory="1Gi" \
   --set replica.resources.limits.memory="2Gi" \
-  --namespace "${NS}"  > "manifests/${NS}"/"${NAME}"/upstream/redis.yaml
+  --namespace "${NS}" > "manifests/${NS}"/"${NAME}"/upstream/redis.yaml \
+  --values $CONFIG
 
 cp gen-yaml/clean-upstream-kustomize-template.yaml manifests/"${NS}"/"${NAME}"/upstream/kustomization.yaml
 

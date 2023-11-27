@@ -80,7 +80,11 @@ data:
       timeout -s 15 $1 \
       redis-cli \
         -h localhost \
-        -p $REDIS_PORT \
+        -p $REDIS_TLS_PORT \
+        --tls \
+        --cacert /opt/bitnami/redis/certs/ca.pem \
+          --cert /opt/bitnami/redis/certs/cert.pem \
+          --key /opt/bitnami/redis/certs/key.pem \
         ping
     )
     if [ "$?" -eq "124" ]; then
@@ -100,7 +104,11 @@ data:
       timeout -s 15 $1 \
       redis-cli \
         -h localhost \
-        -p $REDIS_PORT \
+        -p $REDIS_TLS_PORT \
+        --tls \
+        --cacert /opt/bitnami/redis/certs/ca.pem \
+          --cert /opt/bitnami/redis/certs/cert.pem \
+          --key /opt/bitnami/redis/certs/key.pem \
         ping
     )
     if [ "$?" -eq "124" ]; then
@@ -122,6 +130,10 @@ data:
       redis-cli \
         -h $REDIS_MASTER_HOST \
         -p $REDIS_MASTER_PORT_NUMBER \
+        --tls \
+        --cacert /opt/bitnami/redis/certs/ca.pem \
+          --cert /opt/bitnami/redis/certs/cert.pem \
+          --key /opt/bitnami/redis/certs/key.pem \
         ping
     )
     if [ "$?" -eq "124" ]; then
@@ -142,6 +154,10 @@ data:
       redis-cli \
         -h $REDIS_MASTER_HOST \
         -p $REDIS_MASTER_PORT_NUMBER \
+        --tls \
+        --cacert /opt/bitnami/redis/certs/ca.pem \
+          --cert /opt/bitnami/redis/certs/cert.pem \
+          --key /opt/bitnami/redis/certs/key.pem \
         ping
     )
     if [ "$?" -eq "124" ]; then
@@ -193,7 +209,12 @@ data:
     if [[ -f /opt/bitnami/redis/mounted-etc/redis.conf ]];then
         cp /opt/bitnami/redis/mounted-etc/redis.conf /opt/bitnami/redis/etc/redis.conf
     fi
-    ARGS=("--port" "${REDIS_PORT}")
+    ARGS=("--port" "0")
+    ARGS+=("--tls-port" "${REDIS_TLS_PORT}")
+    ARGS+=("--tls-cert-file" "${REDIS_TLS_CERT_FILE}")
+    ARGS+=("--tls-key-file" "${REDIS_TLS_KEY_FILE}")
+    ARGS+=("--tls-ca-cert-file" "${REDIS_TLS_CA_FILE}")
+    ARGS+=("--tls-auth-clients" "${REDIS_TLS_AUTH_CLIENTS}")
     ARGS+=("--requirepass" "${REDIS_PASSWORD}")
     ARGS+=("--masterauth" "${REDIS_PASSWORD}")
     ARGS+=("--include" "/opt/bitnami/redis/etc/redis.conf")
@@ -244,7 +265,13 @@ data:
     echo "" >> /opt/bitnami/redis/etc/replica.conf
     echo "replica-announce-port $REDISPORT" >> /opt/bitnami/redis/etc/replica.conf
     echo "replica-announce-ip $(get_full_hostname "$HOSTNAME")" >> /opt/bitnami/redis/etc/replica.conf
-    ARGS=("--port" "${REDIS_PORT}")
+    ARGS=("--port" "0")
+    ARGS+=("--tls-port" "${REDIS_TLS_PORT}")
+    ARGS+=("--tls-cert-file" "${REDIS_TLS_CERT_FILE}")
+    ARGS+=("--tls-key-file" "${REDIS_TLS_KEY_FILE}")
+    ARGS+=("--tls-ca-cert-file" "${REDIS_TLS_CA_FILE}")
+    ARGS+=("--tls-auth-clients" "${REDIS_TLS_AUTH_CLIENTS}")
+    ARGS+=("--tls-replication" "yes")
     ARGS+=("--replicaof" "${REDIS_MASTER_HOST}" "${REDIS_MASTER_PORT_NUMBER}")
     ARGS+=("--requirepass" "${REDIS_PASSWORD}")
     ARGS+=("--masterauth" "${REDIS_MASTER_PASSWORD}")
@@ -380,8 +407,8 @@ spec:
         app.kubernetes.io/component: master
       annotations:
         checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
-        checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: aea3e551fdf75c0c71eaaf1c928fdefef87f72f941de0d5034d5d6499891d349
+        checksum/health: d5dd6fb1ef3fdcda8f96b16f1c85114021e47ea817209e5b5332c47f662f9a06
+        checksum/scripts: 42a5317bd1bc912de1487911ec36daf4458d63c796393ed45779cc6f97f0c991
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
     spec:
       
@@ -438,9 +465,17 @@ spec:
                   name: redis
                   key: redis-password
             - name: REDIS_TLS_ENABLED
-              value: "no"
-            - name: REDIS_PORT
+              value: "yes"
+            - name: REDIS_TLS_PORT
               value: "6379"
+            - name:  REDIS_TLS_AUTH_CLIENTS
+              value: "yes"
+            - name:  REDIS_TLS_CERT_FILE
+              value: /opt/bitnami/redis/certs/cert.pem
+            - name:  REDIS_TLS_KEY_FILE
+              value: /opt/bitnami/redis/certs/key.pem
+            - name:  REDIS_TLS_CA_FILE
+              value: /opt/bitnami/redis/certs/ca.pem
           ports:
             - name: redis
               containerPort: 6379
@@ -470,10 +505,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 5Gi
+              memory: 2Gi
             requests:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
           volumeMounts:
             - name: start-scripts
               mountPath: /opt/bitnami/scripts/start-scripts
@@ -487,6 +522,46 @@ spec:
               mountPath: /opt/bitnami/redis/etc/
             - name: tmp
               mountPath: /tmp
+            - name: redis-certificates
+              mountPath: /opt/bitnami/redis/certs
+              readOnly: true
+      initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            cockroach-certs --host=localhost --host=127.0.0.1 --host=$(hostname -f) --host=$(hostname -f|cut -f 1-2 -d '.') --host=$(COCKROACH_HOST) --host=$(COCKROACH_HOST).$(hostname -f|cut -f 3- -d '.')
+          env:
+          - name: CERTIFICATE_TYPE
+            value: node
+          - name: CERTS_DIR
+            value: /cockroach-certs
+          - name: CA_PROFILE
+            valueFrom:
+              configMapKeyRef:
+                key: ca.node.profile
+                name: ca.config
+          - name: CA_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                key: ca.endpoint
+                name: ca.config
+          - name: CA_AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: ca.auth
+          - name: COCKROACH_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: cockroach.host
+                name: cockroach
+          image: cockroach-cfssl-certs
+          imagePullPolicy: Always
+          name: init-certs
+          volumeMounts:
+          - mountPath: /cockroach-certs
+            name: certs
       volumes:
         - name: start-scripts
           configMap:
@@ -503,6 +578,10 @@ spec:
           emptyDir: {}
         - name: tmp
           emptyDir: {}
+        - name: redis-certificates
+          secret:
+            secretName: redis-secret
+            defaultMode: 256
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
@@ -557,8 +636,8 @@ spec:
         app.kubernetes.io/component: replica
       annotations:
         checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
-        checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: aea3e551fdf75c0c71eaaf1c928fdefef87f72f941de0d5034d5d6499891d349
+        checksum/health: d5dd6fb1ef3fdcda8f96b16f1c85114021e47ea817209e5b5332c47f662f9a06
+        checksum/scripts: 42a5317bd1bc912de1487911ec36daf4458d63c796393ed45779cc6f97f0c991
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
     spec:
       
@@ -624,9 +703,17 @@ spec:
                   name: redis
                   key: redis-password
             - name: REDIS_TLS_ENABLED
-              value: "no"
-            - name: REDIS_PORT
+              value: "yes"
+            - name: REDIS_TLS_PORT
               value: "6379"
+            - name:  REDIS_TLS_AUTH_CLIENTS
+              value: "yes"
+            - name:  REDIS_TLS_CERT_FILE
+              value: /opt/bitnami/redis/certs/cert.pem
+            - name:  REDIS_TLS_KEY_FILE
+              value: /opt/bitnami/redis/certs/key.pem
+            - name:  REDIS_TLS_CA_FILE
+              value: /opt/bitnami/redis/certs/ca.pem
           ports:
             - name: redis
               containerPort: 6379
@@ -663,10 +750,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 5Gi
+              memory: 2Gi
             requests:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
           volumeMounts:
             - name: start-scripts
               mountPath: /opt/bitnami/scripts/start-scripts
@@ -678,6 +765,46 @@ spec:
               mountPath: /opt/bitnami/redis/mounted-etc
             - name: redis-tmp-conf
               mountPath: /opt/bitnami/redis/etc
+            - name: redis-certificates
+              mountPath: /opt/bitnami/redis/certs
+              readOnly: true
+      initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            cockroach-certs --host=localhost --host=127.0.0.1 --host=$(hostname -f) --host=$(hostname -f|cut -f 1-2 -d '.') --host=$(COCKROACH_HOST) --host=$(COCKROACH_HOST).$(hostname -f|cut -f 3- -d '.')
+          env:
+          - name: CERTIFICATE_TYPE
+            value: node
+          - name: CERTS_DIR
+            value: /cockroach-certs
+          - name: CA_PROFILE
+            valueFrom:
+              configMapKeyRef:
+                key: ca.node.profile
+                name: ca.config
+          - name: CA_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                key: ca.endpoint
+                name: ca.config
+          - name: CA_AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: ca.auth
+          - name: COCKROACH_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: cockroach.host
+                name: cockroach
+          image: cockroach-cfssl-certs
+          imagePullPolicy: Always
+          name: init-certs
+          volumeMounts:
+          - mountPath: /cockroach-certs
+            name: certs
       volumes:
         - name: start-scripts
           configMap:
@@ -692,6 +819,10 @@ spec:
             name: redis-shared-configuration
         - name: redis-tmp-conf
           emptyDir: {}
+        - name: redis-certificates
+          secret:
+            secretName: redis-secret
+            defaultMode: 256
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim

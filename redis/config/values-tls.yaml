@@ -1,0 +1,53 @@
+tls:
+  enabled: true
+  existingSecret: redis-secret
+  certFilename: cert.pem
+  certKeyFilename: key.pem
+  certCAFilename: ca.pem
+
+master:
+  initContainers: &cfssl
+    - name: init-certs
+      image: redis-cfssl-certs
+      imagePullPolicy: Always
+      command:
+        - "sh"
+        - "-c"
+        - >
+          redis-certs
+          --host=localhost
+          --host=127.0.0.1
+          --host=$(hostname -f)
+          --host=$(hostname -f|cut -f 1-2 -d '.')
+          --host=$(REDIS_HOST)
+          --host=$(REDIS_HOST).$(hostname -f|cut -f 3- -d '.')
+      env:
+        - name: CERTIFICATE_TYPE
+          value: "node"
+        - name: CERTS_DIR
+          value: "/redis-certs"
+        - name: CA_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: ca.config
+              key: ca.node.profile
+        - name: CA_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: ca.config
+              key: ca.endpoint
+        - name: CA_AUTH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ca.auth
+              key: key
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: redis
+              key: redis.host
+      volumeMounts:
+        - name: certs
+          mountPath: /redis-certs
+replica:
+  initContainers: *cfssl
