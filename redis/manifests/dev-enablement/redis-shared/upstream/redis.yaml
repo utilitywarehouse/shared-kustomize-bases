@@ -470,10 +470,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 5Gi
+              memory: 2Gi
             requests:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
           volumeMounts:
             - name: start-scripts
               mountPath: /opt/bitnami/scripts/start-scripts
@@ -537,7 +537,7 @@ metadata:
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/instance: redis-shared
@@ -663,10 +663,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 5Gi
+              memory: 2Gi
             requests:
               cpu: 500m
-              memory: 2Gi
+              memory: 1Gi
           volumeMounts:
             - name: start-scripts
               mountPath: /opt/bitnami/scripts/start-scripts

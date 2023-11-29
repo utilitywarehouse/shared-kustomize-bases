@@ -12,6 +12,7 @@ gen-dev-enablement-redis-shared:
 		--env OPSLEVEL_APP_DESCRIPTION="cache for opslevel-k8s-deployer" \
 		--env OPSLEVEL_APP_TIER="tier_4" \
 		--env REDIS_SECRET_NAME="redis" \
+		--env REDIS_REPLICA_COUNT=1 \
 		--workdir=/opt/manifests \
 		--entrypoint=/bin/sh \
 		alpine/helm ./gen-yaml/gen.sh
