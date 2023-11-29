@@ -15,6 +15,7 @@ helm template "${NAME}" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set commonAnnotations."app\.uw\.systems\/tier"="${OPSLEVEL_APP_TIER}" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis" \
   --set auth.existingSecret="${REDIS_SECRET_NAME}" \
+  --set replica.replicaCount="${REDIS_REPLICA_COUNT}" \
   --set master.resources.requests.cpu="500m" \
   --set master.resources.limits.cpu="1000m" \
   --set master.resources.requests.memory="1Gi" \
