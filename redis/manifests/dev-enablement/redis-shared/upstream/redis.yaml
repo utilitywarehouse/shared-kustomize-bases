@@ -616,7 +616,7 @@ metadata:
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
-  replicas: 3
+  replicas: 0
   selector:
     matchLabels:
       app.kubernetes.io/instance: redis-shared

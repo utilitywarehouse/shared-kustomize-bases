@@ -26,4 +26,5 @@ NAME="redis-shared" # Name of your Redis instance
 OPSLEVEL_APP_DESCRIPTION="cache for opslevel-k8s-deployer" # Description of your Redis in OpsLevel
 OPSLEVEL_APP_TIER="tier_4" # Tier of your Redis in OpsLevel- see https://wiki.uw.systems/posts/ops-level-nz4v4ka0#h1u0u-app-uw-systems-tier
 REDIS_SECRET_NAME="redis" # Name of the secret with your Redis password. See secret created in directory `example`.
+REDIS_REPLICA_COUNT=1 # Amount of failover replicas 
 ```
