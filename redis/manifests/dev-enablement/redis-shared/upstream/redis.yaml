@@ -44,8 +44,6 @@ data:
   master.conf: |-
     dir /data
     # User-supplied master configuration:
-    rename-command FLUSHDB ""
-    rename-command FLUSHALL ""
     # End of master configuration
   replica.conf: |-
     dir /data
@@ -311,6 +309,34 @@ spec:
     app.kubernetes.io/name: redis-shared
     app.kubernetes.io/component: master
 ---
+# Source: redis/templates/metrics-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-shared-metrics
+  namespace: "dev-enablement"
+  labels:
+    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/version: 7.2.2
+    helm.sh/chart: redis-18.1.6
+    app.kubernetes.io/component: metrics
+  annotations:
+    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_4
+spec:
+  type: ClusterIP
+  ports:
+    - name: http-metrics
+      port: 9121
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/name: redis-shared
+---
 # Source: redis/templates/replicas/service.yaml
 apiVersion: v1
 kind: Service
@@ -379,10 +405,12 @@ spec:
         helm.sh/chart: redis-18.1.6
         app.kubernetes.io/component: master
       annotations:
-        checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
+        checksum/configmap: e888d0f18b05c7bd70a8c6ee0ee303f66b2775fd57390463254884461a8cdf6c
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
         checksum/scripts: aea3e551fdf75c0c71eaaf1c928fdefef87f72f941de0d5034d5d6499891d349
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
     spec:
       
       securityContext:
@@ -487,6 +515,61 @@ spec:
               mountPath: /opt/bitnami/redis/etc/
             - name: tmp
               mountPath: /tmp
+        - name: metrics
+          image: docker.io/bitnami/redis-exporter:1.55.0-debian-11-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+            - -c
+            - |
+              if [[ -f '/secrets/redis-password' ]]; then
+              export REDIS_PASSWORD=$(cat /secrets/redis-password)
+              fi
+              redis_exporter
+          env:
+            - name: REDIS_ALIAS
+              value: redis-shared
+            - name: REDIS_USER
+              value: default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: redis-password
+          ports:
+            - name: metrics
+              containerPort: 9121
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: metrics
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
       volumes:
         - name: start-scripts
           configMap:
@@ -556,10 +639,12 @@ spec:
         helm.sh/chart: redis-18.1.6
         app.kubernetes.io/component: replica
       annotations:
-        checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
+        checksum/configmap: e888d0f18b05c7bd70a8c6ee0ee303f66b2775fd57390463254884461a8cdf6c
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
         checksum/scripts: aea3e551fdf75c0c71eaaf1c928fdefef87f72f941de0d5034d5d6499891d349
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
     spec:
       
       securityContext:
@@ -678,6 +763,61 @@ spec:
               mountPath: /opt/bitnami/redis/mounted-etc
             - name: redis-tmp-conf
               mountPath: /opt/bitnami/redis/etc
+        - name: metrics
+          image: docker.io/bitnami/redis-exporter:1.55.0-debian-11-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+            - -c
+            - |
+              if [[ -f '/secrets/redis-password' ]]; then
+              export REDIS_PASSWORD=$(cat /secrets/redis-password)
+              fi
+              redis_exporter
+          env:
+            - name: REDIS_ALIAS
+              value: redis-shared
+            - name: REDIS_USER
+              value: default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: redis-password
+          ports:
+            - name: metrics
+              containerPort: 9121
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: metrics
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
       volumes:
         - name: start-scripts
           configMap:
