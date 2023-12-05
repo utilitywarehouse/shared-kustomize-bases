@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 ---
@@ -30,7 +30,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 data:
@@ -67,7 +67,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 data:
@@ -179,7 +179,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 data:
@@ -265,7 +265,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
     
@@ -294,7 +294,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 spec:
@@ -325,7 +325,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 spec:
@@ -356,7 +356,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 spec:
@@ -533,7 +533,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: cache for storing temporary bank accounts tokens
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_3
 spec:
