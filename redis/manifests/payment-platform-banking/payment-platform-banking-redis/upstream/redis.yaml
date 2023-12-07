@@ -4,35 +4,35 @@ apiVersion: v1
 kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
-  name: bank-account-tokenisation-redis
+  name: payment-platform-banking-redis
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 ---
 # Source: redis/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: bank-account-tokenisation-redis-configuration
+  name: payment-platform-banking-redis-configuration
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 data:
   redis.conf: |-
     # User-supplied common configuration:
@@ -44,8 +44,6 @@ data:
   master.conf: |-
     dir /data
     # User-supplied master configuration:
-    rename-command FLUSHDB ""
-    rename-command FLUSHALL ""
     # End of master configuration
   replica.conf: |-
     dir /data
@@ -58,18 +56,18 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: bank-account-tokenisation-redis-health
+  name: payment-platform-banking-redis-health
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 data:
   ping_readiness_local.sh: |-
     #!/bin/bash
@@ -170,18 +168,18 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: bank-account-tokenisation-redis-scripts
+  name: payment-platform-banking-redis-scripts
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 data:
   start-master.sh: |
     #!/bin/bash
@@ -230,7 +228,7 @@ data:
     }
 
     REDISPORT=$(get_port "$HOSTNAME" "REDIS")
-    HEADLESS_SERVICE="bank-account-tokenisation-redis-headless.payment-platform-banking.svc.cluster.local"
+    HEADLESS_SERVICE="payment-platform-banking-redis-headless.payment-platform-banking.svc.cluster.local"
 
     [[ -f $REDIS_PASSWORD_FILE ]] && export REDIS_PASSWORD="$(< "${REDIS_PASSWORD_FILE}")"
     [[ -f $REDIS_MASTER_PASSWORD_FILE ]] && export REDIS_MASTER_PASSWORD="$(< "${REDIS_MASTER_PASSWORD_FILE}")"
@@ -256,18 +254,18 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bank-account-tokenisation-redis-headless
+  name: payment-platform-banking-redis-headless
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
     
 spec:
   type: ClusterIP
@@ -277,26 +275,26 @@ spec:
       port: 6379
       targetPort: redis
   selector:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
 ---
 # Source: redis/templates/master/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: bank-account-tokenisation-redis-master
+  name: payment-platform-banking-redis-master
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -307,27 +305,55 @@ spec:
       targetPort: redis
       nodePort: null
   selector:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/component: master
+---
+# Source: redis/templates/metrics-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-platform-banking-redis-metrics
+  namespace: "payment-platform-banking"
+  labels:
+    app.kubernetes.io/instance: payment-platform-banking-redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: payment-platform-banking-redis
+    app.kubernetes.io/version: 7.2.2
+    helm.sh/chart: redis-18.1.6
+    app.kubernetes.io/component: metrics
+  annotations:
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/tier: tier_2
+spec:
+  type: ClusterIP
+  ports:
+    - name: http-metrics
+      port: 9121
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/instance: payment-platform-banking-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
 ---
 # Source: redis/templates/replicas/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: bank-account-tokenisation-redis-replicas
+  name: payment-platform-banking-redis-replicas
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -338,56 +364,58 @@ spec:
       targetPort: redis
       nodePort: null
   selector:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/component: replica
 ---
 # Source: redis/templates/master/application.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: bank-account-tokenisation-redis-master
+  name: payment-platform-banking-redis-master
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: bank-account-tokenisation-redis
-      app.kubernetes.io/name: bank-account-tokenisation-redis
+      app.kubernetes.io/instance: payment-platform-banking-redis
+      app.kubernetes.io/name: payment-platform-banking-redis
       app.kubernetes.io/component: master
-  serviceName: bank-account-tokenisation-redis-headless
+  serviceName: payment-platform-banking-redis-headless
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: bank-account-tokenisation-redis
+        app.kubernetes.io/instance: payment-platform-banking-redis
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: bank-account-tokenisation-redis
+        app.kubernetes.io/name: payment-platform-banking-redis
         app.kubernetes.io/version: 7.2.2
         helm.sh/chart: redis-18.1.6
         app.kubernetes.io/component: master
       annotations:
-        checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
+        checksum/configmap: e888d0f18b05c7bd70a8c6ee0ee303f66b2775fd57390463254884461a8cdf6c
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: ae11ceb09b4949a53815c13d4cab89194b6eb0e6839205d52d667cec0619de09
+        checksum/scripts: 6ef9e7c5b59f635cd328031e0bc9e49a9ea179f30bddb54c4fd32900bf928a98
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
     spec:
       
       securityContext:
         fsGroup: 1001
-      serviceAccountName: bank-account-tokenisation-redis
+      serviceAccountName: payment-platform-banking-redis
       automountServiceAccountToken: true
       affinity:
         podAffinity:
@@ -397,8 +425,8 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: bank-account-tokenisation-redis
-                    app.kubernetes.io/name: bank-account-tokenisation-redis
+                    app.kubernetes.io/instance: payment-platform-banking-redis
+                    app.kubernetes.io/name: payment-platform-banking-redis
                     app.kubernetes.io/component: master
                 topologyKey: kubernetes.io/hostname
               weight: 1
@@ -487,18 +515,73 @@ spec:
               mountPath: /opt/bitnami/redis/etc/
             - name: tmp
               mountPath: /tmp
+        - name: metrics
+          image: docker.io/bitnami/redis-exporter:1.55.0-debian-11-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+            - -c
+            - |
+              if [[ -f '/secrets/redis-password' ]]; then
+              export REDIS_PASSWORD=$(cat /secrets/redis-password)
+              fi
+              redis_exporter
+          env:
+            - name: REDIS_ALIAS
+              value: payment-platform-banking-redis
+            - name: REDIS_USER
+              value: default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: redis-password
+          ports:
+            - name: metrics
+              containerPort: 9121
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: metrics
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
       volumes:
         - name: start-scripts
           configMap:
-            name: bank-account-tokenisation-redis-scripts
+            name: payment-platform-banking-redis-scripts
             defaultMode: 0755
         - name: health
           configMap:
-            name: bank-account-tokenisation-redis-health
+            name: payment-platform-banking-redis-health
             defaultMode: 0755
         - name: config
           configMap:
-            name: bank-account-tokenisation-redis-configuration
+            name: payment-platform-banking-redis-configuration
         - name: redis-tmp-conf
           emptyDir: {}
         - name: tmp
@@ -509,8 +592,8 @@ spec:
       metadata:
         name: redis-data
         labels:
-          app.kubernetes.io/instance: bank-account-tokenisation-redis
-          app.kubernetes.io/name: bank-account-tokenisation-redis
+          app.kubernetes.io/instance: payment-platform-banking-redis
+          app.kubernetes.io/name: payment-platform-banking-redis
           app.kubernetes.io/component: master
       spec:
         accessModes:
@@ -523,48 +606,50 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: bank-account-tokenisation-redis-replicas
+  name: payment-platform-banking-redis-replicas
   namespace: "payment-platform-banking"
   labels:
-    app.kubernetes.io/instance: bank-account-tokenisation-redis
+    app.kubernetes.io/instance: payment-platform-banking-redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: bank-account-tokenisation-redis
+    app.kubernetes.io/name: payment-platform-banking-redis
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: replica
   annotations:
-    app.uw.systems/description: cache for storing temporary bank accounts tokens
+    app.uw.systems/description: shared cache for payment-platform-banking namespace
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_3
+    app.uw.systems/tier: tier_2
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: bank-account-tokenisation-redis
-      app.kubernetes.io/name: bank-account-tokenisation-redis
+      app.kubernetes.io/instance: payment-platform-banking-redis
+      app.kubernetes.io/name: payment-platform-banking-redis
       app.kubernetes.io/component: replica
-  serviceName: bank-account-tokenisation-redis-headless
+  serviceName: payment-platform-banking-redis-headless
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: bank-account-tokenisation-redis
+        app.kubernetes.io/instance: payment-platform-banking-redis
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: bank-account-tokenisation-redis
+        app.kubernetes.io/name: payment-platform-banking-redis
         app.kubernetes.io/version: 7.2.2
         helm.sh/chart: redis-18.1.6
         app.kubernetes.io/component: replica
       annotations:
-        checksum/configmap: 86bcc953bb473748a3d3dc60b7c11f34e60c93519234d4c37f42e22ada559d47
+        checksum/configmap: e888d0f18b05c7bd70a8c6ee0ee303f66b2775fd57390463254884461a8cdf6c
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: ae11ceb09b4949a53815c13d4cab89194b6eb0e6839205d52d667cec0619de09
+        checksum/scripts: 6ef9e7c5b59f635cd328031e0bc9e49a9ea179f30bddb54c4fd32900bf928a98
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+        prometheus.io/port: "9121"
+        prometheus.io/scrape: "true"
     spec:
       
       securityContext:
         fsGroup: 1001
-      serviceAccountName: bank-account-tokenisation-redis
+      serviceAccountName: payment-platform-banking-redis
       automountServiceAccountToken: true
       affinity:
         podAffinity:
@@ -574,8 +659,8 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: bank-account-tokenisation-redis
-                    app.kubernetes.io/name: bank-account-tokenisation-redis
+                    app.kubernetes.io/instance: payment-platform-banking-redis
+                    app.kubernetes.io/name: payment-platform-banking-redis
                     app.kubernetes.io/component: replica
                 topologyKey: kubernetes.io/hostname
               weight: 1
@@ -608,7 +693,7 @@ spec:
             - name: REDIS_REPLICATION_MODE
               value: replica
             - name: REDIS_MASTER_HOST
-              value: bank-account-tokenisation-redis-master-0.bank-account-tokenisation-redis-headless.payment-platform-banking.svc.cluster.local
+              value: payment-platform-banking-redis-master-0.payment-platform-banking-redis-headless.payment-platform-banking.svc.cluster.local
             - name: REDIS_MASTER_PORT_NUMBER
               value: "6379"
             - name: ALLOW_EMPTY_PASSWORD
@@ -678,18 +763,73 @@ spec:
               mountPath: /opt/bitnami/redis/mounted-etc
             - name: redis-tmp-conf
               mountPath: /opt/bitnami/redis/etc
+        - name: metrics
+          image: docker.io/bitnami/redis-exporter:1.55.0-debian-11-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+            - -c
+            - |
+              if [[ -f '/secrets/redis-password' ]]; then
+              export REDIS_PASSWORD=$(cat /secrets/redis-password)
+              fi
+              redis_exporter
+          env:
+            - name: REDIS_ALIAS
+              value: payment-platform-banking-redis
+            - name: REDIS_USER
+              value: default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: redis-password
+          ports:
+            - name: metrics
+              containerPort: 9121
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: metrics
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
       volumes:
         - name: start-scripts
           configMap:
-            name: bank-account-tokenisation-redis-scripts
+            name: payment-platform-banking-redis-scripts
             defaultMode: 0755
         - name: health
           configMap:
-            name: bank-account-tokenisation-redis-health
+            name: payment-platform-banking-redis-health
             defaultMode: 0755
         - name: config
           configMap:
-            name: bank-account-tokenisation-redis-configuration
+            name: payment-platform-banking-redis-configuration
         - name: redis-tmp-conf
           emptyDir: {}
   volumeClaimTemplates:
@@ -698,8 +838,8 @@ spec:
       metadata:
         name: redis-data
         labels:
-          app.kubernetes.io/instance: bank-account-tokenisation-redis
-          app.kubernetes.io/name: bank-account-tokenisation-redis
+          app.kubernetes.io/instance: payment-platform-banking-redis
+          app.kubernetes.io/name: payment-platform-banking-redis
           app.kubernetes.io/component: replica
       spec:
         accessModes:

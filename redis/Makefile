@@ -23,9 +23,9 @@ gen-bank-account-tokenisation-redis-shared:
 		--volume $${PWD}:/opt/manifests \
 		--env BITNAMI_REDIS_RELEASE=${BITNAMI_REDIS_RELEASE} \
 		--env NS="payment-platform-banking" \
-		--env NAME="bank-account-tokenisation-redis" \
-		--env OPSLEVEL_APP_DESCRIPTION="cache for storing temporary bank accounts tokens" \
-		--env OPSLEVEL_APP_TIER="tier_3" \
+		--env NAME="payment-platform-banking-redis" \
+		--env OPSLEVEL_APP_DESCRIPTION="shared cache for payment-platform-banking namespace" \
+		--env OPSLEVEL_APP_TIER="tier_2" \
 		--env REDIS_SECRET_NAME="redis" \
 		--env REDIS_REPLICA_COUNT=0 \
 		--workdir=/opt/manifests \
