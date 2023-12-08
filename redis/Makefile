@@ -26,6 +26,7 @@ gen-bank-account-tokenisation-redis-shared:
 		--env OPSLEVEL_APP_DESCRIPTION="shared cache for payment-platform-banking namespace" \
 		--env OPSLEVEL_APP_TIER="tier_2" \
 		--env REDIS_SECRET_NAME="redis" \
+		--env REDIS_REPLICA_COUNT=0 \
 		--workdir=/opt/manifests \
 		--entrypoint=/bin/sh \
 		alpine/helm ./gen-yaml/gen.sh

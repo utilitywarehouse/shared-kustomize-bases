@@ -7,7 +7,7 @@ This manifest is build on the base of [Bitnami Sentinel Redis Helm chart](https:
 Before using those manifests, consider whether Sentinel is suitable for your use:
 
 - [Redis Sentinel](https://redis.io/docs/management/sentinel/) allows using multiple databases in one instance,
-however- it doesn't provide sharding. This means, nodes other than master are just read-only replicas. <br>
+however- it doesn't provide sharding. It is possible to add additional nodes, however, nodes other than master are just read-only replicas.
 [It is possible to grant high availability by enabling Sentinel failover](https://github.com/bitnami/charts/tree/main/bitnami/redis#master-replicas-with-sentinel)- in this case, master failure would cause 
 election of the new master from replica nodes. However, this would demand client library querying the master address.
 
