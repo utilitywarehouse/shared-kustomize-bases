@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - cronjob.yaml
+  - postgres.yaml
+configMapGenerator:
+  - name: postgres-config
+    files:
+      - pg_hba.conf=pg_hba.conf
+      - pg_init_users.sh=pg_init_users.sh
