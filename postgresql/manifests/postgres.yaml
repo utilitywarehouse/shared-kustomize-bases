@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9187"
+    uw.health.aggregator.enable: "false"
+spec:
+  ports:
+    - name: db
+      port: 5432
+      protocol: TCP
+    - name: exporter
+      protocol: TCP
+      port: 9187
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path:   /__/metrics
+        prometheus.io/port:   "8081"
+      labels:
+        app: postgres
+      name: postgres
+    spec:
+      containers:
+      - name: metrics
+        env:
+        - name: DATA_SOURCE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: url
+        resources:
+          limits:
+            memory: 64Mi
+            cpu: 100m
+        ports:
+          - containerPort: 9187
+            protocol: TCP
+        imagePullPolicy: Always
+        image: wrouesnel/postgres_exporter:v0.8.0
+      - name: postgres
+        image: postgres:16-alpine
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 0
+            memory: 0
+          limits:
+            memory: 2000Mi
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: password
+        - name: POSTGRES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: database
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: pgdata
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
