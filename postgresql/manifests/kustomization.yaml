@@ -4,8 +4,3 @@ resources:
 - postgres.yaml
 - backup.yaml
 - backup-pvc.yaml
-configMapGenerator:
-- files:
-  - pg_hba.conf=pg_hba.conf
-  - pg_init_users.sh=pg_init_users.sh
-  name: postgres-config
