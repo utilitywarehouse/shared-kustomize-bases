@@ -65,7 +65,7 @@ spec:
               cpu: 0
               memory: 0
             limits:
-              memory: 2000Mi
+              memory: 1000Mi
           env:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
