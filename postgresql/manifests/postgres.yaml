@@ -56,7 +56,7 @@ spec:
           - containerPort: 9187
             protocol: TCP
         imagePullPolicy: IfNotPresent
-        image: wrouesnel/postgres_exporter:v0.8.0
+        image: quay.io/prometheuscommunity/postgres-exporter:0.15.0
       - name: postgres
         image: postgres:16-alpine
         command:
