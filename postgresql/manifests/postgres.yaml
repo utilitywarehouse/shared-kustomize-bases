@@ -34,90 +34,90 @@ spec:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/path:   /__/metrics
-        prometheus.io/port:   "8081"
+        prometheus.io/path: /__/metrics
+        prometheus.io/port: "8081"
       labels:
         app: postgres
       name: postgres
     spec:
       containers:
-      - name: metrics
-        env:
-        - name: DATA_SOURCE_NAME
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: url
-        resources:
-          limits:
-            memory: 64Mi
-            cpu: 100m
-        ports:
-          - containerPort: 9187
-            protocol: TCP
-        imagePullPolicy: IfNotPresent
-        image: quay.io/prometheuscommunity/postgres-exporter:0.15.0
-      - name: postgres
-        image: postgres:16-alpine
-        command:
-          - docker-entrypoint.sh
-          - -c
-          - work_mem=512MB
-          - -c
-          - max_parallel_workers_per_gather=0
-          - -c
-          - max_wal_size=2GB
-        imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            cpu: 0
-            memory: 0
-          limits:
-            memory: 2000Mi
-        env:
-        - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: user
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: password
-        - name: POSTGRES_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: database
-        ports:
-        - containerPort: 5432
-          protocol: TCP
-        livenessProbe:
-          exec:
-            command:
-              - /bin/sh
-              - -c
-              - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
-          failureThreshold: 3
-          initialDelaySeconds: 30
-          successThreshold: 1
-          timeoutSeconds: 1
-        readinessProbe:
-          exec:
-            command:
-              - /bin/sh
-              - -c
-              - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
-          failureThreshold: 3
-          initialDelaySeconds: 30
-          successThreshold: 1
-          timeoutSeconds: 1
-        volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: pgdata
+        - name: metrics
+          env:
+            - name: DATA_SOURCE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: url
+          resources:
+            limits:
+              memory: 64Mi
+              cpu: 100m
+          ports:
+            - containerPort: 9187
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          image: quay.io/prometheuscommunity/postgres-exporter:0.15.0
+        - name: postgres
+          image: postgres:16-alpine
+          command:
+            - docker-entrypoint.sh
+            - -c
+            - work_mem=512MB
+            - -c
+            - max_parallel_workers_per_gather=0
+            - -c
+            - max_wal_size=2GB
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 0
+              memory: 0
+            limits:
+              memory: 2000Mi
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: database
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "exec pg_isready -U $POSTGRES_USER -d $POSTGRES_DATABASE -h 127.0.0.1 -p 5432"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pgdata
   volumeClaimTemplates:
     - metadata:
         name: pgdata

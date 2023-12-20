@@ -5,9 +5,9 @@ namespace: "energy-platform"
 commonLabels:
   app: crm-graphql-postgres
 resources:
-- ssh://github.com/utilitywarehouse/shared-kustomize-bases//postgres/manifests?ref=master
-- secrets/postgres-secrets.yaml
+  - ssh://github.com/utilitywarehouse/shared-kustomize-bases//postgres/manifests?ref=master
+  - secrets/postgres-secrets.yaml
 patches:
-- path: backup.yaml
-- path: backup-pvc.yaml
-- path: postgres.yaml
+  - path: backup.yaml
+  - path: backup-pvc.yaml
+  - path: postgres.yaml
