@@ -3,6 +3,7 @@ kind: CronJob
 metadata:
   name: postgres-backup
   labels:
+    app: postgres-backup
 spec:
   schedule: "@daily"
   concurrencyPolicy: Allow
@@ -19,21 +20,26 @@ spec:
             - name: dockerhub-key
           serviceAccountName: service-account-name
           containers:
-          - name: postgresql-pgdumpall
-            image: eeshugerman/postgres-backup-s3:16
+          - name: postgres-backup
+            image: eeshugerman/postgres-backup-s3:15
             imagePullPolicy: "IfNotPresent"
+            volumeMounts:
+            - mountPath: /backups
+              name: postgres-backup-pvc
+            # after the backup is complete cleanup the backup files
+            lifecycle:
+                  preStop:
+                    exec:
+                      command: ["/bin/sh", "-c", "rm /backups/*"]
             env:
-              - name: ADMIN_URL
-                valueFrom:
-                  secretKeyRef:
-                    name: crm-graphql-postgres-secrets
-                    key: url
               - name: S3_REGION
                 value: "eu-west"
               - name: S3_BUCKET
                 value: "s3-bucket-name"
               - name: S3_PREFIX
                 value: "backups"
+              - name: POSTGRES_HOST
+                value: "postgres"
               - name: POSTGRES_USER
                 valueFrom:
                   secretKeyRef:
@@ -49,21 +55,12 @@ spec:
                   secretKeyRef:
                     name: postgres-secrets
                     key: database
-              - name: PGPORT
+              - name: POSTGRES_PORT
                 value: "5432"
               - name: PGDUMP_EXTRA_OPTS
-                value: "-f /backups"
+                value: "-f /backups/file"
           restartPolicy: OnFailure
-        volumeMounts:
-        - mountPath: /backups
-          name: db-backup-volume
-    volumes:
-        - name: db-backup-volume
-          ephemeral:
-            volumeClaimTemplate:
-              spec:
-                accessModes: [ "ReadWriteOnce" ]
-                storageClassName: "db-backups"
-                resources:
-                  requests:
-                    storage: 10Gi
+          volumes:
+            - name: postgres-backup-pvc
+              persistentVolumeClaim:
+                claimName: postgres-backup-pvc
