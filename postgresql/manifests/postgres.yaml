@@ -59,14 +59,6 @@ spec:
           image: quay.io/prometheuscommunity/postgres-exporter:0.15.0
         - name: postgres
           image: postgres:16-alpine
-          command:
-            - docker-entrypoint.sh
-            - -c
-            - work_mem=512MB
-            - -c
-            - max_parallel_workers_per_gather=0
-            - -c
-            - max_wal_size=2GB
           imagePullPolicy: IfNotPresent
           resources:
             requests:
