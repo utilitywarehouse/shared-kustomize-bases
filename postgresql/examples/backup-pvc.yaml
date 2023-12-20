@@ -1,0 +1,11 @@
+# PVC for backup volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-backup-pvc
+  labels:
+    name: crm-graphql-postgres-backup-pvc
+spec:
+  resources:
+    requests:
+      storage: 50Gi

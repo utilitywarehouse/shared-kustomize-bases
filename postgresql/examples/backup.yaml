@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  labels:
+    app: crm-graphql-postgres-backup
+spec:
+  schedule: "@daily"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            injector.tumblr.com/request: vault-init-container-aws
+        spec:
+          imagePullSecrets:
+            - name: dockerhub-key
+          serviceAccountName: crm-postgres-backup
+          containers:
+          - name: postgres-backup
+            image: eeshugerman/postgres-backup-s3:16
+            volumeMounts:
+              - name: postgres-backup-pvc
+                mountPath: "/backups"
+            env:
+              - name: S3_BUCKET
+                value: "uw-dev-energy-crm-postgres-backup"
+              - name: S3_PREFIX
+                value: "backups"
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: crm-graphql-postgres-secrets
+                    key: user
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: crm-graphql-postgres-secrets
+                    key: password
+              - name: POSTGRES_DATABASE
+                valueFrom:
+                  secretKeyRef:
+                    name: crm-graphql-postgres-secrets
+                    key: database
+              - name: POSTGRES_PORT
+                value: "5432"
+          volumes:
+            - name: postgres-backup-pvc
+              persistentVolumeClaim:
+                claimName: crm-graphql-backup-pvc
