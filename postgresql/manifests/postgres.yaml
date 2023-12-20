@@ -55,7 +55,7 @@ spec:
         ports:
           - containerPort: 9187
             protocol: TCP
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         image: wrouesnel/postgres_exporter:v0.8.0
       - name: postgres
         image: postgres:16-alpine
