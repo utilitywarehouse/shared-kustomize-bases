@@ -2,8 +2,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: postgres-backup
-  labels:
-    app: crm-graphql-postgres-backup
 spec:
   schedule: "@daily"
   concurrencyPolicy: Forbid
