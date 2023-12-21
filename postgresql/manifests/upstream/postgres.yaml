@@ -3,12 +3,12 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgresql
+  name: postgres
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: postgresql
+    app.kubernetes.io/instance: postgres
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/version: 16.1.0
     helm.sh/chart: postgresql-13.2.25
   annotations:
@@ -17,19 +17,19 @@ metadata:
     app.uw.systems/tier: ""
 type: Opaque
 data:
-  postgres-password: "V1N6aDFObm1mNw=="
+  postgres-password: "dDlBY2VMY1kwbQ=="
   # We don't auto-generate LDAP password when it's not provided as we do for other passwords
 ---
 # Source: postgresql/templates/primary/svc-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql-hl
+  name: postgres-hl
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: postgresql
+    app.kubernetes.io/instance: postgres
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/version: 16.1.0
     helm.sh/chart: postgresql-13.2.25
     app.kubernetes.io/component: primary
@@ -54,20 +54,20 @@ spec:
       port: 5432
       targetPort: tcp-postgresql
   selector:
-    app.kubernetes.io/instance: postgresql
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: postgres
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/component: primary
 ---
 # Source: postgresql/templates/primary/svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql
+  name: postgres
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: postgresql
+    app.kubernetes.io/instance: postgres
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/version: 16.1.0
     helm.sh/chart: postgresql-13.2.25
     app.kubernetes.io/component: primary
@@ -84,20 +84,20 @@ spec:
       targetPort: tcp-postgresql
       nodePort: null
   selector:
-    app.kubernetes.io/instance: postgresql
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: postgres
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/component: primary
 ---
 # Source: postgresql/templates/primary/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgresql
+  name: postgres
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: postgresql
+    app.kubernetes.io/instance: postgres
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/version: 16.1.0
     helm.sh/chart: postgresql-13.2.25
     app.kubernetes.io/component: primary
@@ -107,22 +107,22 @@ metadata:
     app.uw.systems/tier: ""
 spec:
   replicas: 1
-  serviceName: postgresql-hl
+  serviceName: postgres-hl
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/instance: postgresql
-      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/instance: postgres
+      app.kubernetes.io/name: postgres
       app.kubernetes.io/component: primary
   template:
     metadata:
-      name: postgresql
+      name: postgres
       labels:
-        app.kubernetes.io/instance: postgresql
+        app.kubernetes.io/instance: postgres
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: postgresql
+        app.kubernetes.io/name: postgres
         app.kubernetes.io/version: 16.1.0
         helm.sh/chart: postgresql-13.2.25
         app.kubernetes.io/component: primary
@@ -137,8 +137,8 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: postgresql
-                    app.kubernetes.io/name: postgresql
+                    app.kubernetes.io/instance: postgres
+                    app.kubernetes.io/name: postgres
                     app.kubernetes.io/component: primary
                 topologyKey: kubernetes.io/hostname
               weight: 1
@@ -176,7 +176,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgresql
+                  name: postgres
                   key: postgres-password
             # Replication
             # Initdb
