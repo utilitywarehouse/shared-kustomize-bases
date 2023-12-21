@@ -17,7 +17,7 @@ metadata:
     app.uw.systems/tier: ""
 type: Opaque
 data:
-  postgres-password: "Rmw3MTlrQVVNdA=="
+  postgres-password: "b3RsSWk4dVRrRw=="
   # We don't auto-generate LDAP password when it's not provided as we do for other passwords
 ---
 # Source: postgresql/templates/primary/svc-headless.yaml
