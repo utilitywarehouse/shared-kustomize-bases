@@ -1,25 +1,4 @@
 ---
-# Source: postgresql/templates/secrets.yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgresql
-  namespace: "default"
-  labels:
-    app.kubernetes.io/instance: postgresql
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: postgresql
-    app.kubernetes.io/version: 16.1.0
-    helm.sh/chart: postgresql-13.2.25
-  annotations:
-    app.uw.systems/description: ""
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/postgresql
-    app.uw.systems/tier: ""
-type: Opaque
-data:
-  postgres-password: "b3RsSWk4dVRrRw=="
-  # We don't auto-generate LDAP password when it's not provided as we do for other passwords
----
 # Source: postgresql/templates/primary/svc-headless.yaml
 apiVersion: v1
 kind: Service
@@ -177,7 +156,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgresql
-                  key: postgres-password
+                  key: admin-password
             # Replication
             # Initdb
             # Standby

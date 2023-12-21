@@ -43,17 +43,17 @@ spec:
                 - name: POSTGRES_USER
                   valueFrom:
                     secretKeyRef:
-                      name: postgres-secrets
+                      name: postgresql
                       key: user
                 - name: POSTGRES_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: postgres-secrets
-                      key: password
+                      name: postgresql
+                      key: admin-password
                 - name: POSTGRES_DATABASE
                   valueFrom:
                     secretKeyRef:
-                      name: postgres-secrets
+                      name: postgresql
                       key: database
                 - name: POSTGRES_PORT
                   value: "5432"
