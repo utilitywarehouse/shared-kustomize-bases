@@ -3,11 +3,6 @@ kind: Kustomization
 resources:
   - postgres.yaml
 patches:
-  # the chart creates a useless secrets block so remove the whole thing
-  - path: delete-secret.yaml
-    target:
-      version: v1
-      kind: Secret
   # Remove unnecessary `app.kubernetes.io/managed-by: Helm` annotation
   - patch: |-
       - op: remove
