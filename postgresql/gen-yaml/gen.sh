@@ -9,9 +9,9 @@ rm manifests/upstream/*
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-helm template "postgres" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELEASE}" \
-  --set fullnameOverride="postgres" \
-  --set nameOverride="postgres" \
+helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELEASE}" \
+  --set fullnameOverride="postgresql" \
+  --set nameOverride="postgresql" \
   --set commonAnnotations."app\.uw\.systems\/description"="" \
   --set commonAnnotations."app\.uw\.systems\/tier"="" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/postgresql" \
