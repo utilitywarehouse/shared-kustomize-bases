@@ -6,7 +6,10 @@ commonLabels:
   app: crm-graphql-postgres
 resources:
   - http://github.com/utilitywarehouse/shared-kustomize-bases//postgresql/manifests?ref=SFE-356/shared-postgres
-  - secrets/postgres-secrets.yaml
+secretGenerator:
+  - name: postgres-secrets
+    envs:
+      - secrets/postgres.properties
 patches:
   - path: backup.yaml
   - path: backup-pvc.yaml

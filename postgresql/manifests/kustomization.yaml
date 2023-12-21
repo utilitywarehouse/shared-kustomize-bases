@@ -4,3 +4,7 @@ resources:
   - backup.yaml
   - backup-pvc.yaml
   - upstream
+secretGenerator:
+  - name: postgres-secrets
+    envs:
+      - secrets/postgres.properties
