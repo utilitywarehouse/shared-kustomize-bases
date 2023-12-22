@@ -29,3 +29,26 @@ patches:
       group: apps
       version: v1
       kind: StatefulSet
+  # replace commands with hardcoded values
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/livenessProbe/exec/command
+        value:
+          - /bin/sh
+          - -c
+          - exec pg_isready -U "$(POSTGRES_USER)" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
+    target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/readinessProbe/exec/command
+        value:
+          - /bin/sh
+          - -c
+          - exec pg_isready -U "$(POSTGRES_USER)" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
+    target:
+      group: apps
+      version: v1
+      kind: StatefulSet
