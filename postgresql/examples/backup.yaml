@@ -10,19 +10,11 @@ spec:
   jobTemplate:
     spec:
       template:
-        metadata:
-          annotations:
-            injector.tumblr.com/request: vault-init-container-aws
         spec:
-          imagePullSecrets:
-            - name: dockerhub-key
           serviceAccountName: crm-postgres-backup
           containers:
             - name: postgres-backup
               image: eeshugerman/postgres-backup-s3:16
-              volumeMounts:
-                - name: postgres-backup-pvc
-                  mountPath: "/backups"
               env:
                 - name: S3_BUCKET
                   value: "uw-dev-energy-crm-postgres-backup"
@@ -43,8 +35,6 @@ spec:
                     secretKeyRef:
                       name: crm-graphql-postgres-secrets
                       key: database
-                - name: POSTGRES_PORT
-                  value: "5432"
           volumes:
             - name: postgres-backup-pvc
               persistentVolumeClaim:
