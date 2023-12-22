@@ -36,7 +36,7 @@ patches:
         value:
           - /bin/sh
           - -c
-          - exec pg_isready -U "$(POSTGRES_USER)" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
+          - exec pg_isready -U "postgres" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
     target:
       group: apps
       version: v1
@@ -47,7 +47,7 @@ patches:
         value:
           - /bin/sh
           - -c
-          - exec pg_isready -U "$(POSTGRES_USER)" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
+          - exec pg_isready -U "postgres" -d "dbname=$(POSTGRES_DATABASE)" -h 127.0.0.1 -p 5432 [-f /opt/bitnami/postgresql/tmp/.initialized] || [-f /bitnami/postgresql/.initialized]
     target:
       group: apps
       version: v1
