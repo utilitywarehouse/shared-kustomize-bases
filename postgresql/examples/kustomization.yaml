@@ -1,16 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namePrefix: crm-graphql
-namespace: "energy-platform"
-commonLabels:
-  app: crm-graphql-postgres
+#namePrefix: crm-graphql
+#namespace: "energy-platform"
+#commonLabels:
+#  app: crm-graphql-postgres
 resources:
   - http://github.com/utilitywarehouse/shared-kustomize-bases//postgresql/manifests?ref=SFE-356/shared-postgres
 secretGenerator:
-  - name: postgres-secrets
+  - name: postgresql
     envs:
       - secrets/postgres.properties
 patches:
-  - path: backup.yaml
+#  - path: backup.yaml
   - path: backup-pvc.yaml
   - path: postgres.yaml
