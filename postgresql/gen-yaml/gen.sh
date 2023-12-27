@@ -8,7 +8,6 @@ rm -f manifests/upstream/*
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-# PGPASSWORD=some_password psql -U some_user -h localhost -p 5432 -d postgres
 helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELEASE}" \
   --set fullnameOverride="postgresql" \
   --set nameOverride="postgresql" \
@@ -26,6 +25,6 @@ helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELE
   --set primary.resources.limits.memory="1Gi" \
   --set metrics.enabled="true" \
   --set backup.enabled="false" \
-  --namespace "${NS}" > manifests/upstream/postgres.yaml
+  --set backup.enabled="false" > manifests/upstream/postgres.yaml
 
 cp gen-yaml/kustomization.yaml manifests/upstream/kustomization.yaml
