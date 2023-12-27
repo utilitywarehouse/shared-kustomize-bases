@@ -183,13 +183,20 @@ spec:
             - name: PGDATA
               value: "/bitnami/postgresql/data"
             # Authentication
+            - name: POSTGRES_USER
+              value: "some_user"
             - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: user-password
+            - name: POSTGRES_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgresql
                   key: password
             - name: POSTGRES_DATABASE
-              value: "database"
+              value: "some_db"
             # Replication
             # Initdb
             # Standby
@@ -226,7 +233,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - exec pg_isready -U "postgres" -d "dbname=database" -h 127.0.0.1 -p 5432
+                - exec pg_isready -U "some_user" -d "dbname=some_db" -h 127.0.0.1 -p 5432
           readinessProbe:
             failureThreshold: 6
             initialDelaySeconds: 5
@@ -239,7 +246,7 @@ spec:
                 - -c
                 - -e
                 - |
-                  exec pg_isready -U "postgres" -d "dbname=database" -h 127.0.0.1 -p 5432
+                  exec pg_isready -U "some_user" -d "dbname=some_db" -h 127.0.0.1 -p 5432
                   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
           resources:
             limits:
@@ -269,14 +276,14 @@ spec:
               type: RuntimeDefault
           env:
             - name: DATA_SOURCE_URI
-              value: 127.0.0.1:5432/database?sslmode=disable
+              value: 127.0.0.1:5432/some_db?sslmode=disable
             - name: DATA_SOURCE_PASS
               valueFrom:
                 secretKeyRef:
                   name: postgresql
-                  key: password
+                  key: user-password
             - name: DATA_SOURCE_USER
-              value: "postgres"
+              value: "some_user"
           ports:
             - name: http-metrics
               containerPort: 9187

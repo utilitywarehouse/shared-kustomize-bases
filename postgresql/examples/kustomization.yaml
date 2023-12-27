@@ -10,6 +10,8 @@ secretGenerator:
   - name: postgresql
     envs:
       - secrets/postgres.properties
+    options:
+      disableNameSuffixHash: true
 patches:
 #  - path: backup.yaml
   - path: backup-pvc.yaml

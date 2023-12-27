@@ -24,6 +24,8 @@ helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELE
   --set primary.resources.limits.memory="1Gi" \
   --set metrics.enabled="true" \
   --set backup.enabled="false" \
+  --set global.postgresql.auth.username="some_user" \
+  --set global.postgresql.auth.database="some_db" \
   --namespace "${NS}" > manifests/upstream/postgres.yaml
 
 cp gen-yaml/kustomization.yaml manifests/upstream/kustomization.yaml
