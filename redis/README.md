@@ -6,6 +6,7 @@
 - [Install parameters](#parameters)
 - [Example kustomization file deploying Redis](example)
 - [Test it manually using redis-cli](#usage)
+- [Grafana dashboards](#metrics)
 
 ## Source
 
@@ -52,3 +53,15 @@ In order to manually access the database:
     ```redis
     KEYS *
     ```
+
+## Metrics
+There are Grafana dashboards prepared for the Redis instances installed via shared kustomize base.
+They can be found using the name [redis overview](https://grafana.prod.aws.uw.systems/goto/8N_RY8OSg?orgId=1).
+
+
+## Backup/ migration
+Sadly, we don't have the automatic backup functionality yet -
+we would be the happiest if you would wish to contribute!
+
+There is, however, [manual way to create backups and restore them](https://docs.bitnami.com/kubernetes/infrastructure/redis/administration/backup-restore/)
+, which can also be used to migrate database instances.
