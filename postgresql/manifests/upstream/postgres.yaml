@@ -184,7 +184,7 @@ spec:
               value: "/bitnami/postgresql/data"
             # Authentication
             - name: POSTGRES_USER
-              value: "some_user"
+              value: "testuser"
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -233,7 +233,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - exec pg_isready -U "some_user" -d "dbname=database" -h 127.0.0.1 -p 5432
+                - exec pg_isready -U "testuser" -d "dbname=database" -h 127.0.0.1 -p 5432
           readinessProbe:
             failureThreshold: 6
             initialDelaySeconds: 5
@@ -246,7 +246,7 @@ spec:
                 - -c
                 - -e
                 - |
-                  exec pg_isready -U "some_user" -d "dbname=database" -h 127.0.0.1 -p 5432
+                  exec pg_isready -U "testuser" -d "dbname=database" -h 127.0.0.1 -p 5432
                   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
           resources:
             limits:
@@ -283,7 +283,7 @@ spec:
                   name: postgresql
                   key: user-password
             - name: DATA_SOURCE_USER
-              value: "some_user"
+              value: "testuser"
           ports:
             - name: http-metrics
               containerPort: 9187

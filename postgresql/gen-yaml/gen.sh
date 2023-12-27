@@ -8,6 +8,7 @@ rm -f manifests/upstream/*
 # Fetch from helm repo: https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
+# PGPASSWORD=some_password psql -U some_user -h localhost -p 5432 -d postgres
 helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELEASE}" \
   --set fullnameOverride="postgresql" \
   --set nameOverride="postgresql" \
@@ -17,8 +18,8 @@ helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELE
   --set auth.existingSecret="postgresql" \
   --set auth.secretKeys.adminPasswordKey="password" \
   --set auth.secretKeys.userPasswordKey="user-password" \
-  --set auth.database="database" \
-  --set global.postgresql.auth.username="some_user" \
+  --set global.postgresql.auth.database="database" \
+  --set global.postgresql.auth.username="testuser" \
   --set primary.resources.requests.cpu="0" \
   --set primary.resources.limits.cpu="1000m" \
   --set primary.resources.requests.memory="0" \
