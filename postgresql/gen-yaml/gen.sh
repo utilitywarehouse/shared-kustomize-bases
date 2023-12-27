@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 set -o errexit -o pipefail -o nounset
@@ -19,11 +18,12 @@ helm template "postgresql" bitnami/postgresql --version "${BITNAMI_POSTGRES_RELE
   --set auth.secretKeys.adminPasswordKey="password" \
   --set auth.secretKeys.userPasswordKey="user-password" \
   --set auth.database="database" \
-  --set master.resources.requests.cpu="0" \
-  --set master.resources.limits.cpu="1000m" \
-  --set master.resources.requests.memory="0" \
-  --set master.resources.limits.memory="1Gi" \
+  --set primary.resources.requests.cpu="0" \
+  --set primary.resources.limits.cpu="1000m" \
+  --set primary.resources.requests.memory="0" \
+  --set primary.resources.limits.memory="1Gi" \
   --set metrics.enabled="true" \
-  --set backup.enabled="false" > manifests/upstream/postgres.yaml
+  --set backup.enabled="false" \
+  --namespace "${NS}" > manifests/upstream/postgres.yaml
 
 cp gen-yaml/kustomization.yaml manifests/upstream/kustomization.yaml
