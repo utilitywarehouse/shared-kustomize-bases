@@ -29,7 +29,7 @@ patches:
       group: apps
       version: v1
       kind: StatefulSet
-  # replace commands with hardcoded values
+  # replace commands with hardcoded values with more flexible commands
   - patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/livenessProbe/exec/command
