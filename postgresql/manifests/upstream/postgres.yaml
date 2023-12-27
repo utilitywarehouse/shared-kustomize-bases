@@ -196,7 +196,7 @@ spec:
                   name: postgresql
                   key: password
             - name: POSTGRES_DATABASE
-              value: "some_db"
+              value: "database"
             # Replication
             # Initdb
             # Standby
@@ -233,7 +233,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - exec pg_isready -U "some_user" -d "dbname=some_db" -h 127.0.0.1 -p 5432
+                - exec pg_isready -U "some_user" -d "dbname=database" -h 127.0.0.1 -p 5432
           readinessProbe:
             failureThreshold: 6
             initialDelaySeconds: 5
@@ -246,7 +246,7 @@ spec:
                 - -c
                 - -e
                 - |
-                  exec pg_isready -U "some_user" -d "dbname=some_db" -h 127.0.0.1 -p 5432
+                  exec pg_isready -U "some_user" -d "dbname=database" -h 127.0.0.1 -p 5432
                   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
           resources:
             limits:
@@ -276,7 +276,7 @@ spec:
               type: RuntimeDefault
           env:
             - name: DATA_SOURCE_URI
-              value: 127.0.0.1:5432/some_db?sslmode=disable
+              value: 127.0.0.1:5432/database?sslmode=disable
             - name: DATA_SOURCE_PASS
               valueFrom:
                 secretKeyRef:
