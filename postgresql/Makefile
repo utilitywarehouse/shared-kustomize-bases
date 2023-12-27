@@ -7,4 +7,5 @@ gen-postgresql:
 			--env BITNAMI_POSTGRES_RELEASE=${BITNAMI_POSTGRESQL_RELEASE} \
 			--workdir=/opt/manifests \
 			--entrypoint=/bin/sh \
+			--env NS=dev-enablement \
 			alpine/helm ./gen-yaml/gen.sh
