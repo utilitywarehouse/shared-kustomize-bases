@@ -39,20 +39,14 @@ REDIS_REPLICA_COUNT=1 # Amount of read-only replicas
 ```
 
 ## Usage
-In order to manually access the database:
-1. [Install redis-cli](https://redis.io/docs/install/install-redis/) (it comes together with server installation)
-2. port-forward to Redis service running in the cluster:
-    ```bash
-    kubectl port-forward svc/redis-shared-master 6379
-    ```
-3. Connect redis-cli to service:
-    ```bash
-    redis-cli -u redis://localhost:6379 -a "password" 
-    ```
-4. Use Redis console. For example, to get the list of all the keys, run
-    ```redis
-    KEYS *
-    ```
+In order to manually access the database (without locally installing redis-cli):
+```bash
+kubectl exec --tty --stdin=true  svc/redis-shared-master -- redis-cli -u redis://localhost:6379 -a "password" 
+```
+For example, to get the list of all the keys, run
+```redis
+KEYS *
+```
 
 ## Metrics
 There are Grafana dashboards prepared for the Redis instances installed via shared kustomize base.
