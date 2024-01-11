@@ -7,7 +7,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm template "redis" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set fullnameOverride="redis" \
-  --set nameOverride="redisTEST" \
+  --set nameOverride="redis" \
   --set commonAnnotations."app\.uw\.systems\/description"="change-me" \
   --set commonAnnotations."app\.uw\.systems\/tier"="tier_4" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis" \
@@ -23,4 +23,4 @@ helm template "redis" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set replica.resources.limits.cpu="1000m" \
   --set replica.resources.requests.memory="1Gi" \
   --set replica.resources.limits.memory="2Gi" \
-  >"manifests/redis.yaml"
+  > "manifests/redis.yaml"

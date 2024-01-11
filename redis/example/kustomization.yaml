@@ -6,8 +6,8 @@ resources:
   #- ../manifests
 
 
-# Add sufix to name
-namePrefix: service-cache
+# Add prefix to name
+namePrefix: service-cache-
 
 # OpsLevel annotations
 commonAnnotations:
@@ -21,7 +21,7 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/namespace
-        value: "dev-enablement"
+        value: "some-namespace"
   # Resource requests and limits
   - target:
       kind: StatefulSet
