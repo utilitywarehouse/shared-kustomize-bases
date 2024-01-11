@@ -4,16 +4,16 @@ apiVersion: v1
 kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
-  name: redis-shared
-  namespace: "dev-enablement"
+  name: redisTEST
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 ---
@@ -21,16 +21,16 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: redis-shared-configuration
-  namespace: "dev-enablement"
+  name: redisTEST-configuration
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
@@ -56,16 +56,16 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: redis-shared-health
-  namespace: "dev-enablement"
+  name: redisTEST-health
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
@@ -168,16 +168,16 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: redis-shared-scripts
-  namespace: "dev-enablement"
+  name: redisTEST-scripts
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 data:
@@ -202,16 +202,16 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-shared-headless
-  namespace: "dev-enablement"
+  name: redisTEST-headless
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
     
@@ -223,24 +223,24 @@ spec:
       port: 6379
       targetPort: redis
   selector:
-    app.kubernetes.io/instance: redis-shared
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/name: redisTEST
 ---
 # Source: redis/templates/master/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-shared-master
-  namespace: "dev-enablement"
+  name: redisTEST-master
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
@@ -253,25 +253,25 @@ spec:
       targetPort: redis
       nodePort: null
   selector:
-    app.kubernetes.io/instance: redis-shared
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/component: master
 ---
 # Source: redis/templates/metrics-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-shared-metrics
-  namespace: "dev-enablement"
+  name: redisTEST-metrics
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: metrics
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
@@ -282,42 +282,42 @@ spec:
       protocol: TCP
       targetPort: metrics
   selector:
-    app.kubernetes.io/instance: redis-shared
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/name: redisTEST
 ---
 # Source: redis/templates/master/application.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: redis-shared-master
-  namespace: "dev-enablement"
+  name: redisTEST-master
+  namespace: "default"
   labels:
-    app.kubernetes.io/instance: redis-shared
+    app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: redis-shared
+    app.kubernetes.io/name: redisTEST
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: cache for opslevel-k8s-deployer
+    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
     app.uw.systems/tier: tier_4
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: redis-shared
-      app.kubernetes.io/name: redis-shared
+      app.kubernetes.io/instance: redis
+      app.kubernetes.io/name: redisTEST
       app.kubernetes.io/component: master
-  serviceName: redis-shared-headless
+  serviceName: redisTEST-headless
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: redis-shared
+        app.kubernetes.io/instance: redis
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: redis-shared
+        app.kubernetes.io/name: redisTEST
         app.kubernetes.io/version: 7.2.2
         helm.sh/chart: redis-18.1.6
         app.kubernetes.io/component: master
@@ -332,7 +332,7 @@ spec:
       
       securityContext:
         fsGroup: 1001
-      serviceAccountName: redis-shared
+      serviceAccountName: redisTEST
       automountServiceAccountToken: true
       affinity:
         podAffinity:
@@ -342,8 +342,8 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: redis-shared
-                    app.kubernetes.io/name: redis-shared
+                    app.kubernetes.io/instance: redis
+                    app.kubernetes.io/name: redisTEST
                     app.kubernetes.io/component: master
                 topologyKey: kubernetes.io/hostname
               weight: 1
@@ -380,7 +380,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis
+                  name: redis-secret
                   key: redis-password
             - name: REDIS_TLS_ENABLED
               value: "no"
@@ -455,13 +455,13 @@ spec:
               redis_exporter
           env:
             - name: REDIS_ALIAS
-              value: redis-shared
+              value: redisTEST
             - name: REDIS_USER
               value: default
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis
+                  name: redis-secret
                   key: redis-password
           ports:
             - name: metrics
@@ -490,15 +490,15 @@ spec:
       volumes:
         - name: start-scripts
           configMap:
-            name: redis-shared-scripts
+            name: redisTEST-scripts
             defaultMode: 0755
         - name: health
           configMap:
-            name: redis-shared-health
+            name: redisTEST-health
             defaultMode: 0755
         - name: config
           configMap:
-            name: redis-shared-configuration
+            name: redisTEST-configuration
         - name: redis-tmp-conf
           emptyDir: {}
         - name: tmp
@@ -509,8 +509,8 @@ spec:
       metadata:
         name: redis-data
         labels:
-          app.kubernetes.io/instance: redis-shared
-          app.kubernetes.io/name: redis-shared
+          app.kubernetes.io/instance: redis
+          app.kubernetes.io/name: redisTEST
           app.kubernetes.io/component: master
       spec:
         accessModes:

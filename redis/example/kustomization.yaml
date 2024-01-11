@@ -3,10 +3,26 @@ kind: Kustomization
 
 resources:
   - ssh://github.com/utilitywarehouse/shared-kustomize-bases//redis/manifests/dev-enablement/redis-shared?ref=v0.0.0
+  #- ../manifests
 
 
-# Resource requests and limits
+# Add sufix to name
+namePrefix: service-cache
+
+# OpsLevel annotations
+commonAnnotations:
+ "app.uw.systems/description": "cache for some service"
+ "app.uw.systems/tier": "tier_4"
+
 patches:
+  # replace namespace
+  - target:
+      kind: .*
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: "dev-enablement"
+  # Resource requests and limits
   - target:
       kind: StatefulSet
       name: redis-shared-master
@@ -24,10 +40,11 @@ patches:
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "2Gi"
 
+
 # Redis password secret
 secretGenerator:
   - name: redis
     envs:
-      - secrets/redis-secret.txt
+      - secrets/redis-secret.yaml
     options:
       disableNameSuffixHash: true
