@@ -5,7 +5,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: redis
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -13,16 +13,14 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 ---
 # Source: redis/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-configuration
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -30,9 +28,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 data:
   redis.conf: |-
     # User-supplied common configuration:
@@ -57,7 +53,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-health
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -65,9 +61,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 data:
   ping_readiness_local.sh: |-
     #!/bin/bash
@@ -169,7 +163,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-scripts
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -177,9 +171,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 data:
   start-master.sh: |
     #!/bin/bash
@@ -203,7 +195,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-headless
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -211,9 +203,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
     
 spec:
   type: ClusterIP
@@ -231,7 +221,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-master
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -240,9 +230,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -262,7 +250,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-metrics
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -271,9 +259,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: metrics
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 spec:
   type: ClusterIP
   ports:
@@ -290,7 +276,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-master
-  namespace: "default"
+  namespace: "change-me"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -299,9 +285,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/description: change-me
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
-    app.uw.systems/tier: tier_4
 spec:
   replicas: 1
   selector:
