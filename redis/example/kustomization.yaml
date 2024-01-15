@@ -17,7 +17,7 @@ commonAnnotations:
 patches:
   # replace namespace
   - target:
-      namespace: default
+      namespace: change-me
     patch: |-
       - op: replace
         path: /metadata/namespace
