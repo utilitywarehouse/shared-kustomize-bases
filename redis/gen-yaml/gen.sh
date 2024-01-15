@@ -6,10 +6,9 @@ set -o errexit -o pipefail -o nounset
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm template "redis" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
+  --namespace 'change-me' \
   --set fullnameOverride="redis" \
   --set nameOverride="redis" \
-  --set commonAnnotations."app\.uw\.systems\/description"="change-me" \
-  --set commonAnnotations."app\.uw\.systems\/tier"="tier_4" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis" \
   --set auth.existingSecret="redis" \
   --set architecture=standalone \

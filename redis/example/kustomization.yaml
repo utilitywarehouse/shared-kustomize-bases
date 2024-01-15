@@ -17,7 +17,7 @@ commonAnnotations:
 patches:
   # replace namespace
   - target:
-      kind: .*
+      namespace: default
     patch: |-
       - op: replace
         path: /metadata/namespace
@@ -45,6 +45,6 @@ patches:
 secretGenerator:
   - name: redis
     envs:
-      - secrets/redis-secret.yaml
+      - secrets/redis-secret.txt
     options:
       disableNameSuffixHash: true
