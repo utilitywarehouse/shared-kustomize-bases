@@ -25,7 +25,7 @@ but allows vertical scalling- great for huge datasets.
 ## Usage
 In order to manually access the database (without locally installing redis-cli):
 ```bash
-kubectl exec --tty --stdin=true  svc/redis-shared-master -- redis-cli -u redis://localhost:6379 -a "password" 
+kubectl exec --tty --stdin=true  svc/redis-master -- redis-cli -u redis://localhost:6379 -a "password" 
 ```
 For example, to get the list of all the keys, run
 ```redis

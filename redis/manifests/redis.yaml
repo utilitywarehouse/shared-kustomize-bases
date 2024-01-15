@@ -380,7 +380,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis-secret
+                  name: redis
                   key: redis-password
             - name: REDIS_TLS_ENABLED
               value: "no"
@@ -461,7 +461,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis-secret
+                  name: redis
                   key: redis-password
           ports:
             - name: metrics
