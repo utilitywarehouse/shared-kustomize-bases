@@ -15,12 +15,6 @@ commonAnnotations:
  "app.uw.systems/tier": "tier_4"
 
 patches:
-  # remove namespace
-  - target:
-      namespace: change-me
-    patch: |-
-      - op: remove 
-        path: /metadata/namespace
   # Resource requests and limits
   - target:
       kind: StatefulSet
@@ -38,8 +32,6 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "2Gi"
-
-
 # Redis password secret
 secretGenerator:
   - name: redis

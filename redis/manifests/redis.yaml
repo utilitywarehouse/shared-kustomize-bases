@@ -5,7 +5,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: redis
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -20,7 +20,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-configuration
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-health
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -163,7 +163,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-scripts
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -195,7 +195,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-headless
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -221,7 +221,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-master
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -250,7 +250,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-metrics
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -276,7 +276,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-master
-  namespace: "change-me"
+  namespace: "default"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
