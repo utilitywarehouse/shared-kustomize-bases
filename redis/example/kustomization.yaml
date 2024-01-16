@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ssh://github.com/utilitywarehouse/shared-kustomize-bases//redis/manifests?ref=v0.0.0
-  #- ../manifests
+  #- ssh://github.com/utilitywarehouse/shared-kustomize-bases//redis/manifests?ref=v0.0.0
+  - ../manifests
 
 
 # Add prefix to name
@@ -15,13 +15,12 @@ commonAnnotations:
  "app.uw.systems/tier": "tier_4"
 
 patches:
-  # replace namespace
+  # remove namespace
   - target:
       namespace: change-me
     patch: |-
-      - op: replace
+      - op: remove 
         path: /metadata/namespace
-        value: "some-namespace"
   # Resource requests and limits
   - target:
       kind: StatefulSet
