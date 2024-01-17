@@ -1,4 +1,4 @@
-BITNAMI_REDIS_RELEASE=18.1.6
+BITNAMI_REDIS_RELEASE=18.6.1
 
 gen-redis-manifest:
 	docker run -ti --rm \
