@@ -1,0 +1,46 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  #- ssh://github.com/utilitywarehouse/shared-kustomize-bases//elasticsearch/manifests?ref=v0.0.0
+  - ../manifests
+
+
+# Add prefix to name
+namePrefix: some-
+
+# OpsLevel annotations
+commonAnnotations:
+ "app.uw.systems/description": "some es instance"
+ "app.uw.systems/tier": "tier_4"
+
+patches:
+  # todo: amount of replicas- master, data nodes
+  # todo: size of persistent volume
+  # todo: data only nodes?
+  # todo: coordination?!
+
+  # Resource requests and limits
+  - target:
+      kind: StatefulSet
+      name: some-elasticsearch-master
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "500m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "1000m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "1Gi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "2Gi"
+# Redis password secret
+secretGenerator:
+  - name: elasticsearch
+    envs:
+      - secrets/es-secret.txt
+    options:
+      disableNameSuffixHash: true
