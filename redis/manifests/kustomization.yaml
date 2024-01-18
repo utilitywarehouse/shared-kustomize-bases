@@ -4,33 +4,5 @@ kind: Kustomization
 resources:
   - redis.yaml
 
-patches:
-  # remove namespace
-  - patch: |-
-      - op: remove
-        path: /metadata/namespace
-    target:
-      namespace: default
-  # Remove unnecessary `app.kubernetes.io/managed-by: Helm` annotation
-  - patch: |-
-      - op: remove
-        path: /metadata/labels/app.kubernetes.io~1managed-by
-    target: { } # All resources
-  - patch: |-
-      - op: remove
-        path: /spec/template/metadata/labels/app.kubernetes.io~1managed-by
-    target:
-      group: apps
-      version: v1
-      kind: StatefulSet
-  # remove these empty affinity nodes, as in Kustomize 5.0.x kustomize generates them as strings with value "null" instead of just null, and they can not be applied.
-  # added this issue in kustomize: https://github.com/kubernetes-sigs/kustomize/issues/5171
-  - patch: |-
-      - op: remove
-        path: /spec/template/spec/affinity/podAffinity
-      - op: remove
-        path: /spec/template/spec/affinity/nodeAffinity
-    target:
-      group: apps
-      version: v1
-      kind: StatefulSet
+components:
+  - ../../components/bitnami-common

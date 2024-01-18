@@ -17,8 +17,4 @@ helm template "redis" bitnami/redis --version "${BITNAMI_REDIS_RELEASE}" \
   --set master.resources.limits.cpu="1000m" \
   --set master.resources.requests.memory="1Gi" \
   --set master.resources.limits.memory="2Gi" \
-  --set replica.resources.requests.cpu="500m" \
-  --set replica.resources.limits.cpu="1000m" \
-  --set replica.resources.requests.memory="1Gi" \
-  --set replica.resources.limits.memory="2Gi" \
   > "manifests/redis.yaml"
