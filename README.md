@@ -20,6 +20,7 @@ templating chart with UW specific values and are using them as Kustomize bases.
 | Directory/ File    | Purpose                                                                               |
 |--------------------|---------------------------------------------------------------------------------------|
 | `Makefile`         | Targets with parameters to generate customized manifests                              |
+| `components`       | Reusable kustomize components                                                         |
 | `{name}/example`   | Example of everything needed to deploy the generated chart                            |
 | `{name}/gen-yaml`  | Everything needed to generate manifest from helm chart                                |
 | `{name}/manifests` | Manifest- generated and ready to be referenced. Together with hand- crafted overlays. |
