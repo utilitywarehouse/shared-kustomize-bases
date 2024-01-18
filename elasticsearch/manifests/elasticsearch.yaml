@@ -308,7 +308,7 @@ metadata:
   annotations:
     app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
 spec:
-  replicas: 1
+  replicas: 3
   podManagementPolicy: Parallel
   selector:
     matchLabels:
@@ -395,11 +395,11 @@ spec:
             - name: ELASTICSEARCH_CLUSTER_HOSTS
               value: "elasticsearch-master-hl.default.svc.cluster.local,"
             - name: ELASTICSEARCH_TOTAL_NODES
-              value: "1"
+              value: "3"
             - name: ELASTICSEARCH_CLUSTER_MASTER_HOSTS
-              value: elasticsearch-master-0 
+              value: elasticsearch-master-0 elasticsearch-master-1 elasticsearch-master-2 
             - name: ELASTICSEARCH_MINIMUM_MASTER_NODES
-              value: "1"
+              value: "2"
             - name: ELASTICSEARCH_ADVERTISED_HOSTNAME
               value: "$(MY_POD_NAME).elasticsearch-master-hl.default.svc.cluster.local"
             - name: ELASTICSEARCH_HEAP_SIZE
@@ -427,8 +427,12 @@ spec:
               command:
                 - /opt/bitnami/scripts/elasticsearch/healthcheck.sh
           resources:
-            limits: {}
-            requests: {}
+            limits:
+              cpu: 2000m
+              memory: 8Gi
+            requests:
+              cpu: 250m
+              memory: 4Gi
           volumeMounts:
             - name: data
               mountPath: /bitnami/elasticsearch/data
