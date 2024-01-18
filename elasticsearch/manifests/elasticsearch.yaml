@@ -382,7 +382,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: ELASTICSEARCH_IS_DEDICATED_NODE
-              value: "yes"
+              value: "no"
             - name: ELASTICSEARCH_NODE_ROLES
               value: "master"
             - name: ELASTICSEARCH_TRANSPORT_PORT_NUMBER
