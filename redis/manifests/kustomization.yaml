@@ -3,4 +3,6 @@ kind: Kustomization
 
 resources:
   - redis.yaml
-  - ../../common-overlays
+
+components:
+  - ../../components/bitnami-common
