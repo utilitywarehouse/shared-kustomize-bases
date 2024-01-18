@@ -11,11 +11,18 @@ namePrefix: some-
 
 # OpsLevel annotations
 commonAnnotations:
- "app.uw.systems/description": "some es instance"
- "app.uw.systems/tier": "tier_4"
+  "app.uw.systems/description": "some es instance"
+  "app.uw.systems/tier": "tier_4"
 
 patches:
-  # todo: size of persistent volume
+  # PVC size
+  - target:
+      kind: StatefulSet
+      name: some-elastisearch-master
+    patch: |-
+      - op: replace
+        path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+        value: 10Gi
   # Resource requests and limits
   - target:
       kind: StatefulSet
@@ -33,7 +40,7 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "2Gi"
-# Redis password secret
+# Elasticsearch password secret
 secretGenerator:
   - name: elasticsearch
     envs:

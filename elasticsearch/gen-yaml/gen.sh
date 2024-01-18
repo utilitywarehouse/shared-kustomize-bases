@@ -21,4 +21,5 @@ helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELE
   --set master.resources.limits.cpu="2000m" \
   --set master.resources.requests.memory="4Gi" \
   --set master.resources.limits.memory="8Gi" \
+  --set master.persistence.size="100Gi" \
   > "manifests/elasticsearch.yaml"

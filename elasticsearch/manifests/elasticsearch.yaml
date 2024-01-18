@@ -447,7 +447,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: "8Gi"
+            storage: "100Gi"
 ---
 # Source: elasticsearch/templates/metrics/deployment.yaml
 apiVersion: apps/v1
