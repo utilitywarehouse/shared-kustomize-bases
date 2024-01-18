@@ -5,6 +5,12 @@ resources:
   - redis.yaml
 
 patches:
+  # remove namespace
+  - patch: |-
+      - op: remove
+        path: /metadata/namespace
+    target:
+      namespace: default
   # Remove unnecessary `app.kubernetes.io/managed-by: Helm` annotation
   - patch: |-
       - op: remove

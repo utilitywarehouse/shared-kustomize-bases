@@ -2,14 +2,23 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ssh://github.com/utilitywarehouse/shared-kustomize-bases//redis/manifests/dev-enablement/redis-shared?ref=v0.0.0
+  #- ssh://github.com/utilitywarehouse/shared-kustomize-bases//redis/manifests?ref=v0.0.0
+  - ../manifests
 
 
-# Resource requests and limits
+# Add prefix to name
+namePrefix: service-cache-
+
+# OpsLevel annotations
+commonAnnotations:
+ "app.uw.systems/description": "cache for some service"
+ "app.uw.systems/tier": "tier_4"
+
 patches:
+  # Resource requests and limits
   - target:
       kind: StatefulSet
-      name: redis-shared-master
+      name: service-cache-redis-master
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
@@ -23,7 +32,6 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "2Gi"
-
 # Redis password secret
 secretGenerator:
   - name: redis
