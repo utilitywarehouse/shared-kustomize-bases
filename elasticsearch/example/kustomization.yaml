@@ -15,11 +15,7 @@ commonAnnotations:
  "app.uw.systems/tier": "tier_4"
 
 patches:
-  # todo: amount of replicas- master, data nodes
   # todo: size of persistent volume
-  # todo: data only nodes?
-  # todo: coordination?!
-
   # Resource requests and limits
   - target:
       kind: StatefulSet
