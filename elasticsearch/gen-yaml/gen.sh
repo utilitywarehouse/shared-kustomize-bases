@@ -12,7 +12,7 @@ helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELE
   --set auth.existingSecret="elasticsearch" \
   --set global.kibanaEnabled="true" \
   --set metrics.enabled="true" \
-  --set master.replicaCount="3" \
+  --set master.replicaCount="1" \
   --set master.masterOnly="false" \
   --set data.replicaCount="0" \
   --set coordinating.replicaCount="0" \
@@ -22,4 +22,5 @@ helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELE
   --set master.resources.requests.memory="4Gi" \
   --set master.resources.limits.memory="8Gi" \
   --set master.persistence.size="100Gi" \
-  > "manifests/elasticsearch.yaml"
+  --set sysctlImage.enabled="false" \
+  >"manifests/elasticsearch.yaml"
