@@ -6,8 +6,6 @@ set -o errexit -o pipefail -o nounset
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELEASE}" \
-  --set fullnameOverride="elasticsearch" \
-  --set nameOverride="elasticsearch" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch" \
   --set auth.existingSecret="elasticsearch" \
   --set global.kibanaEnabled="true" \
@@ -22,5 +20,9 @@ helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELE
   --set master.resources.requests.memory="4Gi" \
   --set master.resources.limits.memory="8Gi" \
   --set master.persistence.size="100Gi" \
+  --set kibana.resources.requests.cpu="250m" \
+  --set kibana.resources.limits.cpu="1000m" \
+  --set kibana.resources.requests.memory="200Mi" \
+  --set kibana.resources.limits.memory="1Gi" \
   --set sysctlImage.enabled="false" \
   >"manifests/elasticsearch.yaml"

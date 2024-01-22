@@ -5,10 +5,6 @@ resources:
   #- ssh://github.com/utilitywarehouse/shared-kustomize-bases//elasticsearch/manifests?ref=v0.0.0
   - ../manifests
 
-
-# Add prefix to name
-namePrefix: some-
-
 # OpsLevel annotations
 commonAnnotations:
   "app.uw.systems/description": "some es instance"

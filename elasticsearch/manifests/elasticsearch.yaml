@@ -275,8 +275,12 @@ spec:
               port: http
               scheme: HTTP
           resources:
-            limits: {}
-            requests: {}
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 200Mi
           volumeMounts:
             - name: kibana-data
               mountPath: /bitnami/kibana
