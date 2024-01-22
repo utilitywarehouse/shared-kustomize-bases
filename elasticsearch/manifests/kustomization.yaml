@@ -9,11 +9,20 @@ patches:
       kind: StatefulSet
       name: elasticsearch-master
     patch: |-
-      # replace ELASTICSEARCH_CLUSTER_HOSTS 
+      # replace ELASTICSEARCH_CLUSTER_HOSTS
+      # but first, check if this index contains correct env
+      - op: test 
+        path: /spec/template/spec/containers/0/env/7/name
+        value: "ELASTICSEARCH_CLUSTER_HOSTS"
       - op: replace
         path: /spec/template/spec/containers/0/env/7/value
         value: "elasticsearch-master-hl,"
       # replace ELASTICSEARCH_ADVERTISED_HOSTNAME
+      # but first, check if this index contains correct env
+      - op: test 
+        path: /spec/template/spec/containers/0/env/11/name
+        
+        value: "ELASTICSEARCH_ADVERTISED_HOSTNAME"
       - op: replace
         path: /spec/template/spec/containers/0/env/11/value
         value: "$(MY_POD_NAME).elasticsearch-master-hl"
