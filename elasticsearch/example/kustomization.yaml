@@ -14,7 +14,7 @@ patches:
   # PVC size
   - target:
       kind: StatefulSet
-      name: some-elastisearch-master
+      name: elastisearch-master
     patch: |-
       - op: replace
         path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
@@ -22,7 +22,7 @@ patches:
   # Resource requests and limits
   - target:
       kind: StatefulSet
-      name: some-elasticsearch-master
+      name: elasticsearch-master
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu

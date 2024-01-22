@@ -4,5 +4,19 @@ kind: Kustomization
 resources:
   - elasticsearch.yaml
 
+patches:
+  - target:
+      kind: StatefulSet
+      name: elasticsearch-master
+    patch: |-
+      # replace ELASTICSEARCH_CLUSTER_HOSTS 
+      - op: replace
+        path: /spec/template/spec/containers/0/env/7/value
+        value: "elasticsearch-master-hl,"
+      # replace ELASTICSEARCH_ADVERTISED_HOSTNAME
+      - op: replace
+        path: /spec/template/spec/containers/0/env/11/value
+        value: "$(MY_POD_NAME).elasticsearch-master-hl"
+
 components:
   - ../../components/bitnami-common
