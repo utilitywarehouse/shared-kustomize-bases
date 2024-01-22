@@ -26,6 +26,4 @@ patches:
       - op: remove
         path: /spec/template/spec/affinity/nodeAffinity
     target:
-      group: apps
-      version: v1
-      kind: StatefulSet
+      group: apps # Deployments, StatefulSets, DaemonSets
