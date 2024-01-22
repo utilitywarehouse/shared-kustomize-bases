@@ -11,6 +11,8 @@ metadata:
     app.kubernetes.io/name: kibana
     app.kubernetes.io/version: 8.11.3
     helm.sh/chart: kibana-10.6.7
+  annotations:
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
 automountServiceAccountToken: true
 ---
 # Source: elasticsearch/charts/kibana/templates/configmap.yaml
@@ -25,6 +27,8 @@ metadata:
     app.kubernetes.io/name: kibana
     app.kubernetes.io/version: 8.11.3
     helm.sh/chart: kibana-10.6.7
+  annotations:
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
 data:
   kibana.yml: |
     pid.file: /opt/bitnami/kibana/tmp/kibana.pid
@@ -45,6 +49,8 @@ metadata:
     app.kubernetes.io/name: kibana
     app.kubernetes.io/version: 8.11.3
     helm.sh/chart: kibana-10.6.7
+  annotations:
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -64,6 +70,11 @@ metadata:
     app.kubernetes.io/name: kibana
     app.kubernetes.io/version: 8.11.3
     helm.sh/chart: kibana-10.6.7
+  annotations:
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    prometheus.io/path: _prometheus/metrics
+    prometheus.io/port: "80"
+    prometheus.io/scrape: "true"
 spec:
   type: ClusterIP
   sessionAffinity: None
@@ -178,6 +189,8 @@ metadata:
     app.kubernetes.io/name: kibana
     app.kubernetes.io/version: 8.11.3
     helm.sh/chart: kibana-10.6.7
+  annotations:
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
 spec:
   replicas: 1
   strategy:

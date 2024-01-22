@@ -24,5 +24,7 @@ helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELE
   --set kibana.resources.limits.cpu="1000m" \
   --set kibana.resources.requests.memory="200Mi" \
   --set kibana.resources.limits.memory="1Gi" \
+  --set kibana.commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch" \
+  --set kibana.metrics.enabled="true" \
   --set sysctlImage.enabled="false" \
   >"manifests/elasticsearch.yaml"
