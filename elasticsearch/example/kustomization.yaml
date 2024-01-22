@@ -36,10 +36,3 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: "8Gi"
-# Elasticsearch password secret
-secretGenerator:
-  - name: elasticsearch
-    envs:
-      - secrets/es-secret.txt
-    options:
-      disableNameSuffixHash: true

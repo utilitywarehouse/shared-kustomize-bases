@@ -7,7 +7,6 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 
 helm template "elasticsearch" bitnami/elasticsearch --version "${BITNAMI_ES_RELEASE}" \
   --set commonAnnotations."app\.uw\.systems\/repos"="https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch" \
-  --set auth.existingSecret="elasticsearch" \
   --set global.kibanaEnabled="true" \
   --set metrics.enabled="true" \
   --set master.replicaCount="3" \
