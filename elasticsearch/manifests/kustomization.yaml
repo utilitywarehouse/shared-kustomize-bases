@@ -5,6 +5,7 @@ resources:
   - elasticsearch.yaml
 
 patches:
+  # Replace the env variables containing the hostname with namespace
   - target:
       kind: StatefulSet
       name: elasticsearch-master
