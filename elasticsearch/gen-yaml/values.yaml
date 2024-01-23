@@ -1,0 +1,48 @@
+commonAnnotations:
+  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch"
+
+global:
+  kibanaEnabled: true
+
+metrics:
+  enabled: true
+
+master:
+  replicaCount: "3"
+  # master node are multipurpose
+  masterOnly: false
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "4Gi"
+    limits:
+      cpu: "2000m"
+      memory: "8Gi"
+  persistence:
+    size: "100Gi"
+
+# Disable nodes other than multipurpose master
+data:
+  replicaCount: "0"
+coordinating:
+  replicaCount: "0"
+ingest:
+  replicaCount: "0"
+
+# disable privileged init image setting the kernel values for max amount of file descriptors and memory map areas.
+# those settings are necessary for ES to work, but they are already set to sufficient values on the cluster.
+sysctlImage:
+  enabled: false
+
+kibana:
+  commonAnnotations:
+    "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch"
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "200Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
