@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-master
+spec:
+  template:
+    spec:
+      containers:
+        - name: elasticsearch
+          env:
+            # This patch changes the master hosts- to use just one. It allows scaling the
+            # ES down to one node.
+            - name: ELASTICSEARCH_CLUSTER_MASTER_HOSTS
+              value: "elasticsearch-master-0"

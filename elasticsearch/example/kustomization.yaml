@@ -11,10 +11,22 @@ commonAnnotations:
   "app.uw.systems/tier": "tier_4"
 
 patches:
+  # Scaling the nodes down to 1
+  - target:
+      kind: StatefulSet
+      name: elasticsearch-master
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target:
+      kind: StatefulSet
+      name: elasticsearch-master
+    path: scale-down.yaml
   # PVC size
   - target:
       kind: StatefulSet
-      name: elastisearch-master
+      name: elasticsearch-master
     patch: |-
       - op: replace
         path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage

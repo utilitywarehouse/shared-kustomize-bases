@@ -7,9 +7,6 @@ resources:
 patches:
   # Replace the env variables containing the hostname with namespace
   - path: fix-hosts.yaml
-    target:
-      kind: StatefulSet
-      name: elasticsearch-master
 
 components:
   - ../../components/bitnami-common
