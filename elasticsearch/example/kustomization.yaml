@@ -11,7 +11,7 @@ commonAnnotations:
   "app.uw.systems/tier": "tier_4"
 
 patches:
-  # Scaling the nodes down to 1
+  # Scaling the nodes down to 1- change amount of replicas and hostnames of the nodes
   - target:
       kind: StatefulSet
       name: elasticsearch-master
