@@ -1,0 +1,24 @@
+commonAnnotations:
+  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis"
+
+auth:
+  existingSecret: "redis"
+
+# redis instance without replication
+architecture: "standalone"
+
+metrics:
+  enabled: true
+
+master:
+  # orignial chart disables commands flushdb and flushall.
+  # we don't want to do that
+  disableCommands: ""
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
