@@ -12,6 +12,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            # update some vars that by default use the namespace passed to helm,
+            # since we don't pass a namespace when generating these.
+            # the `MY_POD_NAME` var is just following the approach used in the generated manifests
+            # and it is needed to preserve order of variables
             - name: ELASTICSEARCH_CLUSTER_HOSTS
               value:  "elasticsearch-master-hl,"
             - name: ELASTICSEARCH_ADVERTISED_HOSTNAME
