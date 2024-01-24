@@ -12,17 +12,7 @@ commonAnnotations:
 
 patches:
   # Scaling the nodes down to 1- change amount of replicas and hostnames of the nodes
-  - target:
-      kind: StatefulSet
-      name: elasticsearch-master
-    patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 1
-  - target:
-      kind: StatefulSet
-      name: elasticsearch-master
-    path: scale-down.yaml
+  -  path: scale-down.yaml
   # PVC size
   - target:
       kind: StatefulSet
