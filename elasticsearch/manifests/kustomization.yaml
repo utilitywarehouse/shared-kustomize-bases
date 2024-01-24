@@ -10,6 +10,9 @@ patches:
   # remove empty pod annotations, as in Kustomize 5.0.x kustomize generates them as strings with value "null" instead of just null, and they can not be applied.
   # added this issue in kustomize: https://github.com/kubernetes-sigs/kustomize/issues/5171
   - patch: |-
+      - op: test
+        path: /spec/template/metadata/annotations
+        value: null
       - op: remove
         path: /spec/template/metadata/annotations
     target:
