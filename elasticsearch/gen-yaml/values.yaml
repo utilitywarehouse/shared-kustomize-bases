@@ -11,6 +11,7 @@ master:
   replicaCount: "3"
   # master node are multipurpose
   masterOnly: false
+  heapSize: "4g"
   resources:
     requests:
       cpu: "250m"
