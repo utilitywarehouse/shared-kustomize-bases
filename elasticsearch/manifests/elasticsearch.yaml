@@ -439,7 +439,7 @@ spec:
             - name: ELASTICSEARCH_ADVERTISED_HOSTNAME
               value: "$(MY_POD_NAME).elasticsearch-master-hl.default.svc.cluster.local"
             - name: ELASTICSEARCH_HEAP_SIZE
-              value: "4g"
+              value: "1g"
           ports:
             - name: rest-api
               containerPort: 9200
