@@ -3,16 +3,11 @@ kind: StatefulSet
 metadata:
   name: elasticsearch-master
 spec:
-  replicas: 1
   template:
     spec:
       containers:
         - name: elasticsearch
           env:
-            # This patch changes the master hosts- to use just one. It allows scaling the
-            # ES down to one node.
-            - name: ELASTICSEARCH_CLUSTER_MASTER_HOSTS
-              value: "elasticsearch-master-0"
             # This patch adjusts the java heap size for the elasticsearch container
             # recommended value is half of available memory
             - name: ELASTICSEARCH_HEAP_SIZE
