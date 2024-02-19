@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-master
+spec:
+  template:
+    spec:
+      containers:
+        - name: elasticsearch
+          env:
+            # This patch adjusts the java heap size for the elasticsearch container
+            # recommended value is half of available memory
+            - name: ELASTICSEARCH_HEAP_SIZE
+              value: 2g
