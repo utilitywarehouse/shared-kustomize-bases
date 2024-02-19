@@ -12,8 +12,8 @@ commonAnnotations:
 
 patches:
   # Scaling the nodes down to 1- change amount of replicas and hostnames of the nodes
-  -  path: scale-down.yaml
-  -  path: decrease-heap-size.yaml
+  # changing the heap size
+  - path: env-patch.yaml
   # PVC size
   - target:
       kind: StatefulSet
