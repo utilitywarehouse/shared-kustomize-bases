@@ -22,6 +22,7 @@ spec:
               value: "false"
             - name: UW_KAFKA_TLS_AUTH
               value: "true"
+          image: registry.uw.systems/dev-enablement/protobuf-contracts-es-indexer:latest
       volumes:
         - name: kafka-client-cert
           secret:
