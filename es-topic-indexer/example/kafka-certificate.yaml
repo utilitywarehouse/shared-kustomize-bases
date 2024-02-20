@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: es-topic-indexer-kafka-client
+spec:
+  # specify certificate name, as specified in kafka-cluster-config
+  # https://github.com/utilitywarehouse/kafka-cluster-config/tree/193fea06658d9359f8f86256c87ca717539c3d7b/modules/tls-app
+  commonName: dev-enablement/example-app
+  # es-topic-indexer consumer group
+  dnsNames:
+    - dev-enablement.example-consumer-group
+  duration: 168h0m0s # 7 days, renews 2/3 of the way through
+  issuerRef:
+    kind: ClusterIssuer
+    name: kafka-shared-selfsigned-issuer
+  secretName: es-topic-indexer-kafka-client-cert

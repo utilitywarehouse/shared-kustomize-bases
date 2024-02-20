@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &app es-topic-indexer
+spec:
+  template:
+    spec:
+      containers:
+        - name: *app
+          env:
+            - name: ES_HOSTS
+              value: "http://elasticsearch:9200"
+            - name: ES_INDEX_NAME
+              value: "example-index-name"
+            - name: KAFKA_BROKERS
+              value: "kafka:9092,kafka2:9092"
+            - name: KAFKA_TOPIC
+              value: "example-topic-1,example-topic-2"
+            - name: KAFKA_CONSUMER_GROUP
+              value: "dev-enablement.example-consumer-group"
+            - name: KAFKA_CONSUME_OLDEST
+              value: "false"
+            - name: UW_KAFKA_TLS_AUTH
+              value: "true"
+      volumes:
+        - name: kafka-client-cert
+          secret:
+            # as specified in certificate. This secret is necessary for TLS
+            secretName: es-topic-indexer-kafka-client-cert
