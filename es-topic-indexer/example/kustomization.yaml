@@ -9,11 +9,6 @@ resources:
 # Add prefix to name
 namePrefix: sample-event-
 
-# OpsLevel annotations
-commonAnnotations:
-  "app.uw.systems/description": "Sample events indexer"
-  "app.uw.systems/tier": "tier_4"
-
 patches:
   - path: indexer-params.yaml
   - path: kafka-certificate.yaml
