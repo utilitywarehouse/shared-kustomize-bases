@@ -34,7 +34,7 @@ spec:
               value: "pubsub-example-sample-message"
             - name: KAFKA_BROKERS
               value: "kafka:9092,kafka2:9092"
-            - name: KAFKA_TOPIC
+            - name: KAFKA_TOPICS
               value: "account.exceptions.v1,account.exceptions.v2"
             - name: KAFKA_CONSUMER_GROUP
               value: "account-exceptions-v1"

@@ -14,7 +14,7 @@ spec:
               value: "example-index-name"
             - name: KAFKA_BROKERS
               value: "kafka:9092,kafka2:9092"
-            - name: KAFKA_TOPIC
+            - name: KAFKA_TOPICS
               value: "example-topic-1,example-topic-2"
             - name: KAFKA_CONSUMER_GROUP
               value: "dev-enablement.example-consumer-group"
