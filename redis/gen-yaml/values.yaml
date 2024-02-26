@@ -22,3 +22,16 @@ master:
     limits:
       cpu: "1000m"
       memory: "2Gi"
+
+replica:
+  # orignial chart disables commands flushdb and flushall.
+  # we don't want to do that
+  disableCommands: ""
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
