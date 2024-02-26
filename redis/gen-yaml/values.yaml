@@ -5,7 +5,7 @@ auth:
   existingSecret: "redis"
 
 # redis instance without replication
-architecture: "standalone"
+architecture: "replication"
 
 metrics:
   enabled: true
