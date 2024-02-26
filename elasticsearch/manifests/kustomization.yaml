@@ -22,3 +22,4 @@ patches:
 
 components:
   - ../../components/bitnami-common
+  - ../../components/opslevel
