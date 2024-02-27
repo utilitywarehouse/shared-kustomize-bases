@@ -938,11 +938,11 @@ spec:
                 - /health/ping_sentinel.sh 1
           resources:
             limits:
-              cpu: 1000m
-              memory: 2Gi
+              cpu: 100m
+              memory: 100Mi
             requests:
-              cpu: 500m
-              memory: 1Gi
+              cpu: 10m
+              memory: 10Mi
           volumeMounts:
             - name: start-scripts
               mountPath: /opt/bitnami/scripts/start-scripts
@@ -1006,8 +1006,12 @@ spec:
               path: /
               port: metrics
           resources:
-            limits: {}
-            requests: {}
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 10m
+              memory: 20Mi
           volumeMounts:
       volumes:
         - name: start-scripts
