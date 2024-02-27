@@ -3,8 +3,9 @@ kind: ConfigMap
 metadata:
   name: redis-scripts
 data:
-  # update HEADLESS_SERVICE var, that by default use the namespace passed to helm,
-  # since we don't pass a namespace when generating these.
+  # Copied script from generated manifest, with updated URL variables.
+  # Those by default use the namespace passed to helm, which won't work in
+  # our case since we don't pass a namespace when generating these.
   start-node.sh: |
     #!/bin/bash
 

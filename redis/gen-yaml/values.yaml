@@ -4,13 +4,12 @@ commonAnnotations:
 auth:
   existingSecret: "redis"
 
-# redis replicated instance
+# redis replicated
 architecture: "replication"
 
 metrics:
   enabled: true
 
-  # todo: change resources
   resources:
     requests:
       cpu: "10m"
@@ -40,8 +39,8 @@ replica:
 
   resources:
     requests:
-      cpu: "500m"
-      memory: "1Gi"
+      cpu: "100m"
+      memory: "30Mi"
     limits:
-      cpu: "1000m"
-      memory: "2Gi"
+      cpu: "500m"
+      memory: "100Mi"

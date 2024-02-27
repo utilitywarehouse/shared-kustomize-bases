@@ -12,7 +12,7 @@ commonAnnotations:
  "app.uw.systems/tier": "tier_4"
 
 patches:
-  # Resource requests and limits
+  # Redis container resource requests and limits
   - target:
       kind: StatefulSet
       name: redis-node
