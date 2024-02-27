@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - redis.yaml
 
+patches:
+  - path: fix-master-host.yaml
+
 components:
   - ../../components/bitnami-common
   - ../../components/opslevel

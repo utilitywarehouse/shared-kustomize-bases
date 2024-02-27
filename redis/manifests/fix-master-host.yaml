@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-replicas
+spec:
+  template:
+    spec:
+      containers:
+        - name: redis
+          env:
+            # update some vars that by default use the namespace passed to helm,
+            # since we don't pass a namespace when generating these.
+            - name: REDIS_MASTER_HOST
+              value: "redis-master-hl"
+      # the manifests generated from the Helm chart have 'volumes: ` (i.e. nil).
+      # Kustomize doesn't seem to like that, so make it explicitly empty instead
+      volumes: [ ]

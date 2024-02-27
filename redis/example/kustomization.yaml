@@ -6,9 +6,6 @@ resources:
   - ../manifests
 
 
-# Add prefix to name
-namePrefix: service-cache-
-
 # OpsLevel annotations
 commonAnnotations:
  "app.uw.systems/description": "cache for some service"
