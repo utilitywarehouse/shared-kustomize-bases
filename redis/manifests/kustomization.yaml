@@ -6,6 +6,7 @@ resources:
 
 patches:
   - path: fix-master-host.yaml
+  - path: fix-script-cm.yaml
 
 components:
   - ../../components/bitnami-common
