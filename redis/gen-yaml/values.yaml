@@ -4,14 +4,24 @@ commonAnnotations:
 auth:
   existingSecret: "redis"
 
-# redis instance without replication
+# redis replicated instance
 architecture: "replication"
 
 metrics:
   enabled: true
 
-master:
-  # orignial chart disables commands flushdb and flushall.
+  # todo: change resources
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+sentinel:
+  enabled: true
+  # original chart disables commands flushdb and flushall.
   # we don't want to do that
   disableCommands: ""
 
@@ -24,7 +34,7 @@ master:
       memory: "2Gi"
 
 replica:
-  # orignial chart disables commands flushdb and flushall.
+  # original chart disables commands flushdb and flushall.
   # we don't want to do that
   disableCommands: ""
 

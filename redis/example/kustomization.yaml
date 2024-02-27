@@ -6,9 +6,6 @@ resources:
   - ../manifests
 
 
-# Add prefix to name
-namePrefix: service-cache-
-
 # OpsLevel annotations
 commonAnnotations:
  "app.uw.systems/description": "cache for some service"
@@ -18,7 +15,7 @@ patches:
   # Resource requests and limits
   - target:
       kind: StatefulSet
-      name: service-cache-redis-master
+      name: redis-node
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
