@@ -5,7 +5,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: redis
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -20,7 +20,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-configuration
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-health
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -161,7 +161,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-scripts
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -218,7 +218,7 @@ data:
     }
 
     REDISPORT=$(get_port "$HOSTNAME" "REDIS")
-    HEADLESS_SERVICE="redis-headless.default.svc.cluster.local"
+    HEADLESS_SERVICE="redis-headless.dev-enablement.svc.cluster.local"
 
     [[ -f $REDIS_PASSWORD_FILE ]] && export REDIS_PASSWORD="$(< "${REDIS_PASSWORD_FILE}")"
     [[ -f $REDIS_MASTER_PASSWORD_FILE ]] && export REDIS_MASTER_PASSWORD="$(< "${REDIS_MASTER_PASSWORD_FILE}")"
@@ -245,7 +245,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-headless
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -271,7 +271,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-master
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -300,7 +300,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-metrics
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -326,7 +326,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-replicas
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -355,7 +355,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-master
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -387,7 +387,7 @@ spec:
       annotations:
         checksum/configmap: c2bea699d7bd15a75043e4054aa935488cee55c9fe0567cabfec327ec7efcf28
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: bb405ab6e14129d9c1652d99ffde3146c358de2ef89164a4c63bb0b1894e7537
+        checksum/scripts: 9e4a3edf72d510da840663a04d004fd3f3fa4b25382f15b217406fbd6f79d431
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
         prometheus.io/port: "9121"
         prometheus.io/scrape: "true"
@@ -587,7 +587,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-replicas
-  namespace: "default"
+  namespace: "dev-enablement"
   labels:
     app.kubernetes.io/instance: redis
     app.kubernetes.io/managed-by: Helm
@@ -619,7 +619,7 @@ spec:
       annotations:
         checksum/configmap: c2bea699d7bd15a75043e4054aa935488cee55c9fe0567cabfec327ec7efcf28
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
-        checksum/scripts: bb405ab6e14129d9c1652d99ffde3146c358de2ef89164a4c63bb0b1894e7537
+        checksum/scripts: 9e4a3edf72d510da840663a04d004fd3f3fa4b25382f15b217406fbd6f79d431
         checksum/secret: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
         prometheus.io/port: "9121"
         prometheus.io/scrape: "true"
@@ -671,7 +671,7 @@ spec:
             - name: REDIS_REPLICATION_MODE
               value: replica
             - name: REDIS_MASTER_HOST
-              value: redis-master-0.redis-headless.default.svc.cluster.local
+              value: redis-master-0.redis-headless.dev-enablement.svc.cluster.local
             - name: REDIS_MASTER_PORT_NUMBER
               value: "6379"
             - name: ALLOW_EMPTY_PASSWORD

@@ -4,6 +4,7 @@ commonAnnotations:
 auth:
   existingSecret: "redis"
 
+
 # redis instance without replication
 architecture: "replication"
 
