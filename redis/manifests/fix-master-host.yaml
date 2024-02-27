@@ -11,7 +11,7 @@ spec:
             # update some vars that by default use the namespace passed to helm,
             # since we don't pass a namespace when generating these.
             - name: REDIS_MASTER_HOST
-              value: "redis-master-hl"
+              value: "redis-master-0"
       # the manifests generated from the Helm chart have 'volumes: ` (i.e. nil).
       # Kustomize doesn't seem to like that, so make it explicitly empty instead
       volumes: [ ]
