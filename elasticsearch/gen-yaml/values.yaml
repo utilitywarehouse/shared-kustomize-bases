@@ -48,7 +48,7 @@ kibana:
       cpu: "1000m"
       memory: "1Gi"
   containerPorts:
-    http: 80
+    http: 8080
   service:
     ports:
-      http: 80
+      http: 8080
