@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: kibana
   annotations:
+    # change for prod/ aws
     external-dns.alpha.kubernetes.io/target: private-ingress-v2.dev.merit.uw.systems
 spec:
   rules:
@@ -20,6 +21,7 @@ spec:
     - web-secure
   routes:
     - kind: Rule
+      # change for prod/ aws
       match: "Host(`NAMESPACE-kibana.dev.merit.uw.systems`)"
       # add middleware if endpoint access should be restricted within UW
       # middlewares:
