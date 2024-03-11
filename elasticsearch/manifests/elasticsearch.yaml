@@ -67,7 +67,7 @@ data:
   kibana.yml: |
     pid.file: /opt/bitnami/kibana/tmp/kibana.pid
     server.host: "::"
-    server.port: 5601
+    server.port: 80
     elasticsearch.hosts: [http://elasticsearch:9200]
     server.rewriteBasePath: false
 ---
@@ -114,7 +114,7 @@ spec:
   sessionAffinity: None
   ports:
     - name: http
-      port: 5601
+      port: 80
       targetPort: http
       nodePort: null
   selector:
@@ -285,7 +285,7 @@ spec:
             - name: BITNAMI_DEBUG
               value: "false"
             - name: KIBANA_PORT_NUMBER
-              value: "5601"
+              value: "80"
             - name: KIBANA_ELASTICSEARCH_URL
               value: "http://elasticsearch:9200"
             - name: KIBANA_ELASTICSEARCH_PORT_NUMBER
@@ -303,7 +303,7 @@ spec:
           envFrom:
           ports:
             - name: http
-              containerPort: 5601
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             failureThreshold: 6

@@ -47,3 +47,8 @@ kibana:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+  containerPorts:
+    http: 80
+  service:
+    ports:
+      http: 80
