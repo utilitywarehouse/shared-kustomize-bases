@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana
+  annotations:
+    # change for prod/ aws
+    external-dns.alpha.kubernetes.io/target: private-ingress-v2.dev.merit.uw.systems
+spec:
+  rules:
+    # change for prod/ aws
+    - host: NAMESPACE-kibana.dev.merit.uw.systems
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kibana
+  labels:
+    kubernetes.io/ingress.class: traefik-private-v2
+spec:
+  entryPoints:
+    - web-secure
+  routes:
+    - kind: Rule
+      # change for prod/ aws
+      match: "Host(`NAMESPACE-kibana.dev.merit.uw.systems`)"
+      # add middleware if endpoint access should be restricted within UW
+      # middlewares:
+      #   - name: ingress-auth-name
+      services:
+        - kind: Service
+          name: elasticsearch-kibana
+          port: 5601
+  tls: { }
+---
+# In order to allow access to exposed endpoint, namespace needs to have permissive network policy, for example:
+
+## Kibana
+## allow all traffic to/ from Kibana
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kibana
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kibana
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - { }
+  egress:
+    - { }
