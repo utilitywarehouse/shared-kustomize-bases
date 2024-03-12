@@ -142,7 +142,6 @@ jobs:
     # reach out on #help-dev-enablement if you encounter any issues
     needs:
       - run-kustomize-build
-    if: needs.changes.outputs.opslevel-annotations == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
