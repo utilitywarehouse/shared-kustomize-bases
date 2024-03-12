@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   #- ssh://github.com/utilitywarehouse/shared-kustomize-bases//es-topic-indexer/manifests?ref=v0.0.0
   - ../manifests
+  - kafka-certificate.yaml
 
 
 # Add prefix to name
@@ -11,4 +12,3 @@ namePrefix: sample-event-
 
 patches:
   - path: indexer-params.yaml
-  - path: kafka-certificate.yaml
