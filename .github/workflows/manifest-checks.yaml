@@ -37,11 +37,8 @@ jobs:
       - name: Run `kustomize build` across changed directories
         run: |
           set -o pipefail
-
           mkdir built-manifests/
-          git diff --name-only --diff-filter=d HEAD^1 HEAD \
-            | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1 \
-            | tee build-output
+          git ls-files -- '*/kustomization.yaml' | xargs kustomize-build-dirs --out-dir built-manifests/
       - name: Check for build errors
         id: check-errors
         run: |
