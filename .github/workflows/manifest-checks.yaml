@@ -2,7 +2,7 @@ name: Check manifests
 on:
   pull_request:
     branches:
-      - main
+      - '*'
 
 jobs:
   # run `kustomize build` over changed kustomize directories
@@ -69,7 +69,7 @@ jobs:
           pr_head="$(git rev-parse --verify HEAD)"
           main_sha="$(git rev-parse --verify HEAD^1)"
           git -c advice.detachedHead=false checkout --force "$main_sha"
-          git diff --name-only --diff-filter=d "$pr_head" "$main_sha" \
+          git ls-files -- '*/kustomization.yaml' \
             | xargs kustomize-build-dirs --out-dir root-manifests/ --truncate-secrets
       - name: Compare changed directories to main
         id: diff
