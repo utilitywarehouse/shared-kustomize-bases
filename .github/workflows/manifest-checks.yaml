@@ -2,7 +2,7 @@ name: Check manifests
 on:
   pull_request:
     branches:
-      - *
+      - '*'
 
 jobs:
   # run `kustomize build` over changed kustomize directories
