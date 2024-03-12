@@ -38,7 +38,8 @@ jobs:
         run: |
           set -o pipefail
           mkdir built-manifests/
-          git ls-files -- '*/kustomization.yaml' | xargs kustomize-build-dirs --out-dir built-manifests/
+          git ls-files -- '*/kustomization.yaml' | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1 \
+            | tee build-output
       - name: Check for build errors
         id: check-errors
         run: |
