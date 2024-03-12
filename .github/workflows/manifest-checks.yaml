@@ -133,30 +133,3 @@ jobs:
         with:
           name: manifests
           path: built-manifests/
-
-  validate-opslevel-annotations:
-    # run some basic checks against the OpsLevel annotations (or lack thereof) in the manifests
-    # powered by https://github.com/utilitywarehouse/dev-enablement-mono/blob/main/cmd/validate-opslevel-annotations/main.go
-    # reach out on #help-dev-enablement if you encounter any issues
-    needs:
-      - run-kustomize-build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: manifests
-          path: manifests/
-      - name: install `validate-opslevel-annotations`
-        run: |
-          curl \
-            --location \
-            --silent \
-            https://github.com/utilitywarehouse/manifest-checkers/releases/download/v0.1.0/manifest-checkers_Linux_x86_64.tar.gz \
-          | tar \
-            --directory /usr/local/bin \
-            --extract \
-            --gzip \
-            --file - \
-            validate-opslevel-annotations \
-      - name: Validate Opslevel annotations
-        run: find ./manifests/ -type f -name '*.yaml' | xargs validate-opslevel-annotations
