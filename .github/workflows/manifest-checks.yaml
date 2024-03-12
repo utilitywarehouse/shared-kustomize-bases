@@ -17,13 +17,6 @@ jobs:
           # Fetch both the merge commit GitHub generates for the pull request
           # and both its parents, i.e. the tip of the branch and the tip of main
           fetch-depth: 2
-      #- name: Configure git private access
-      #  # pin to a SHA until things settle and there's a tagged version
-      #  # uses: utilitywarehouse/internal-actions/setup-github-access@setup-github-access/v0.1.0
-      #  uses: utilitywarehouse/internal-actions/setup-github-access@e2b09b2653c47f64ca6d09f6f65122318fbaad0e
-      #  with:
-      #    github-token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
-      #    github-user: ${{ secrets.DEPLOY_GITHUB_USER }}
       - name: install `kustomize-build-dirs`
         run: |
           curl \
