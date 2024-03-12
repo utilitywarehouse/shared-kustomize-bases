@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - DENA-489
 
 jobs:
   # run `kustomize build` over changed kustomize directories
