@@ -35,11 +35,10 @@ jobs:
           curl --silent --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.2.1/kustomize_v5.2.1_linux_amd64.tar.gz |
           tar zx -C /usr/local/bin
       - name: Run `kustomize build` across changed directories
-        run: |
-          set -o pipefail
-          mkdir built-manifests/
-          git ls-files -- '*/kustomization.yaml' | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1 \
-            | tee build-output
+        run: >-
+          git ls-files -- '*/kustomization.yaml'
+          | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1
+          | tee build-output
       - name: Check for build errors
         id: check-errors
         run: |
@@ -61,11 +60,7 @@ jobs:
           fi
       - name: Run `kustomize build` across files in main
         run: |
-          set -o pipefail
-
-          # checkout the first parent of the merge commit (main)
-          # and build against the changes on the current branch
-          mkdir root-manifests/
+          # main is the first parent of the merge commit created by GitHub
           main_sha="$(git rev-parse --verify HEAD^1)"
           git -c advice.detachedHead=false checkout --force "$main_sha"
           git ls-files -- '*/kustomization.yaml' \
