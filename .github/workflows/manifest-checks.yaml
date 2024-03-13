@@ -1,0 +1,127 @@
+name: Check manifests
+on:
+  pull_request:
+
+jobs:
+  # run `kustomize build` over changed kustomize directories
+  # powered by https://github.com/utilitywarehouse/manifest-checkers/tree/main/cmd/kustomize-build-dirs
+  # reach out on #help-dev-enablement if you encounter any issues
+  run-kustomize-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Fetch both the merge commit GitHub generates for the pull request
+          # and both its parents, i.e. the tip of the branch and the tip of main
+          fetch-depth: 2
+      - name: install `kustomize-build-dirs`
+        run: |
+          curl \
+            --location \
+            --silent \
+            https://github.com/utilitywarehouse/manifest-checkers/releases/download/v0.1.0/manifest-checkers_Linux_x86_64.tar.gz \
+          | tar \
+            --directory /usr/local/bin \
+            --extract \
+            --gzip \
+            --file - \
+            kustomize-build-dirs \
+      - name: Ensure Kustomize
+        run: >-
+          command -v kustomize ||
+          curl --silent --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.2.1/kustomize_v5.2.1_linux_amd64.tar.gz |
+          tar zx -C /usr/local/bin
+      - name: Run `kustomize build` across changed directories
+        run: >-
+          git ls-files -- '*/kustomization.yaml'
+          | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1
+          | tee build-output
+      - name: Check for build errors
+        id: check-errors
+        run: |
+          # grab text between delimiters "---End warnings---"/"---start Warnings---"
+          build_errors="$(awk '$0=="---End warnings---"{d=0} d{print $0} $0=="---start Warnings---"{d=1}' build-output)"
+          if [ -n "$build_errors" ]
+          then
+            # multi-line output https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
+            echo "build-errs<<EOF" >> "$GITHUB_OUTPUT"
+            # print lines until the line that takes the total output is over 25000 characters
+            # this is to keep output size small while also not cutting things off mid-line (which can lead to confusing output)
+            awk -v max_length=25000 '{len+=length(); print} len >= max_length {exit(0)}' <<< "${build_errors}" >> "$GITHUB_OUTPUT"
+            echo -e "\n=============================================" >> "$GITHUB_OUTPUT"
+            if [[ ${#build_errors} -gt 25000 ]]
+            then
+              echo -e "\n(Errors output is truncated to 25000 characters)" >> "$GITHUB_OUTPUT"
+            fi
+            echo "EOF" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run `kustomize build` across files in main
+        run: |
+          # main is the first parent of the merge commit created by GitHub
+          main_sha="$(git rev-parse --verify HEAD^1)"
+          git -c advice.detachedHead=false checkout --force "$main_sha"
+          git ls-files -- '*/kustomization.yaml' \
+            | xargs kustomize-build-dirs --out-dir root-manifests/ --truncate-secrets
+      - name: Compare changed directories to main
+        id: diff
+        run: |
+          # compare with the manifests built on the current branch
+          diff_output="$(git --no-pager diff --no-index root-manifests/ built-manifests/ || true)"
+          if [ -n "$diff_output" ]
+          then
+            echo "diff-output<<EOF" >> "$GITHUB_OUTPUT"
+            awk -v max_length=25000 '{len+=length(); print} len >= max_length {exit(0)}' <<< "${diff_output}" >> "$GITHUB_OUTPUT"
+            echo -e "\n=============================================" >> "$GITHUB_OUTPUT"
+            if [[ ${#diff_output} -gt 25000 ]]
+            then
+              echo -e "(Diff output is truncated to 25000 characters)" >> "$GITHUB_OUTPUT"
+            fi
+            add=$(echo "$diff_output" | grep -o '\+kind' | wc -l)
+            destroy=$(echo "$diff_output" | grep -o '\-kind' | wc -l)
+            change=$(echo "$diff_output" | grep -o '^@@' | wc -l)
+            echo "k8s objects: $add to add, $destroy to destroy" >> "$GITHUB_OUTPUT"
+            echo "$change changed hunks" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Diff as PR comment
+        if: steps.diff.outputs.diff-output != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: k8s-diff
+          recreate: true
+          message: |
+            Post `kustomize build` diff:
+
+            ```diff
+            ${{ steps.diff.outputs.diff-output }}
+            ```
+      - name: Remove diff as PR comment
+        if: steps.diff.outputs.diff-output == ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: k8s-diff
+          delete: true
+      - name: Warnings as PR comment
+        if: steps.check-errors.outputs.build-errs != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: k8s-warnings
+          recreate: true
+          message: |
+            Warnings found when running `kustomize build` at ${{ github.sha }}:
+
+            ```
+            ${{ steps.check-errors.outputs.build-errs }}
+            ```
+      - name: Remove diff as PR comment
+        if: steps.check-errors.outputs.build-errs == ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: k8s-warnings
+          delete: true
+      - name: Upload manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: manifests
+          path: built-manifests/
