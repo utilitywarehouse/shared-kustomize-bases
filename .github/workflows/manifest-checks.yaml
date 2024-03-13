@@ -6,7 +6,7 @@ on:
 
 jobs:
   # run `kustomize build` over changed kustomize directories
-  # powered by https://github.com/utilitywarehouse/dev-enablement-mono/blob/main/cmd/kustomize-build-dirs/main.go
+  # powered by https://github.com/utilitywarehouse/manifest-checkers/tree/main/cmd/kustomize-build-dirs
   # reach out on #help-dev-enablement if you encounter any issues
   run-kustomize-build:
     runs-on: ubuntu-latest
@@ -66,7 +66,6 @@ jobs:
           # checkout the first parent of the merge commit (main)
           # and build against the changes on the current branch
           mkdir root-manifests/
-          pr_head="$(git rev-parse --verify HEAD)"
           main_sha="$(git rev-parse --verify HEAD^1)"
           git -c advice.detachedHead=false checkout --force "$main_sha"
           git ls-files -- '*/kustomization.yaml' \
