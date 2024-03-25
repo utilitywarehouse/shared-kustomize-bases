@@ -49,4 +49,40 @@ e.g. [for `dev-merit`](https://grafana.dev.merit.uw.systems/d/4yyL6dBMk/elastics
 
 ## Backup
 
-TODO
+ElasticSearch comes with an option to backup the data to S3 bucket.
+In order to enable it, you need to:
+
+- have an S3 bucket together with user that has access to it,
+- provide the bucket user credentials to ElasticSearch keystore, and
+- configure the backup via API or with the Kibana Stack Management UI.
+
+### Steps
+
+1. Create bucket and user via Terraform
+   Example bucket and user configuration can be
+   found [here](https://github.com/utilitywarehouse/terraform/blob/master/aws/dev/dev-enablement/test-backups-s3-bucket.tf).
+- both bucket and user can be configured with (
+  system-terraform-modules)[https://github.com/utilitywarehouse/system-terraform-modules]
+- sadly, we must use AWS user instead of role, which means that we must deal with static set of credentials instead of
+  rolling them automatically with Vault. This is due to the fact that ElasticSearch supports either static credentials
+  or IAM role token created by OIDC (available only in EKS)
+  ([source](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/repository-s3.html#iam-kubernetes-service-accounts)).
+
+2. Patch the ElasticSearch manifest in order to provide the credentials
+   Example patch can be found [here](example/env-patch.yaml).
+   This patch modifies the ElasticSearch container, so that on start it runs a process that adds the credentials to the
+   keystore.
+   The process runs as a part of the container to ensure that it will run after the ES initialization, and that it will
+   run every time the container is restarted.
+
+   
+3. Configure backup with Kibana UI
+    - Go to Stack Management -> Snapshot and Restore
+    - Add repository
+    - Provide the repository name and type (S3)
+    - Provide the bucket name and region
+    - Provide the credentials (access key and secret key)
+    - Save the repository
+    - Verify the repository- it should have status `connected`
+    - Create snapshot lifecycle policy
+    - Run policy to test it 
