@@ -32,7 +32,7 @@ spec:
             exec:
               command:
                 - curl
-                - --fail-with-body
+                - --fail
                 - -X POST
                 - localhost:9200/_nodes/reload_secure_settings
             initialDelaySeconds: 10
