@@ -67,6 +67,8 @@ In order to enable it, you need to:
   rolling them automatically with Vault. This is due to the fact that ElasticSearch supports either static credentials
   or IAM role token created by OIDC (available only in EKS)
   ([source](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/repository-s3.html#iam-kubernetes-service-accounts)).
+  Once you have run `make plan` and `make apply` you can capture the outputs you need using command
+  `make show ARGS="-json"`.
 
 2. Patch the ElasticSearch manifest in order to provide the credentials
    Example patch can be found [here](example/env-patch.yaml).
