@@ -72,8 +72,9 @@ In order to enable it, you need to:
    Example patch can be found [here](example/env-patch.yaml).
    This patch modifies the ElasticSearch container, so that on start it runs a process that adds the credentials to the
    keystore.
-   The process runs as a part of the container to ensure that it will run after the ES initialization, and that it will
-   run every time the container is restarted.
+   Keystore is reloaded in startup probe. This is necessary, because there are situations when the keystore contents
+   are not picked up- for example, when more than one node restarted, and keystore state briefly differs between them.
+   In addition, it correctly functions as a startup probe, since it checks if ES API is available.
 
    
 3. Configure backup with Kibana UI

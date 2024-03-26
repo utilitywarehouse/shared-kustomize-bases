@@ -24,22 +24,26 @@ spec:
                 secretKeyRef:
                   name: es-backups-s3
                   key: secret-access-key
-          # initialize keystore with s3 credentials- in order to use them in the S3 repository plugin
+          # Reloading secure settings as a startup probe to ensure keystore picked new credentials
+          startupProbe:
+            exec:
+              command:
+                - curl
+                - --fail
+                - -X POST
+                - localhost:9200/_nodes/reload_secure_settings
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 60 # 60*5 = 300 seconds for container to start
+            # initialize keystore with s3 credentials
           command:
             - bash
             - -c
           args:
             - |
-              ( # this process should wait in the background for the ES to start and then configure the keystore
-                cd ./opt/bitnami/elasticsearch/bin/
-                echo "waiting for elastic search to start"
-                # wait for the elasticsearch to be ready before editing keystore 
-                # S3 repository won't work before this time
-                sleep 120 
-                echo $AWS_SECRET_ACCESS_KEY | ./elasticsearch-keystore add -f --stdin s3.client.default.secret_key
-                echo $AWS_ACCESS_KEY_ID | ./elasticsearch-keystore add -f --stdin s3.client.default.access_key
+              (
+                echo $AWS_SECRET_ACCESS_KEY | elasticsearch-keystore add -f --stdin s3.client.default.secret_key
+                echo $AWS_ACCESS_KEY_ID | elasticsearch-keystore add -f --stdin s3.client.default.access_key
                 echo "added AWS credentials to keystore"
-                curl -X POST "elasticsearch:9200/_nodes/reload_secure_settings" 
-                echo "refreshed keystore"
-              ) &
+              ) &&
               /opt/bitnami/scripts/elasticsearch/entrypoint.sh /opt/bitnami/scripts/elasticsearch/run.sh
