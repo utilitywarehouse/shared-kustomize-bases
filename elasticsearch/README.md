@@ -61,17 +61,17 @@ In order to enable it, you need to:
 1. Create bucket and user via Terraform
    Example bucket and user configuration can be
    found [here](https://github.com/utilitywarehouse/terraform/blob/master/aws/dev/dev-enablement/test-backups-s3-bucket.tf).
-- both bucket and user can be configured with (
-  system-terraform-modules)[https://github.com/utilitywarehouse/system-terraform-modules]
+- both bucket and user can be configured with [system-terraform-modules](https://github.com/utilitywarehouse/system-terraform-modules).
 - sadly, we must use AWS user instead of role, which means that we must deal with static set of credentials instead of
   rolling them automatically with Vault. This is due to the fact that ElasticSearch supports either static credentials
   or IAM role token created by OIDC (available only in EKS)
   ([source](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/repository-s3.html#iam-kubernetes-service-accounts)).
+  We created an [issue about that](https://github.com/elastic/elasticsearch/issues/106484) in Elasticsearch repository.
   Once you have run `make plan` and `make apply` you can capture the outputs you need using command
   `make show ARGS="-json"`.
 
 2. Patch the ElasticSearch manifest in order to provide the credentials
-   Example patch can be found [here](example/env-patch.yaml).
+   Example patch can be found [here](example/env-patch.yaml). Real life example of patch can be found [here](https://github.com/utilitywarehouse/kubernetes-manifests/blob/master/dev-merit/dev-enablement/elasticsearch/env-patch.yaml).
    This patch modifies the ElasticSearch container, so that on start it runs a process that adds the credentials to the
    keystore, and startup probe ensures credentials are correctly picked up.
 
