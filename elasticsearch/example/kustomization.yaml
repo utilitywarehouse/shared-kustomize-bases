@@ -6,6 +6,11 @@ resources:
   - ../manifests
   - ingress.yaml
 
+secretGenerator:
+  - envs:
+      - secrets/backups-s3
+    name: es-backups-s3
+
 # OpsLevel annotations
 commonAnnotations:
   "app.uw.systems/description": "some es instance"
