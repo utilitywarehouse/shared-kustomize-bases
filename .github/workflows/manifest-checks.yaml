@@ -34,6 +34,7 @@ jobs:
           tar zx -C /usr/local/bin
       - name: Run `kustomize build` across changed directories
         run: >-
+          set -e
           git ls-files -- '*/kustomization.yaml'
           | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1
           | tee build-output
