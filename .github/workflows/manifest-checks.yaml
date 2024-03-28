@@ -34,7 +34,7 @@ jobs:
           tar zx -C /usr/local/bin
       - name: Run `kustomize build` across changed directories
         run: >-
-          set -e
+          set -o pipefail
           git ls-files -- '*/kustomization.yaml'
           | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1
           | tee build-output
@@ -59,6 +59,7 @@ jobs:
           fi
       - name: Run `kustomize build` across files in main
         run: |
+          set -o pipefail
           # main is the first parent of the merge commit created by GitHub
           main_sha="$(git rev-parse --verify HEAD^1)"
           git -c advice.detachedHead=false checkout --force "$main_sha"
