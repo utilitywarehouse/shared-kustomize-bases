@@ -47,6 +47,10 @@ There are Grafana dashboards prepared for the ElasticSearch instances installed 
 They can be found using the name "elasticsearch overview",
 e.g. [for `dev-merit`](https://grafana.dev.merit.uw.systems/d/4yyL6dBMk/elasticsearch-overview?orgId=1).
 
+## Alerts
+There are stock alerts for ElasticSearch, which runs for every team that [subscribed to stock alerts](https://github.com/utilitywarehouse/system-alerts/tree/main/common/stock#usage).
+They can be found [here](https://github.com/utilitywarehouse/system-alerts/blob/main/common/stock/elasticsearch.yaml.tmpl).
+
 ## Backup
 
 ElasticSearch comes with an option to backup the data to S3 bucket.
