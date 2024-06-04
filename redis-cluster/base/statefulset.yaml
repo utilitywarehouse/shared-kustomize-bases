@@ -33,8 +33,8 @@ data:
       exit 1
     fi
     
-    check_output=$(redis-cli --cluster check localhost:$REDIS_PORT)
-    if [[ ! $check_output =~ "[OK] All 16384 slots covered" ]]; then
+    check_output=$(redis-cli cluster info)
+    if [[ ! $check_output =~ "cluster_state:ok" ]]; then
       exit 1
     fi
 
