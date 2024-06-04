@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-init-scripts
+data:
+  cluster-init.sh: |
+    #!/bin/bash
+    if [[ ! -z "$REDIS_PASSWORD" ]]; then
+      export REDISCLI_AUTH=$REDIS_PASSWORD
+    fi
+    
+    sleep 5
+            
+    for pod_id in $(seq 0  $(($NODE_REPLICA_COUNT-1))); do
+      node="$REDIS_NODE_NAME-$pod_id"   
+    
+      ping_command="timeout 5 redis-cli -h $node.$REDIS_HEADLESS_SERVICE -p $REDIS_PORT ping"     
+      while [[ $($ping_command) != 'PONG' ]]; do
+        echo "Waiting for node $node.$REDIS_HEADLESS_SERVICE to be ready"
+        sleep 5
+      done
+    
+      nodes="$nodes $node.$REDIS_HEADLESS_SERVICE:$REDIS_PORT"
+    done
+    
+    check_output=$(redis-cli --cluster check $REDIS_NODE_NAME-0.$REDIS_HEADLESS_SERVICE:$REDIS_PORT)
+    if [[ ! $check_output =~ "[OK] All 16384 slots covered" ]]; then
+      redis-cli --cluster create $nodes --cluster-replicas 1 --cluster-yes
+    fi
+    
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: redis-init
+  labels:
+    app: redis
+  annotations:
+    internal.config.kubernetes.io/needsHashSuffix: enabled # force the job to change on a change to avoid immutable issue
+spec:
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: cluster-init
+          image: redis
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          envFrom:
+            - configMapRef:
+                name: redis-env
+            - secretRef:
+                name: redis-password
+          command:
+            - /bin/bash
+            - -c
+            - /opt/scripts/cluster-init.sh
+          resources:
+            requests:
+              cpu: 0
+              memory: 128Mi
+            limits:
+              cpu: 1
+              memory: 512Mi
+          volumeMounts:
+            - name: redis-init-scripts
+              mountPath: /opt/scripts
+      restartPolicy: OnFailure
+      volumes:
+        - name: redis-init-scripts
+          configMap:
+            name:  redis-init-scripts
+            defaultMode: 0755
+
+
