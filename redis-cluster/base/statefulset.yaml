@@ -64,7 +64,7 @@ metadata:
   annotations:
     "app.uw.systems/name": "Redis"
     "app.uw.systems/description": "A key value store"
-    "app.uw.systems/repos.kubernetes-manifests": "https://github.com/utilitywarehouse/customer-support-manifests/databases/redis/cluster/base"
+    "app.uw.systems/repos.kubernetes-manifests": "https://github.com/utilitywarehouse/shared-kustomize-bases/redis-cluster/base"
     "app.uw.systems/tags.oss": "true"
 spec:
   replicas: 6
