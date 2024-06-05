@@ -12,7 +12,7 @@ resources:
   - ../base
 
 patches:
-  - statefulset.yaml
+  - path: statefulset.yaml
 
 configMapGenerator:
   - name: redis-env
