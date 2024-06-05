@@ -25,7 +25,7 @@ data:
     
     check_output=$(redis-cli --cluster check $REDIS_NODE_NAME-0.$REDIS_HEADLESS_SERVICE:$REDIS_PORT)
     if [[ ! $check_output =~ "[OK] All 16384 slots covered" ]]; then
-      redis-cli --cluster create $nodes --cluster-replicas 1 --cluster-yes
+      redis-cli --cluster create $nodes --cluster-replicas $REDIS_REPLICA_COUNT --cluster-yes
     fi
     
 
