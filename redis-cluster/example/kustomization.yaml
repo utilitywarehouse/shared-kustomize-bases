@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: foo-
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app: foo-redis
+
+resources:
+  - ../base
+
+patches:
+  - path: statefulset.yaml
+
+configMapGenerator:
+  - name: redis-env
+    envs:
+      - config/redis-env
+    behavior: replace
+  - name: redis-config
+    files:
+      - config/redis.conf
+    behavior: replace
+
+replicas:
+  - name: redis
+    count: 9
+
