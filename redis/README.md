@@ -45,7 +45,7 @@ KEYS *
 
 ## Metrics
 
-There are Grafana dashboards prepared for the Redis instances installed via shared kustomize base.
+There are Grafana dashboards prepared for the Redis.
 They can be found using the name "redis overview",
 e.g. [for `prod-aws`](https://grafana.prod.aws.uw.systems/goto/8N_RY8OSg?orgId=1).
 
