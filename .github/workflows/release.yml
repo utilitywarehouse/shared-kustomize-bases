@@ -3,7 +3,7 @@ on:
   push:
     branches:
       #- main
-      - DENA-580
+      - DENA-582-test
   workflow_dispatch:
 
 jobs:

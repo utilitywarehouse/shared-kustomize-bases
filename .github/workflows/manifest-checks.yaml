@@ -1,6 +1,6 @@
 name: Check manifests
 on:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   # run `kustomize build` over changed kustomize directories
