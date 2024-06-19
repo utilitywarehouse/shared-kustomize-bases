@@ -14,6 +14,7 @@ This manifest is basing on multiple different manifests found over the internet.
 ## Flavour
 
 This manifest is for clustered Redis.
+This repository also contains the [manifest for standalone Redis](../redis)
 
 Before using those manifests, consider whether clustered is suitable for your use.
 There are following alternatives:
@@ -24,6 +25,7 @@ There are following alternatives:
 | [Replicated](https://redis.io/docs/management/replication/) | No (replica nodes are used e.g. to optimize read operations) | Yes                | No       | 1 master, n replicas   |                                       |
 | [Sentinel](https://redis.io/docs/management/sentinel/)      | Yes (master election in case of failure)                     | Yes                | No       | 3+                     | Needs special handling on client side |
 | [Cluster](https://redis.io/docs/management/scaling/)        | Yes (master election in case of failure)                     | No                 | Yes      | 3+ masters, n replicas | Needs special handling on client side |
+
 
 If you are interested in using another flavour, let us know!
 We can help you to set it up.

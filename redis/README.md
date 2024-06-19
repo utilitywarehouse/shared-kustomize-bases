@@ -15,6 +15,7 @@ of [Bitnami Redis Helm chart](https://github.com/bitnami/charts/tree/main/bitnam
 ## Flavour
 
 This manifest is for standalone Redis.
+This repository also contains the [manifest for Redis cluster](../redis-cluster)
 
 Before using those manifests, consider whether standalone is suitable for your use.
 There are following alternatives:
