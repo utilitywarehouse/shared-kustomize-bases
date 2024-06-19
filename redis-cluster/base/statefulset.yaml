@@ -97,7 +97,7 @@ spec:
               weight: 100
       containers:
         - name: redis
-          image: redis
+          image: redis:7.2.5
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false

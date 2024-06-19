@@ -114,8 +114,3 @@ The readiness probe only goes ready if both the local redis node is responsive a
 
 ### Future work:
 - allow for scaling after initial setup
-
-
-
-
-
