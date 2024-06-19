@@ -35,7 +35,7 @@ spec:
                 - --fail
                 - -X POST
                 - localhost:9200/_nodes/reload_secure_settings
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 5
             failureThreshold: 60 # 60*5 = 300 seconds for container to start
             # initialize keystore with s3 credentials- in order to use them in the S3 repository plugin
