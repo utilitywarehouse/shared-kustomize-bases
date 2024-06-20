@@ -1,7 +1,7 @@
 {
-  "cockroachdb": "v23.2.2-1",
-  "elasticsearch": "v8.11.4-1",
-  "es-topic-indexer": "v0.1.0-1",
-  "redis": "v7.2.2-1",
-  "redis-cluster": "v7.2.5-1"
+  "cockroachdb": "1.0.0",
+  "elasticsearch": "1.0.0",
+  "es-topic-indexer": "1.0.0",
+  "redis": "1.0.0",
+  "redis-cluster": "1.0.0"
 }
