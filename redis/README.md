@@ -15,6 +15,7 @@ of [Bitnami Redis Helm chart](https://github.com/bitnami/charts/tree/main/bitnam
 ## Flavour
 
 This manifest is for standalone Redis.
+This repository also contains the [manifest for Redis cluster](../redis-cluster)
 
 Before using those manifests, consider whether standalone is suitable for your use.
 There are following alternatives:
@@ -45,7 +46,7 @@ KEYS *
 
 ## Metrics
 
-There are Grafana dashboards prepared for the Redis instances installed via shared kustomize base.
+There are Grafana dashboards prepared for the Redis.
 They can be found using the name "redis overview",
 e.g. [for `prod-aws`](https://grafana.prod.aws.uw.systems/goto/8N_RY8OSg?orgId=1).
 
