@@ -76,7 +76,7 @@ nature of these manifests, you should review any changes between the current and
 this is via
 
 ```
-https://github.com/utilitywarehouse/cockroachdb-manifests/compare/<curent-tag>...<target-tag>
+https://github.com/utilitywarehouse/shared-kustomize-bases/compare/<curent-tag>...<target-tag>
 ```
 
 e.g. https://github.com/utilitywarehouse/cockroachdb-manifests/compare/v21.2.1-0...v21.2.7-1
@@ -217,8 +217,8 @@ Adjust the kustomize base ref to match the new target version. For example:
    - 00-namespace.yaml
    - 01-auth.yaml
    - 02-network-policies.yaml
--  - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.6-0
-+  - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.7-0
+-  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/base?ref=cockroachdb-1.0.0
++  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/base?ref=cockroachdb-1.0.1
  
  patchesStrategicMerge:
    - cockroach.yaml
@@ -294,8 +294,8 @@ above the previous (excluding the patch element).
    - 00-namespace.yaml
    - 01-auth.yaml
    - 02-network-policies.yaml
--  - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.1.16-0
-+  - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.7-0
+-  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/base?ref=cockroachdb-1.0.0
++  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/base?ref=cockroachdb-1.0.1
  
  patchesStrategicMerge:
    - cockroach.yaml

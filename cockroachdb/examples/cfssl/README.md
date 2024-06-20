@@ -1,7 +1,7 @@
 # DEPRECATED
-We have replaced `cfssl` with `cert-manager` for CockroachDB certificates. Please refer to [cert-manager examples](https://github.com/utilitywarehouse/cockroachdb-manifests/examples/cert-manager) for up-to-date manifests.
+We have replaced `cfssl` with `cert-manager` for CockroachDB certificates. Please refer to [cert-manager examples](https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/cockroachdb/example/cert-manager) for up-to-date manifests.
 
-# cockroachdb-manifests
+# cockroachdb-CFSSL
 
 This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. The base depends on Cloudflare's
 [cfssl](https://github.com/cloudflare/cfssl) as a Certificate Authority for signing certificates for

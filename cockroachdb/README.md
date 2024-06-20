@@ -1,4 +1,4 @@
-# cockroachdb-manifests
+# cockroachdb
 
 This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. The base depends on [cert-manager](https://github.com/cert-manager/cert-manager) for generating and renewing certificates to secure communication between nodes and clients.
 
