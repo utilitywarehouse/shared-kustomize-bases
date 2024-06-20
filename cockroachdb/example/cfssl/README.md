@@ -1,5 +1,5 @@
 # DEPRECATED
-We have replaced `cfssl` with `cert-manager` for CockroachDB certificates. Please refer to [cert-manager examples](https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/cockroachdb/example/cert-manager) for up-to-date manifests.
+We have replaced `cfssl` with `cert-manager` for CockroachDB certificates. Please refer to [cert-manager example](https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/cockroachdb/example/cert-manager) for up-to-date manifests.
 
 # cockroachdb-CFSSL
 
@@ -11,7 +11,7 @@ securing communication between nodes and clients.
 
 To deploy a cockroachdb cluster in your namespace you will need to complete the following steps:
 1. Configure and Deploy a Certificate Authority by following the [readme](./CFSSL_README.md). This will secure access for your cockroach cluster and clients.
-2. Setup a `kustomization.yaml` file that will use the bases defined here with your own configuration layered over the top. There is an [examples/single-cluster](./examples/single-cluster/) folder that can be used as a starting point. By filling in the missing pieces (e.g. certs, backup config, etc) you should get a running CA and CRDB cluster with periodic backups to S3 and AWS creds injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md) (assumes an existing vault setup).
+2. Setup a `kustomization.yaml` file that will use the bases defined here with your own configuration layered over the top. There is an [example/single-cluster](./example/single-cluster/) folder that can be used as a starting point. By filling in the missing pieces (e.g. certs, backup config, etc) you should get a running CA and CRDB cluster with periodic backups to S3 and AWS creds injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md) (assumes an existing vault setup).
 
 ### Single namespace - multiple CockroachDB clusters
 

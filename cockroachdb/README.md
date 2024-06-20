@@ -5,7 +5,7 @@ This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. 
 
 ## Deployment
 
-To deploy a cockroachdb cluster in your namespace you will need to setup a `kustomization.yaml` file that will use the bases defined here with your own configuration layered over the top. There is an [examples](./examples/) folder that can be used as a starting point. By filling in the missing pieces (e.g. certs, backup config, etc) you should get a running CRDB cluster with periodic backups to S3 and AWS creds injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md) (assumes an existing vault setup).
+To deploy a cockroachdb cluster in your namespace you will need to setup a `kustomization.yaml` file that will use the bases defined here with your own configuration layered over the top. There is an [example](./example/) folder that can be used as a starting point. By filling in the missing pieces (e.g. certs, backup config, etc) you should get a running CRDB cluster with periodic backups to S3 and AWS creds injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md) (assumes an existing vault setup).
 
 ### Single namespace - multiple CockroachDB clusters
 
