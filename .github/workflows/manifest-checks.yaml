@@ -33,11 +33,12 @@ jobs:
           curl --silent --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.2.1/kustomize_v5.2.1_linux_amd64.tar.gz |
           tar zx -C /usr/local/bin
       - name: Run `kustomize build` across changed directories
-        run: >-
+        run: |
           set -o pipefail
-          git ls-files -- '*/kustomization.yaml'
-          | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1
-          | tee build-output
+
+          git ls-files -- '*/kustomization.yaml' \
+            | xargs kustomize-build-dirs --out-dir built-manifests/ --truncate-secrets 2>&1 \
+            | tee build-output
       - name: Check for build errors
         id: check-errors
         run: |
