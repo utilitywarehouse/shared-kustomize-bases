@@ -3,26 +3,10 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
 jobs:
-  # create PR if someone manually triggers the event
-  release-please-pr:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+  release-please:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v4
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          skip-github-release: true
-  # create a release if we merge a release commit (i.e. merge a PR created above)
-  release-please-release:
-    # match on the default PR title
-    # https://github.com/googleapis/release-please/blob/3569f158158e2bd096a94c145bdb1a7f455829f0/docs/customizing.md#pull-request-title
-    if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(main): release') }}"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: google-github-actions/release-please-action@v4
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          skip-github-pull-request: true
