@@ -48,6 +48,7 @@ spec:
         fsGroup: 1001
       containers:
         - name: cluster-init
+          # image tag set in kustomize file
           image: redis
           imagePullPolicy: IfNotPresent
           securityContext:
@@ -85,5 +86,3 @@ spec:
           configMap:
             name:  redis-init-scripts
             defaultMode: 0755
-
-
