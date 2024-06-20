@@ -1,4 +1,5 @@
-# cockroachdb
+** Work in progress! State of this manifest should change in next days**
+# Cockroachdb
 
 This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. The base depends on [cert-manager](https://github.com/cert-manager/cert-manager) for generating and renewing certificates to secure communication between nodes and clients.
 
