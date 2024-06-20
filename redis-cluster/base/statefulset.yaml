@@ -97,7 +97,8 @@ spec:
               weight: 100
       containers:
         - name: redis
-          image: redis:7.2.5
+          # image tag set in kustomize file
+          image: redis
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
