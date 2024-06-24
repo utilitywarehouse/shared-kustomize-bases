@@ -155,7 +155,7 @@ set the replicas count to the target value via the kustomize
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.8-0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
  
 +replicas:
 +  - name: cockroachdb
@@ -170,7 +170,7 @@ pods, etc, to satisfy the target count.
 
 #### Review join flag (optional)
 
-The [`--join`](https://github.com/utilitywarehouse/cockroachdb-manifests/blob/795a82920d5977d7c07ace1ba73969f3e39d4411/base/statefulset.yaml#L83)
+The [`--join`](https://github.com/utilitywarehouse/shared-kustomize-bases/blob/6d5e235d899ecd6b7734b18c863fabe17ed51c33/cockroachdb/base/statefulset.yaml#L101)
 flag currently hardcodes the default initial 3 nodes of the cluster. This may change at some stage to make it more
 configurable, but please note that it is _not_ necessary to set all nodes in the cluster into the `--join` flag value.
 In fact, the CockroachDB team
@@ -318,7 +318,7 @@ set the replicas count to the target value via the kustomize
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.8-0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
  
 replicas:
   - name: cockroachdb
@@ -381,7 +381,7 @@ ranges. To re-add nodes in such circumstances, simply increase the replica count
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.8-0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
  
 replicas:
   - name: cockroachdb
