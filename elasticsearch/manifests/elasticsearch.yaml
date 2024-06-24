@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/version: 8.11.4
     helm.sh/chart: kibana-10.7.0
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 automountServiceAccountToken: false
 ---
 # Source: elasticsearch/templates/master/serviceaccount.yaml
@@ -29,7 +29,7 @@ metadata:
     helm.sh/chart: elasticsearch-19.16.1
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 automountServiceAccountToken: false
 ---
 # Source: elasticsearch/templates/metrics/serviceaccount.yaml
@@ -46,7 +46,7 @@ metadata:
     helm.sh/chart: elasticsearch-19.16.1
     app.kubernetes.io/component: metrics
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 automountServiceAccountToken: false
 ---
 # Source: elasticsearch/charts/kibana/templates/configmap.yaml
@@ -62,7 +62,7 @@ metadata:
     app.kubernetes.io/version: 8.11.4
     helm.sh/chart: kibana-10.7.0
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 data:
   kibana.yml: |
     pid.file: /opt/bitnami/kibana/tmp/kibana.pid
@@ -84,7 +84,7 @@ metadata:
     app.kubernetes.io/version: 8.11.4
     helm.sh/chart: kibana-10.7.0
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -105,7 +105,7 @@ metadata:
     app.kubernetes.io/version: 8.11.4
     helm.sh/chart: kibana-10.7.0
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
     prometheus.io/path: _prometheus/metrics
     prometheus.io/port: "80"
     prometheus.io/scrape: "true"
@@ -135,7 +135,7 @@ metadata:
     helm.sh/chart: elasticsearch-19.16.1
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 spec:
   type: ClusterIP
   clusterIP: None
@@ -166,7 +166,7 @@ metadata:
     helm.sh/chart: elasticsearch-19.16.1
     app.kubernetes.io/component: metrics
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
     prometheus.io/port: "9114"
     prometheus.io/scrape: "true"
 spec:
@@ -194,7 +194,7 @@ metadata:
     helm.sh/chart: elasticsearch-19.16.1
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 spec:
   type: ClusterIP
   sessionAffinity: None
@@ -224,7 +224,7 @@ metadata:
     app.kubernetes.io/version: 8.11.4
     helm.sh/chart: kibana-10.7.0
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 spec:
   replicas: 1
   strategy:
@@ -361,7 +361,7 @@ metadata:
     ## Istio Labels: https://istio.io/docs/ops/deployment/requirements/
     app: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
 spec:
   replicas: 3
   podManagementPolicy: Parallel
@@ -477,7 +477,7 @@ spec:
     - metadata:
         name: "data"
         annotations:
-          app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+          app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
       spec:
         accessModes:
           - "ReadWriteOnce"
@@ -501,7 +501,7 @@ metadata:
     ## Istio Labels: https://istio.io/docs/ops/deployment/requirements/
     app: metrics
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "5"
 spec:
