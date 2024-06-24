@@ -7,6 +7,7 @@ spec:
     metadata:
       annotations:
         uw.systems/kyverno-inject-sidecar-request: vault-sidecar-aws
+        "app.uw.systems/tier": "tier_1"
     spec:
       containers:
         - name: cockroachdb
