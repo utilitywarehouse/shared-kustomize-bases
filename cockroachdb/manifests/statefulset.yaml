@@ -6,7 +6,7 @@ metadata:
     app: cockroachdb
   annotations:
     "app.uw.systems/description": "Used to store data projections of events in multiple services."
-    "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/cockroachdb"
+    "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/cockroachdb"
     "app.uw.systems/tags.oss": "true"
 spec:
   serviceName: cockroachdb

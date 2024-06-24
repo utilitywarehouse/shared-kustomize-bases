@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 ---
 # Source: redis/templates/configmap.yaml
 apiVersion: v1
@@ -28,7 +28,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 data:
   redis.conf: |-
     # User-supplied common configuration:
@@ -61,7 +61,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 data:
   ping_readiness_local.sh: |-
     #!/bin/bash
@@ -171,7 +171,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 data:
   start-master.sh: |
     #!/bin/bash
@@ -203,7 +203,7 @@ metadata:
     app.kubernetes.io/version: 7.2.2
     helm.sh/chart: redis-18.1.6
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
     
 spec:
   type: ClusterIP
@@ -230,7 +230,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 spec:
   type: ClusterIP
   internalTrafficPolicy: Cluster
@@ -259,7 +259,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: metrics
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 spec:
   type: ClusterIP
   ports:
@@ -285,7 +285,7 @@ metadata:
     helm.sh/chart: redis-18.1.6
     app.kubernetes.io/component: master
   annotations:
-    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis
+    app.uw.systems/repos: https://github.com/utilitywarehouse/shared-kustomize-bases/redis
 spec:
   replicas: 1
   selector:

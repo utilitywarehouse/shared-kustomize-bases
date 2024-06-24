@@ -1,5 +1,5 @@
 commonAnnotations:
-  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/redis"
+  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/redis"
 
 auth:
   existingSecret: "redis"

@@ -1,5 +1,5 @@
 commonAnnotations:
-  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch"
+  "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch"
 
 global:
   kibanaEnabled: true
@@ -37,7 +37,7 @@ sysctlImage:
 
 kibana:
   commonAnnotations:
-    "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/tree/main/elasticsearch"
+    "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/elasticsearch"
   metrics:
     enabled: true
   resources:
