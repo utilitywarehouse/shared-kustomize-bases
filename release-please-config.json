@@ -1,5 +1,5 @@
 {
-  "bootstrap-sha": "77ecc2590ea9899db4f47a92ca1bbb50c18c6777",
+  "bootstrap-sha": "f57935327bb79364c280dcc9f57448a2719c0866",
   "tag-separator": "/",
   "release-type": "go",
   "separate-pull-requests": true,

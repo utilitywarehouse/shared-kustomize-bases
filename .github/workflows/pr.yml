@@ -1,6 +1,6 @@
 name: PR
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -15,7 +15,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # https://github.com/utilitywarehouse/uwos-go/blob/main/release-please-config.json#L53
           types: |
             fix
             feat
