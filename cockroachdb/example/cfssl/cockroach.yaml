@@ -7,6 +7,7 @@ spec:
     metadata:
       annotations:
         uw.systems/kyverno-inject-sidecar-request: vault-sidecar-aws
+        "app.uw.systems/tier": "tier_1"
     spec:
       containers:
         - name: cockroachdb
@@ -19,9 +20,9 @@ spec:
               memory: "2Gi"
           env:
             - name: CACHE
-              value: 256MB
+              values: 256MB
             - name: MAX_SQL_MEMORY
-              value: 256MB
+              values: 256MB
   volumeClaimTemplates:
     - metadata:
         name: datadir

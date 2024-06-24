@@ -25,7 +25,7 @@ kustomize base, but the equivalent process can be applied for any statefulset.
 ### Determine where PVC size is defined
 
 This first step is to figure our what is dictating the size of the existing PVCs. This kustomize base currently
-[defaults to 10GB](https://github.com/utilitywarehouse/cockroachdb-manifests/blob/795a82920d5977d7c07ace1ba73969f3e39d4411/base/statefulset.yaml#L196),
+[defaults to 10GB](https://github.com/utilitywarehouse/shared-kustomize-bases/blob/6d5e235d899ecd6b7734b18c863fabe17ed51c33/cockroachdb/base/statefulset.yaml#L231),
 for the PVC size. You can view the current size of the PVCs by executing the following:
 
 ```
@@ -85,7 +85,7 @@ In the `kustomize.yaml` that imports this base, apply the following type of chan
 @@ -200,3 +200,6 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/cockroachdb-manifests//base?ref=v21.2.8-0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
 +
 +patchesStrategicMerge:
 +  - cockroachdb.yaml
