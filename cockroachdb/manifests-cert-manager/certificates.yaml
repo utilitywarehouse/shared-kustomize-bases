@@ -55,7 +55,7 @@ metadata:
   name: client
 spec:
   issuerRef:
-    name: ca-issuer
+    name: cockroachdb-ca-issuer
     kind: Issuer
   commonName: root
   secretName: cockroachdb.client.root
