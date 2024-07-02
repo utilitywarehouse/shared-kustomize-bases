@@ -17,7 +17,7 @@ spec:
               mountPath: /cockroach/cockroach-certs
           env:
             - name: COCKROACH_INIT_HOST
-              value: cockroachdb-0.cockroachdb
+              value: cockroachdb-0.cockroachdb #todo: change to key from the cm
           command:
             - "/bin/bash"
             - "-c"
