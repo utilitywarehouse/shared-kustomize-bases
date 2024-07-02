@@ -6,6 +6,9 @@ images:
     newName: cockroachdb/cockroach
     newTag: v23.2.2
 
+patches:
+  - path: certificates-patch.yaml
+
 resources:
   - certificates.yaml
   - client.yaml

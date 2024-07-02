@@ -6,7 +6,7 @@ resources:
   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager
 
 patches:
-  - path: certificates-patch.yaml
+  - path: dns-names-patch.yaml
   - path: cockroach.yaml
 
 configMapGenerator:

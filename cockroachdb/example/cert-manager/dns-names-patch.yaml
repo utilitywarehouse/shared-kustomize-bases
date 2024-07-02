@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: node
+spec:
+  issuerRef:
+    name: cockroachdb-ca-issuer
+    kind: Issuer
+  commonName: node
+  dnsNames:
+    - cockroachdb-0.cockroachdb
+    - cockroachdb-1.cockroachdb
+    - cockroachdb-2.cockroachdb
+    - cockroachdb-0.cockroachdb.<your namespace here>.svc.cluster.local
+    - cockroachdb-1.cockroachdb.<your namespace here>.svc.cluster.local
+    - cockroachdb-2.cockroachdb.<your namespace here>.svc.cluster.local

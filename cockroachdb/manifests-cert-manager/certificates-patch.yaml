@@ -1,21 +1,5 @@
 # This manifests return error "unable to parse SM or JSON patch" for kustomize versions lower than v5.2.1, as they don't support multiple patches in one file
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: node
-spec:
-  issuerRef:
-    name: cockroachdb-ca-issuer
-    kind: Issuer
-  commonName: node
-  dnsNames:
-    - cockroachdb-0.cockroachdb
-    - cockroachdb-1.cockroachdb
-    - cockroachdb-2.cockroachdb
-    - cockroachdb-0.cockroachdb.<your namespace here>.svc.cluster.local
-    - cockroachdb-1.cockroachdb.<your namespace here>.svc.cluster.local
-    - cockroachdb-2.cockroachdb.<your namespace here>.svc.cluster.local
----
+
 # https://www.cockroachlabs.com/docs/stable/authentication#using-cockroach-cert-or-openssl-commands
 apiVersion: apps/v1
 kind: StatefulSet
