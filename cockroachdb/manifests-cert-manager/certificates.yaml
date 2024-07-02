@@ -44,6 +44,7 @@ spec:
     - cockroachdb-0.cockroachdb
     - cockroachdb-1.cockroachdb
     - cockroachdb-2.cockroachdb
+    - cockroachdb-proxy
   secretName: cockroachdb.node
   usages:
     - server auth
@@ -55,7 +56,7 @@ metadata:
   name: client
 spec:
   issuerRef:
-    name: ca-issuer
+    name: cockroachdb-ca-issuer
     kind: Issuer
   commonName: root
   secretName: cockroachdb.client.root

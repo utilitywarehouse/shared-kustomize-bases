@@ -16,12 +16,15 @@ spec:
             - name: client-certs
               mountPath: /cockroach/cockroach-certs
           env:
-            - name: COCKROACH_INIT_HOST
-              value: cockroachdb-0.cockroachdb
+            - name: COCKROACH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: cockroach
+                  key: cockroach.host
           command:
             - "/bin/bash"
             - "-c"
-            - "/cockroach/cockroach init --certs-dir=/cockroach/cockroach-certs --host=$(COCKROACH_INIT_HOST) --port=26357 2>&1 | grep 'initialized'"
+            - "/cockroach/cockroach init --certs-dir=/cockroach/cockroach-certs --port=26357 2>&1 | grep 'initialized'"
           resources:
             requests:
               cpu: 0
@@ -32,6 +35,15 @@ spec:
       restartPolicy: OnFailure
       volumes:
         - name: client-certs
-          secret:
-            secretName: cockroachdb.client.root
+          projected:
+            sources:
+              - secret:
+                  name: cockroachdb.client.root
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                    - key: tls.crt
+                      path: client.root.crt
+                    - key: tls.key
+                      path: client.root.key
             defaultMode: 256

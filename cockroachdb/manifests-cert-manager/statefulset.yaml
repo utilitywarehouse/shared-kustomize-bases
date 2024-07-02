@@ -108,8 +108,18 @@ spec:
           persistentVolumeClaim:
             claimName: datadir
         - name: certs
-          secret:
-            secretName: cockroachdb.node
+          # https://www.cockroachlabs.com/docs/stable/authentication#using-cockroach-cert-or-openssl-commands
+          projected:
+            sources:
+              - secret:
+                  name: cockroachdb.node
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                    - key: tls.crt
+                      path: node.crt
+                    - key: tls.key
+                      path: node.key
             defaultMode: 256
   podManagementPolicy: Parallel
   updateStrategy:

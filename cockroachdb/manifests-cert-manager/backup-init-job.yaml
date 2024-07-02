@@ -53,7 +53,18 @@ spec:
       restartPolicy: OnFailure
       volumes:
         - name: client-certs
-          emptyDir: {}
+          projected:
+            sources:
+              - secret:
+                  name: cockroachdb.client.root
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                    - key: tls.crt
+                      path: client.root.crt
+                    - key: tls.key
+                      path: client.root.key
+            defaultMode: 256
         - name: cockroachdb-scripts
           configMap:
             name: cockroachdb-scripts
