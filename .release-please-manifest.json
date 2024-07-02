@@ -1,5 +1,5 @@
 {
-  "cockroachdb": "1.0.0",
+  "cockroachdb": "1.0.1",
   "elasticsearch": "1.0.0",
   "es-topic-indexer": "1.0.0",
   "redis": "1.0.0",
