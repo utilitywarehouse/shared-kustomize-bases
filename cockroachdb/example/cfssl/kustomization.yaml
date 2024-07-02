@@ -27,5 +27,5 @@ resources:
   - sa.yaml
   - github.com/utilitywarehouse/shared-kustomize-bases/cockroachdb/manifests
 
-patchesStrategicMerge:
-  - cockroach.yaml
+patches:
+  - path: cockroach.yaml
