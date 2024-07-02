@@ -44,7 +44,6 @@ data:
     SQL_CMD="/cockroach/cockroach sql" > /dev/null
 
     $SQL_CMD << EOF
-
       BEGIN;
       -- create a new schedule
       CREATE SCHEDULE IF NOT EXISTS cluster_backup
