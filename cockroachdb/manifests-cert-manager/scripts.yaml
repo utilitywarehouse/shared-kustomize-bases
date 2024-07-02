@@ -40,9 +40,11 @@ data:
         exit 1
     fi
 
+    # todo: wait for the cockroachdb cluster to be ready
     SQL_CMD="/cockroach/cockroach sql" > /dev/null
 
     $SQL_CMD << EOF
+
       BEGIN;
       -- create a new schedule
       CREATE SCHEDULE IF NOT EXISTS cluster_backup

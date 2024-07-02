@@ -88,3 +88,27 @@ spec:
                     - key: tls.key
                       path: client.root.key
             defaultMode: 256
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cockroach-backup-init
+spec:
+  template:
+    spec:
+      volumes:
+        - name: client-certs
+          secret:
+            $patch: delete
+          projected:
+            sources:
+              - secret:
+                  name: cockroachdb.client.root
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                    - key: tls.crt
+                      path: client.root.crt
+                    - key: tls.key
+                      path: client.root.key
+            defaultMode: 256
