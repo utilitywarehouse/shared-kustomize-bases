@@ -19,12 +19,16 @@ data:
 
     SQL_CMD="/cockroach/cockroach -d system sql" > /dev/null
 
+    # try creating user, database, grant database permissions to user
     $SQL_CMD << EOF
       CREATE USER IF NOT EXISTS $DB_USER;
       CREATE DATABASE IF NOT EXISTS $DB_NAME;
       GRANT ALL ON DATABASE $DB_NAME TO $DB_USER;
-      GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;
     EOF
+    
+    # If database already exists and contains tables, grant access to them for user. 
+    # This command will fail for freshly initialized databases.
+    $SQL_CMD --execute "GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;" || true
 
   backup-bootstrap.sh: |
     #!/bin/bash

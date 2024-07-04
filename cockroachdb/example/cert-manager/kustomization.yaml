@@ -4,6 +4,12 @@ kind: Kustomization
 resources:
   - sa.yaml
   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager
+  - db-init-manifests/example-database
+
+# OpsLevel annotations
+commonAnnotations:
+  "app.uw.systems/description": "Cockroachdb instance used to store ..."
+  "app.uw.systems/tier": "tier_1"
 
 patches:
   - path: dns-names-patch.yaml

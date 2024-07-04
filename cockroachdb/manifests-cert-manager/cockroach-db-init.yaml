@@ -1,0 +1,82 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: &app cockroach-init
+  labels:
+    version: v1
+    app: *app
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-init
+          image: cockroachdb
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 0
+              memory: 128Mi
+            limits:
+              cpu: 1
+              memory: 512Mi
+          command:
+            - "/bin/bash"
+            - "/opt/scripts/user-schema-bootstrap.sh"
+          env:
+            - name: COCKROACH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: cockroach
+                  key: cockroach.host
+            - name: COCKROACH_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cockroach
+                  key: cockroach.port
+            - name: COCKROACH_CERTS_DIR
+              value: "/cockroach-certs/"
+            # This variables should be replaced by patches
+            - name: DB_NAME
+              value: "default"
+            - name: DB_USER
+              value: "default"
+          volumeMounts:
+            - name: client-certs
+              mountPath: /cockroach-certs
+            - name: cockroachdb-scripts
+              mountPath: /opt/scripts
+              readOnly: true
+      restartPolicy: OnFailure
+      volumes:
+        - name: client-certs
+          projected:
+            sources:
+              - secret:
+                  name: cockroachdb.client.root
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                    - key: tls.crt
+                      path: client.root.crt
+                    - key: tls.key
+                      path: client.root.key
+            defaultMode: 256
+        - name: cockroachdb-scripts
+          configMap:
+            name: cockroachdb-scripts
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  # to be replaced by patches
+  name: cockroach-userName
+spec:
+  issuerRef:
+    name: cockroachdb-ca-issuer
+    kind: Issuer
+  # to be replaced by patches
+  commonName: userName
+  # to be replaced by patches
+  secretName: cockroachdb.client.userName
+  usages:
+    - client auth
