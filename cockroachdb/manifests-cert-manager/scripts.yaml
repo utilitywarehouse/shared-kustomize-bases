@@ -16,7 +16,29 @@ data:
         echo "DB_NAME envvar not set"
         exit 1
     fi
+    
+    # Wait for cluster to be ready
+    MAX_RETRIES=20
+    RETRY_INTERVAL=3
+    
+    is_cluster_ready() {
+      cockroach sql --execute="SELECT 1;" &> /dev/null
+    }
+    
+    until is_cluster_ready; do
+      ((retry_count++))
+    
+      if [ $retry_count -ge $MAX_RETRIES ]; then
+          echo "Reached maximum retries. Cluster is not ready."
+          exit 1
+      fi
 
+      echo "Cluster is not ready yet. Retry $retry_count/$MAX_RETRIES. Waiting for $RETRY_INTERVAL seconds..."
+      sleep $RETRY_INTERVAL
+    done 
+    
+    
+    # execute command 
     SQL_CMD="/cockroach/cockroach -d system sql" > /dev/null
 
     # try creating user, database, grant database permissions to user
@@ -43,8 +65,29 @@ data:
         echo "BACKUP_DESTINATION_URL envvar is not set"
         exit 1
     fi
+    
+    # Wait for cluster to be ready
+    MAX_RETRIES=20
+    RETRY_INTERVAL=3
+    
+    is_cluster_ready() {
+      cockroach sql --execute="SELECT 1;" &> /dev/null
+    }
+    
+    until is_cluster_ready; do
+      ((retry_count++))
+    
+      if [ $retry_count -ge $MAX_RETRIES ]; then
+          echo "Reached maximum retries. Cluster is not ready."
+          exit 1
+      fi
 
-    # todo: wait for the cockroachdb cluster to be ready
+      echo "Cluster is not ready yet. Retry $retry_count/$MAX_RETRIES. Waiting for $RETRY_INTERVAL seconds..."
+      sleep $RETRY_INTERVAL
+    done 
+    
+    
+    # execute command
     SQL_CMD="/cockroach/cockroach sql" > /dev/null
 
     $SQL_CMD << EOF
