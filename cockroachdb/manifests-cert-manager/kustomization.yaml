@@ -15,4 +15,3 @@ resources:
   - init-job.yaml
   - backup-init-job.yaml
   - scripts.yaml
-  - cockroach-db-init.yaml
