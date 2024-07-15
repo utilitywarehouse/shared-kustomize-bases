@@ -5,8 +5,6 @@ metadata:
 data:
   user-schema-bootstrap.sh: |
     #!/bin/bash
-    echo "AAAAAA"
-    set -e
 
     if [ -z "$DB_USER" ]; then
         echo "DB_USER envvar is not set"
@@ -17,7 +15,6 @@ data:
         echo "DB_NAME envvar not set"
         exit 1
     fi
-    echo "BBBBBBB"
     # Wait for cluster to be ready
     MAX_RETRIES=20
     RETRY_INTERVAL=3
@@ -38,8 +35,6 @@ data:
       sleep $RETRY_INTERVAL
     done 
     
-    echo "CCCCCCCCCC"
-    
     # execute command 
     SQL_CMD="/cockroach/cockroach -d system sql" > /dev/null
 
@@ -56,7 +51,6 @@ data:
 
   backup-bootstrap.sh: |
     #!/bin/bash
-    set -e
 
     if [ -z "$BACKUP_SCHEDULE" ]; then
         echo "BACKUP_SCHEDULE envvar is not set"
