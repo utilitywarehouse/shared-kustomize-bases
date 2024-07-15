@@ -5,6 +5,7 @@ metadata:
 data:
   user-schema-bootstrap.sh: |
     #!/bin/bash
+    echo "AAAAAA"
     set -e
 
     if [ -z "$DB_USER" ]; then
@@ -16,7 +17,7 @@ data:
         echo "DB_NAME envvar not set"
         exit 1
     fi
-    
+    echo "BBBBBBB"
     # Wait for cluster to be ready
     MAX_RETRIES=20
     RETRY_INTERVAL=3
@@ -37,6 +38,7 @@ data:
       sleep $RETRY_INTERVAL
     done 
     
+    echo "CCCCCCCCCC"
     
     # execute command 
     SQL_CMD="/cockroach/cockroach -d system sql" > /dev/null
