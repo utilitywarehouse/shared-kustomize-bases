@@ -1,0 +1,17 @@
+# Remove Service Account from StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cockroachdb
+spec:
+  template:
+    spec:
+      $patch: delete
+      serviceAccountName: cockroachdb
+---
+# Remove cockroach-backup-init job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cockroach-backup-init
+$patch: delete

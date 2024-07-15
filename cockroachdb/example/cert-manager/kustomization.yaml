@@ -3,8 +3,10 @@ kind: Kustomization
 
 resources:
   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager
-  - sa.yaml
   - db-init-manifests/example-database
+# sa.yaml and configmap cockroach.backup.config are resources necessary to add the backup.
+# If your use case excludes the usage of backups, use patch `disable-backup.yaml`
+  - sa.yaml
 
 # OpsLevel annotations
 commonAnnotations:

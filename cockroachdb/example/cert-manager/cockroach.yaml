@@ -6,6 +6,7 @@ spec:
   template:
     metadata:
       annotations:
+        # For sake of AWS backup
         uw.systems/kyverno-inject-sidecar-request: vault-sidecar-aws
     spec:
       containers:
