@@ -7,6 +7,13 @@ spec:
   backoffLimit: 10
   template:
     spec:
+      initContainers:
+        - name: wait-for-cluster
+          image: cockroachdb
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/bash"
+            - "/opt/scripts/wait-for-cluster-to-be-ready.sh"
       containers:
         - name: backup-init
           image: cockroachdb
@@ -14,16 +21,6 @@ spec:
           command:
             - "/bin/bash"
             - "/opt/scripts/backup-bootstrap.sh"
-          startupProbe:
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            failureThreshold: 10
-            exec:
-              command:
-                - cockroach
-                - sql
-                - --execute
-                - "SELECT 1"
           env:
             - name: COCKROACH_HOST
               valueFrom:

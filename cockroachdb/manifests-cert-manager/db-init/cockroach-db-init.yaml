@@ -8,6 +8,13 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+        - name: wait-for-cluster
+          image: cockroachdb
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/bash"
+            - "/opt/scripts/wait-for-cluster-to-be-ready.sh"
       containers:
         - name: db-init
           image: cockroachdb
@@ -22,16 +29,6 @@ spec:
           command:
             - "/bin/bash"
             - "/opt/scripts/user-schema-bootstrap.sh"
-          startupProbe:
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            failureThreshold: 10
-            exec:
-              command:
-                - cockroach
-                - sql
-                - --execute
-                - "SELECT 1"
           env:
             - name: COCKROACH_HOST
               valueFrom:
