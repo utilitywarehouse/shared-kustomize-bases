@@ -12,7 +12,7 @@ spec:
           image: cockroachdb
           imagePullPolicy: IfNotPresent
           command: [ "/bin/bash" ]
-          args: ["-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/user-schema-bootstrap.sh" ]
+          args: ["-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/backup-bootstrap.sh" ]
           env:
             - name: COCKROACH_HOST
               valueFrom:
