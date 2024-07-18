@@ -22,6 +22,15 @@ spec:
           command:
             - "/bin/bash"
             - "/opt/scripts/user-schema-bootstrap.sh"
+          startupProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            exec:
+              command:
+                - cockroach
+                - sql
+                - --execute
+                - "SELECT 1"
           env:
             - name: COCKROACH_HOST
               valueFrom:
