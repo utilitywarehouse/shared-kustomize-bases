@@ -8,17 +8,6 @@ metadata:
 spec:
   template:
     spec:
-      initContainers:
-        - name: wait-for-cluster
-          image: cockroachdb
-          imagePullPolicy: IfNotPresent
-          command:
-            - "/bin/bash"
-            - "/opt/scripts/wait-for-cluster-to-be-ready.sh"
-          volumeMounts:
-            - name: cockroachdb-scripts
-              mountPath: /opt/scripts
-              readOnly: true
       containers:
         - name: db-init
           image: cockroachdb
@@ -30,9 +19,8 @@ spec:
             limits:
               cpu: 1
               memory: 512Mi
-          command:
-            - "/bin/bash"
-            - "/opt/scripts/user-schema-bootstrap.sh"
+          command: [ "/bin/bash" ]
+          args: [ "-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/user-schema-bootstrap.sh" ]
           env:
             - name: COCKROACH_HOST
               valueFrom:

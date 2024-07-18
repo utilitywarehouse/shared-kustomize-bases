@@ -4,6 +4,8 @@ metadata:
   name: cockroachdb-scripts
 data:
   wait-for-cluster-to-be-ready.sh: |
+    #!/bin/bash
+    
     MAX_RETRIES=20
     RETRY_INTERVAL=3
     
