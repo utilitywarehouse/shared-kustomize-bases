@@ -5,7 +5,6 @@ metadata:
 data:
   wait-for-cluster-to-be-ready.sh: |
     #!/bin/bash
-    set -e
     
     MAX_RETRIES=20
     RETRY_INTERVAL=3
