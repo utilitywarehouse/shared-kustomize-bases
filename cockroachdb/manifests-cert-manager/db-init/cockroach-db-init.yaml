@@ -20,7 +20,7 @@ spec:
               cpu: 1
               memory: 512Mi
           command: [ "/bin/bash" ]
-          args: [ "-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/user-schema-bootstrap.sh" ]
+          args: [ "-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && bash /opt/scripts/user-schema-bootstrap.sh" ]
           env:
             - name: COCKROACH_HOST
               valueFrom:
