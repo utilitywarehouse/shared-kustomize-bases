@@ -51,7 +51,7 @@ data:
     
     # If database already exists and contains tables, grant access to them for user. 
     # This command will fail for freshly initialized databases.
-    $SQL_CMD --execute "GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;" || true
+    $SQL_CMD --execute "GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;" 2>1 || echo "no tables in database yet"
 
   backup-bootstrap.sh: |
     #!/bin/bash
