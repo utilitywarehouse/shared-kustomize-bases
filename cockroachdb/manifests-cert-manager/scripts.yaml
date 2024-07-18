@@ -6,7 +6,7 @@ data:
   wait-for-cluster-to-be-ready.sh: |
     #!/bin/bash
     
-    MAX_RETRIES=20
+    MAX_RETRIES=40
     RETRY_INTERVAL=3
     
     is_cluster_ready() {
