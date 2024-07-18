@@ -25,6 +25,7 @@ spec:
           startupProbe:
             initialDelaySeconds: 5
             periodSeconds: 5
+            failureThreshold: 10
             exec:
               command:
                 - cockroach
