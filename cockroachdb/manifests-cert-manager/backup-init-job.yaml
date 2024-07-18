@@ -7,17 +7,6 @@ spec:
   backoffLimit: 10
   template:
     spec:
-      initContainers:
-        - name: wait-for-cluster
-          image: cockroachdb
-          imagePullPolicy: IfNotPresent
-          command:
-            - "/bin/bash"
-            - "/opt/scripts/wait-for-cluster-to-be-ready.sh"
-          volumeMounts:
-            - name: cockroachdb-scripts
-              mountPath: /opt/scripts
-              readOnly: true
       containers:
         - name: backup-init
           image: cockroachdb
