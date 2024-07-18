@@ -15,6 +15,10 @@ spec:
           command:
             - "/bin/bash"
             - "/opt/scripts/wait-for-cluster-to-be-ready.sh"
+          volumeMounts:
+            - name: cockroachdb-scripts
+              mountPath: /opt/scripts
+              readOnly: true
       containers:
         - name: db-init
           image: cockroachdb
