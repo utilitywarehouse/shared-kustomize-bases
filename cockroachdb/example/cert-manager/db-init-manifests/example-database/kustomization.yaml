@@ -4,7 +4,7 @@ kind: Kustomization
 # similar kustomize file should exist for every database/ user pair
 
 resources:
-  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager/db-init?ref=DENA-603
+  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager/db-init?ref=main
 
 namePrefix: example-database-
 
