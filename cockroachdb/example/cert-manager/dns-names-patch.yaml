@@ -6,7 +6,6 @@ spec:
   issuerRef:
     name: cockroachdb-ca-issuer
     kind: Issuer
-  commonName: node
   dnsNames:
     - cockroachdb-0.cockroachdb
     - cockroachdb-1.cockroachdb
@@ -14,3 +13,4 @@ spec:
     - cockroachdb-0.cockroachdb.<your namespace here>.svc.cluster.local
     - cockroachdb-1.cockroachdb.<your namespace here>.svc.cluster.local
     - cockroachdb-2.cockroachdb.<your namespace here>.svc.cluster.local
+    - cockroachdb-proxy
