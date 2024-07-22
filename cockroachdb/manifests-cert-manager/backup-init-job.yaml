@@ -11,9 +11,8 @@ spec:
         - name: backup-init
           image: cockroachdb
           imagePullPolicy: IfNotPresent
-          command:
-            - "/bin/bash"
-            - "/opt/scripts/backup-bootstrap.sh"
+          command: [ "/bin/bash" ]
+          args: ["-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/backup-bootstrap.sh" ]
           env:
             - name: COCKROACH_HOST
               valueFrom:
@@ -68,3 +67,4 @@ spec:
         - name: cockroachdb-scripts
           configMap:
             name: cockroachdb-scripts
+            defaultMode: 0777

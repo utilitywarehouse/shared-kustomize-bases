@@ -3,6 +3,28 @@ kind: ConfigMap
 metadata:
   name: cockroachdb-scripts
 data:
+  wait-for-cluster-to-be-ready.sh: |
+    #!/bin/bash
+    
+    MAX_RETRIES=40
+    RETRY_INTERVAL=3
+    
+    is_cluster_ready() {
+      cockroach sql --execute="SELECT 1;" &> /dev/null
+    }
+    
+    until is_cluster_ready; do
+      ((retry_count++))
+    
+      if [ $retry_count -ge $MAX_RETRIES ]; then
+          echo "Reached maximum retries. Cluster is not ready."
+          exit 1
+      fi
+
+      echo "Cluster is not ready yet. Retry $retry_count/$MAX_RETRIES. Waiting for $RETRY_INTERVAL seconds..."
+      sleep $RETRY_INTERVAL
+    done 
+
   user-schema-bootstrap.sh: |
     #!/bin/bash
     set -e
@@ -17,6 +39,7 @@ data:
         exit 1
     fi
 
+    # execute command 
     SQL_CMD="/cockroach/cockroach -d system sql" > /dev/null
 
     # try creating user, database, grant database permissions to user
@@ -28,7 +51,7 @@ data:
     
     # If database already exists and contains tables, grant access to them for user. 
     # This command will fail for freshly initialized databases.
-    $SQL_CMD --execute "GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;" || true
+    $SQL_CMD --execute "GRANT ALL ON TABLE $DB_NAME.* TO $DB_USER;" 2>1 || echo "no tables in database yet"
 
   backup-bootstrap.sh: |
     #!/bin/bash
@@ -43,8 +66,8 @@ data:
         echo "BACKUP_DESTINATION_URL envvar is not set"
         exit 1
     fi
-
-    # todo: wait for the cockroachdb cluster to be ready
+    
+    # execute command
     SQL_CMD="/cockroach/cockroach sql" > /dev/null
 
     $SQL_CMD << EOF
