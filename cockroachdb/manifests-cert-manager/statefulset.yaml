@@ -9,6 +9,8 @@ metadata:
     "app.uw.systems/repos": "https://github.com/utilitywarehouse/shared-kustomize-bases/cockroachdb"
     "app.uw.systems/tags.oss": "true"
     "secret.reloader.stakater.com/reload": "cockroachdb.node"
+    # for sake of backup
+    "uw.systems/kyverno-inject-sidecar-request": vault-sidecar-aws
 spec:
   serviceName: cockroachdb
   replicas: 3
