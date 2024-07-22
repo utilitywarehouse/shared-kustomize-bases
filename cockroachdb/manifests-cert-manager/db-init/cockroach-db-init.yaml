@@ -64,7 +64,6 @@ spec:
           configMap:
             name: cockroachdb-scripts
             defaultMode: 0777
-
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
