@@ -24,3 +24,6 @@ configMapGenerator:
   - name: cockroach.backup.config
     envs:
       - config/backup-config
+
+#components:
+#  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager?ref=DENA-601

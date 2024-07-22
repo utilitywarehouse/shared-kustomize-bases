@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - db-init-manifests/example-database
+
+patches:
+  - path: disable-backup.yaml
+  - target:
+      kind: StatefulSet
+      name: cockroachdb
+    patch: |
+      - op: remove
+        path: /spec/template/metadata/annotations/uw.systems~1kyverno-inject-sidecar-request
+      - op: remove
+        path: /spec/template/spec/serviceAccountName
