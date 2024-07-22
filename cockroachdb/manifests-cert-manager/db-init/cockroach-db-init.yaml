@@ -19,9 +19,8 @@ spec:
             limits:
               cpu: 1
               memory: 512Mi
-          command:
-            - "/bin/bash"
-            - "/opt/scripts/user-schema-bootstrap.sh"
+          command: [ "/bin/bash" ]
+          args: ["-c", "/opt/scripts/wait-for-cluster-to-be-ready.sh && /opt/scripts/user-schema-bootstrap.sh" ]
           env:
             - name: COCKROACH_HOST
               valueFrom:
@@ -64,6 +63,7 @@ spec:
         - name: cockroachdb-scripts
           configMap:
             name: cockroachdb-scripts
+            defaultMode: 0777
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
