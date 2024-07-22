@@ -26,4 +26,4 @@ configMapGenerator:
       - config/backup-config
 
 #components:
-#  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager?ref=DENA-601
+#  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager/disable-backup?ref=DENA-601
