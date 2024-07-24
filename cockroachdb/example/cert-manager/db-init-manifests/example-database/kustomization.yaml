@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 # similar kustomize file should exist for every database/ user pair
+# This patch creates new db- init job
 
 resources:
   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager/db-init?ref=main

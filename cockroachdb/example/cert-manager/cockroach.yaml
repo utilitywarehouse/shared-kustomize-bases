@@ -4,9 +4,6 @@ metadata:
   name: cockroachdb
 spec:
   template:
-    metadata:
-      annotations:
-        uw.systems/kyverno-inject-sidecar-request: vault-sidecar-aws
     spec:
       containers:
         - name: cockroachdb
