@@ -1,4 +1,3 @@
-** Work in progress! State of this manifest should change in next days**
 # Cockroachdb
 
 This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. The base depends on [cert-manager](https://github.com/cert-manager/cert-manager) for generating and renewing certificates to secure communication between nodes and clients.
@@ -37,13 +36,7 @@ These tags are of the form `<cockroachdb-version>-<internal-version>`, for
 example: `v23.1.10-2` is the 2nd internal version of these manifests supporting
 `cockroachdb/cockroachv:23.1.10`
 
-### Configuration
-Cockroach DB requires some base configuration that can be overridden. (An example is below)
-- Note: `cockroach.host` and `cockroach.port` are required by the backup job.
-```
-cockroach.host=cockroachdb-proxy
-cockroach.port=26257
-```
+`
 
 #### CockroachDB
 
