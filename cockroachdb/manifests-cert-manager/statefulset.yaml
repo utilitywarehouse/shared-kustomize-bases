@@ -20,6 +20,9 @@ spec:
       labels:
         app: cockroachdb
         policy.semaphore.uw.io/name: cockroachdb
+      annotations:
+        # for sake of backup
+        "uw.systems/kyverno-inject-sidecar-request": vault-sidecar-aws
     spec:
       serviceAccountName: cockroachdb
       shareProcessNamespace: true
