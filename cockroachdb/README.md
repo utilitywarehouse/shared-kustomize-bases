@@ -4,7 +4,7 @@
 
 - [Which manifest should I choose?](#flavour)
 - [Example how to deploy Cockroach](example)
-- [Test it manually, access the admin panel](#usage)
+- [Runbooks, how to test it manually, access the admin panel](#usage)
 - [Grafana dashboards](#metrics)
 
 ## Flavour
@@ -19,6 +19,12 @@ There are two manifest directories - `manifests-cfssl`, and `manifests-cert-mana
   For more information, see [CERT MANAGER REDME](manifests-cert-manager/CERT_MANAGER_README.md).
 
 ## Usage
+
+There are runbooks in [docs](docs) directory, covering following topics:
+- [backup](docs/backup.md)
+- [pvc resize](docs/pvc-resize.md)
+- [scaling](docs/scaling.md)
+- [upgrade](docs/upgrade.md)
 
 ### Client
 
@@ -54,6 +60,7 @@ e.g. [for `prod-aws`](https://grafana.prod.aws.uw.systems/d/ddnrjgg8eby80e/cockr
 ## Backup/ migration
 
 Our CockroachDB is configured with backup by default.
+For more information, see [backup doc](docs/backup.md).
 
 ### Disable backup
 Backup can be disabled using [disable backup component](manifests-cert-manager/disable-backup) - see [example](example/cert-manager/kustomization.yaml)
