@@ -20,7 +20,7 @@ jobs:
           curl \
             --location \
             --silent \
-            https://github.com/utilitywarehouse/manifest-checkers/releases/download/v0.1.0/manifest-checkers_Linux_x86_64.tar.gz \
+            https://github.com/utilitywarehouse/manifest-checkers/releases/download/v0.1.1/manifest-checkers_Linux_x86_64.tar.gz \
           | tar \
             --directory /usr/local/bin \
             --extract \
