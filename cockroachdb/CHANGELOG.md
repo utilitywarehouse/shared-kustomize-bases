@@ -1,5 +1,12 @@
 # Changelog
 
+## v23.2.2-2
+
+### 🐛 Bug Fixes
+
+  - ArgoCD sync warnings from deleted jobs
+    [5dad179](https://github.com/utilitywarehouse/shared-kustomize-bases/commit/5dad1799b33898ba22e999aab2af41db49ea3016)
+
 ## [1.1.0](https://github.com/utilitywarehouse/shared-kustomize-bases/compare/cockroachdb/v1.0.1...cockroachdb/v1.1.0) (2024-07-31)
 
 
