@@ -155,7 +155,7 @@ set the replicas count to the target value via the kustomize
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
  
 +replicas:
 +  - name: cockroachdb
@@ -318,7 +318,7 @@ set the replicas count to the target value via the kustomize
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
  
 replicas:
   - name: cockroachdb
@@ -381,7 +381,7 @@ ranges. To re-add nodes in such circumstances, simply increase the replica count
 @@ -201,5 +201,9 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
  
 replicas:
   - name: cockroachdb

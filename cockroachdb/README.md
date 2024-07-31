@@ -1,54 +1,30 @@
-** Work in progress! State of this manifest should change in next days**
-# Cockroachdb
+# Cockroachdb 
 
-This is a Kustomization base for deploying CockroachDB to a Kubernetes cluster. The base depends on [cert-manager](https://github.com/cert-manager/cert-manager) for generating and renewing certificates to secure communication between nodes and clients.
+## TL;DR
 
-## Deployment
+- [Which manifest should I choose?](#flavour)
+- [Example how to deploy Cockroach](example)
+- [Runbooks, how to test it manually, access the admin panel](#usage)
+- [Grafana dashboards](#metrics)
 
-To deploy a cockroachdb cluster in your namespace you will need to setup a `kustomization.yaml` file that will use the bases defined here with your own configuration layered over the top. There is an [example](./example/) folder that can be used as a starting point. By filling in the missing pieces (e.g. certs, backup config, etc) you should get a running CRDB cluster with periodic backups to S3 and AWS creds injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md) (assumes an existing vault setup).
+## Flavour
 
-### Single namespace - multiple CockroachDB clusters
+There are two manifest directories - `manifests-cfssl`, and `manifests-cert-manager`.
 
-While the preference is to have a single CockroachDB cluster per namespace, in some cases this isn't ideal. 
+- `manifests-cert-manager` are using Kubernetes cert-manager controller,
+  for generating and renewing certificates to secure communication between nodes and clients.
+  For more information, see [CERT MANAGER REDME](manifests-cert-manager/CERT_MANAGER_README.  md).
+- `manifests-cfssl` are **not recommended** for fresh install - they contain the manifests that demand
+  certificate authority deployed within the namespace. For more information,
+  see [CFSSL README](manifests-cfssl/CFSSL_README.md)
 
-An example of this is in the Energy team where they have recently split into three squads but currently still share use of the `energy-platform` namespace. 
+## Usage
 
-In order to deploy multiple CockroachDB clusters within a single namespace whilst avoiding naming conflicts we can make use of the `namePrefix` and/or `nameSuffix` ability of Kustomize. 
-This will automagically update the names of resources within a Kustomization as well as the selectors and labels. 
-
-One part of this that Kustomize is not able to help with is with the CockroachDB specific commands that are used to create and join nodes to the cluster. 
-For this two environment variables have been added `COCKROACH_INIT_HOST` and `COCKROACH_JOIN_STRING`. 
-
-- `COCKROACH_INIT_HOST` is used by the `init-job.yaml` manifest to initialise the first node in the cluster
-- `COCKROACH_JOIN_STRING` is in the `statefulset.yaml` manifest to define which nodes will be joining the cluster. 
-
-There are sensible defaults for these environment variables to ensure that a single cluster within a namespace can be brought up without overriding any environment variables. 
-
-
-### Versioning
-
-This repo uses tags to manage versions, these tags have two components:
-
-  - The version of the `cockroachdb/cockroach` image the manifests are using
-  - An internal version to track changes to anything besides the version of
-    CockroachDB
-
-These tags are of the form `<cockroachdb-version>-<internal-version>`, for
-example: `v23.1.10-2` is the 2nd internal version of these manifests supporting
-`cockroachdb/cockroachv:23.1.10`
-
-### Configuration
-Cockroach DB requires some base configuration that can be overridden. (An example is below)
-- Note: `cockroach.host` and `cockroach.port` are required by the backup job.
-```
-cockroach.host=cockroachdb-proxy
-cockroach.port=26257
-```
-
-#### CockroachDB
-
-You can configure `--cache` and `--max-sql-memory` cockroachdb flags via
-following envvars: `CACHE` and `MAX_SQL_MEMORY`.
+There are runbooks in [docs](docs) directory, covering following topics:
+- [backup](docs/backup.md)
+- [pvc resize](docs/pvc-resize.md)
+- [scaling](docs/scaling.md)
+- [upgrade](docs/upgrade.md)
 
 ### Client
 
@@ -67,16 +43,56 @@ CockroachDB has a DB console [user interface](https://www.cockroachlabs.com/docs
 To log into the DB console you will require a database user.
 This can be achieved by:
 - Start a SQL shell using the client `kubectl exec -it deployment/cockroachdb-client -c cockroachdb-client -- cockroach sql`
-  - You may need to change the replica count of the client (see above)
+- You may need to change the replica count of the client (see above)
 - Create a user using SQL `CREATE USER foo WITH PASSWORD 'changeme';`
 - Assign admin role to the user with the SQL command `GRANT admin TO foo;`
-  - This allows full access within the UI.
+- This allows full access within the UI.
 - Port forward any node `kubectl port-forward cockroachdb-0 8080`
 - Use a browser to navigate to https://localhost:8080.
 - It will warn you that the certificate is not trusted, this is expected.
 
-### Architecture
+## Metrics
+
+There are Grafana dashboards prepared for the Cockroachdb.
+They can be found using the name "cockroach overview",
+e.g. [for `prod-aws`](https://grafana.prod.aws.uw.systems/d/ddnrjgg8eby80e/cockroachdb-overview?orgId=1).
+
+## Backup/ migration
+
+Our CockroachDB is configured with backup by default.
+This requires a Service Account to be configured, see [configure backup](#configure-backup)
+For more information, see [backup doc](docs/backup.md).
+
+### Disable backup
+Backup can be disabled using [disable backup component](manifests-cert-manager/disable-backup) - see [example](example/cert-manager/kustomization.yaml)
+for instructions.
+
+### Configure backup
+In order to configure backup, you must create Service Account ([example](example/cert-manager/sa.yaml)) referencing AWS 
+role with given bucket access. Role with bucket access should be configured in the Terraform repository - [example](https://github.com/utilitywarehouse/terraform/blob/ec6116c08335f27237ae94038a5aa12de0dcc8fe/aws/dev/dev-enablement/test-backups-s3-bucket.tf#L15).
+
+AWS credentials are injected via [vault](https://github.com/utilitywarehouse/documentation/blob/master/infra/vault/vault-aws.md)
+
+## Architecture
+
 We recommend creating one instance of CockroachDB cluster per namespace instead of creating new cluster instance
 for each of applications.
 Data can be separated by creating different databases, and having one, bigger cluster instead of multiple smaller ones
 reduces infrastructure costs and maintenance overhead.
+
+### Single namespace - multiple CockroachDB clusters
+
+While the preference is to have a single CockroachDB cluster per namespace, in some cases this isn't ideal.
+
+An example of this is in the Energy team where they have recently split into three squads but currently still share use of the `energy-platform` namespace.
+
+In order to deploy multiple CockroachDB clusters within a single namespace whilst avoiding naming conflicts we can make use of the `namePrefix` and/or `nameSuffix` ability of Kustomize.
+This will automagically update the names of resources within a Kustomization as well as the selectors and labels.
+
+One part of this that Kustomize is not able to help with is with the CockroachDB specific commands that are used to create and join nodes to the cluster.
+For this two environment variables have been added `COCKROACH_INIT_HOST` and `COCKROACH_JOIN_STRING`.
+
+- `COCKROACH_INIT_HOST` is used by the `init-job.yaml` manifest to initialise the first node in the cluster
+- `COCKROACH_JOIN_STRING` is in the `statefulset.yaml` manifest to define which nodes will be joining the cluster.
+
+There are sensible defaults for these environment variables to ensure that a single cluster within a namespace can be brought up without overriding any environment variables. 

@@ -25,7 +25,7 @@ configMapGenerator:
 resources:
   - certificate-authority.yaml
   - sa.yaml
-  - github.com/utilitywarehouse/shared-kustomize-bases/cockroachdb/manifests
+  - github.com/utilitywarehouse/shared-kustomize-bases/cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
 
 patches:
   - path: cockroach.yaml
