@@ -1,4 +1,4 @@
-# Redis
+# Cockroachdb 
 
 ## TL;DR
 
@@ -11,12 +11,12 @@
 
 There are two manifest directories - `manifests-cfssl`, and `manifests-cert-manager`.
 
+- `manifests-cert-manager` are using Kubernetes cert-manager controller,
+  for generating and renewing certificates to secure communication between nodes and clients.
+  For more information, see [CERT MANAGER REDME](manifests-cert-manager/CERT_MANAGER_README.  md).
 - `manifests-cfssl` are **not recommended** for fresh install - they contain the manifests that demand
   certificate authority deployed within the namespace. For more information,
   see [CFSSL README](manifests-cfssl/CFSSL_README.md)
-  - `manifests-cert-manager` are using Kubernetes cert-manager controller, 
-  for generating and renewing certificates to secure communication between nodes and clients.
-  For more information, see [CERT MANAGER REDME](manifests-cert-manager/CERT_MANAGER_README.md).
 
 ## Usage
 
@@ -43,10 +43,10 @@ CockroachDB has a DB console [user interface](https://www.cockroachlabs.com/docs
 To log into the DB console you will require a database user.
 This can be achieved by:
 - Start a SQL shell using the client `kubectl exec -it deployment/cockroachdb-client -c cockroachdb-client -- cockroach sql`
-  - You may need to change the replica count of the client (see above)
+- You may need to change the replica count of the client (see above)
 - Create a user using SQL `CREATE USER foo WITH PASSWORD 'changeme';`
 - Assign admin role to the user with the SQL command `GRANT admin TO foo;`
-  - This allows full access within the UI.
+- This allows full access within the UI.
 - Port forward any node `kubectl port-forward cockroachdb-0 8080`
 - Use a browser to navigate to https://localhost:8080.
 - It will warn you that the certificate is not trusted, this is expected.
@@ -60,6 +60,7 @@ e.g. [for `prod-aws`](https://grafana.prod.aws.uw.systems/d/ddnrjgg8eby80e/cockr
 ## Backup/ migration
 
 Our CockroachDB is configured with backup by default.
+This requires a Service Account to be configured, see [configure backup](#configure-backup)
 For more information, see [backup doc](docs/backup.md).
 
 ### Disable backup

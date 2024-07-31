@@ -85,7 +85,7 @@ In the `kustomize.yaml` that imports this base, apply the following type of chan
 @@ -200,3 +200,6 @@ resources:
    - 01-auth.yaml
    - 02-network-policies.yaml
-   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests?ref=cockroachdb-1.0.0
+   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb-1.0.0
 +
 +patchesStrategicMerge:
 +  - cockroachdb.yaml
