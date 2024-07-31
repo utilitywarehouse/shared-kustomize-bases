@@ -1,6 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  # job to be run once to initialise the cluster by creating user and DB
+  # upon failures of this job (e.g. missing env vars/configuration) you
+  # should manually delete it so it can be recreated
   name: &app cockroach-db-init
   labels:
     version: v1
