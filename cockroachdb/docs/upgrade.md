@@ -217,8 +217,8 @@ Adjust the kustomize base ref to match the new target version. For example:
    - 00-namespace.yaml
    - 01-auth.yaml
    - 02-network-policies.yaml
--  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
-+  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
+-  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.1.0
++  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.1.0
  
  patchesStrategicMerge:
    - cockroach.yaml
@@ -294,8 +294,8 @@ above the previous (excluding the patch element).
    - 00-namespace.yaml
    - 01-auth.yaml
    - 02-network-policies.yaml
--  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
-+  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.0.2-alpha
+-  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.1.0
++  - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cfssl?ref=cockroachdb/v1.1.0
  
  patchesStrategicMerge:
    - cockroach.yaml
