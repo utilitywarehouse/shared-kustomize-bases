@@ -1,2 +1,5 @@
+# docs: (https://www.cockroachlabs.com/docs/stable/create-schedule-for-backup#parameters
+# `RECURRING crontab`
 schedule=0 0,12 * * *
+# `location`
 destination.url=<your s3 bucket url here>

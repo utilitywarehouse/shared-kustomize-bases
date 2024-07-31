@@ -1,9 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  # job to be run once to initialise the backup by creating a
+  # "Backup Schedule", docs: https://www.cockroachlabs.com/docs/stable/create-schedule-for-backup
+  # upon failures of this job (e.g. missing env vars/configuration) you
+  # should manually delete it so it can be recreated
   name: cockroach-backup-init
 spec:
-  ttlSecondsAfterFinished: 600
   backoffLimit: 10
   template:
     spec:

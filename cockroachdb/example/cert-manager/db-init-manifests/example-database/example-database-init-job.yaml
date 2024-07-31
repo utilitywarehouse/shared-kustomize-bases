@@ -8,7 +8,9 @@ spec:
       containers:
         - name: db-init
           env:
+            # name of the DB that the init will should create
             - name: DB_NAME
               value: "example_database"
+            # name of the user that the init job will grant access on the DB to
             - name: DB_USER
               value: "example_user"
