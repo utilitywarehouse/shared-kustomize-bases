@@ -4,6 +4,16 @@ This repository contains kustomize bases for common tools.
 
 Everyone is encouraged to use them and to contribute.
 
+## Versioning
+
+This repo uses tags to manage versions, these tags have two components:
+
+- The version of the software image the manifests are using
+- An internal version to track changes to manifests other than version upgrade
+
+These tags are of the form `<image-version>-<manifest-version>`, for example: 
+`cockroachdb/v23.1.10-2` is the 2nd internal version of these manifests supporting `cockroachdb/cockroachv:23.1.10`
+
 ## Helm-based manifests
 
 #### Why
