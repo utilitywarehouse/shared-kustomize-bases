@@ -10,4 +10,5 @@ resources:
 namePrefix: example-database-
 
 patches:
+  - path: certificate.yaml
   - path: init.yaml
