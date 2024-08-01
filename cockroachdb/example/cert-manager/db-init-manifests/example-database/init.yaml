@@ -14,3 +14,11 @@ spec:
             # name of the user that the init job will grant access on the DB to
             - name: DB_USER
               value: "example_user"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cockroach-client
+spec:
+  commonName: example_user
+  secretName: cockroachdb.client.example_user

@@ -10,15 +10,4 @@ resources:
 namePrefix: example-database-
 
 patches:
-  - path: example-database-init-job.yaml
-  - patch: |-
-      - op: replace
-        path: /spec/commonName
-        value: "example_user"
-      - op: replace
-        path: /spec/secretName
-        value: "cockroachdb.client.example-user"
-    target:
-      kind: Certificate
-      name: cockroach-client
-      version: v1
+  - path: init.yaml
