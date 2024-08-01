@@ -21,4 +21,4 @@ metadata:
   name: cockroach-client
 spec:
   commonName: example_user
-  secretName: cockroachdb.client.example_user
+  secretName: cockroachdb.client.example-user
