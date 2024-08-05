@@ -248,14 +248,7 @@ spec:
         podAffinity:
           
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app.kubernetes.io/instance: elasticsearch
-                    app.kubernetes.io/name: kibana
-                topologyKey: kubernetes.io/hostname
-              weight: 1
+
         nodeAffinity:
           
       securityContext:
@@ -390,9 +383,18 @@ spec:
       
       affinity:
         podAffinity:
-          
+
         podAntiAffinity:
-          
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: elasticsearch
+                    app.kubernetes.io/name: elasticsearch
+                    app.kubernetes.io/component: master
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+
         nodeAffinity:
           
       securityContext:
