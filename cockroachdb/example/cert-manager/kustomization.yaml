@@ -1,6 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# In case there is more than one cockroach in the namespace,
+# we need to add prefix in order to avoid naming conflict while creating resources
+#namePrefix: shared-
+
 resources:
   - github.com/utilitywarehouse/shared-kustomize-bases//cockroachdb/manifests-cert-manager
   - db-init-manifests/example-database
