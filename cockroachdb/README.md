@@ -88,6 +88,6 @@ In order to deploy multiple CockroachDB clusters within a single namespace whils
 This will automatically update the names of resources within a Kustomization as well as the selectors and labels.
 
 In addition to that, you must manually patch:
-- Any Cockroach URLs - like env `COCKROACH_JOIN_STRING`, dnsNames or COCKROACH_INIT_HOST - because service name (and thus, URL) will be updated;
+- Any Cockroach URLs - like env `COCKROACH_JOIN_STRING`, dnsNames or `COCKROACH_INIT_HOST` - because Service name (and thus, URL) will be updated;
 - Certificate issuerRef- as Issuer name will be changed;
-- serviceAccountName - as service name will be changed;
+- serviceAccountName - as Service Account name will be changed;
