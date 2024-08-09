@@ -13,7 +13,7 @@ There are two manifest directories - `manifests-cfssl`, and `manifests-cert-mana
 
 - `manifests-cert-manager` are using Kubernetes cert-manager controller,
   for generating and renewing certificates to secure communication between nodes and clients.
-  For more information, see [CERT MANAGER REDME](manifests-cert-manager/CERT_MANAGER_README.  md).
+  For more information, see [CERT MANAGER README](manifests-cert-manager/CERT_MANAGER_README.md).
 - `manifests-cfssl` are **not recommended** for fresh install - they contain the manifests that demand
   certificate authority deployed within the namespace. For more information,
   see [CFSSL README](manifests-cfssl/CFSSL_README.md)
