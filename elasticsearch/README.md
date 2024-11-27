@@ -36,6 +36,24 @@ we will be happy to help you add its manifest to the shared-kustomize-bases.
 
 ## Usage
 
+### Changing the deployment name
+
+If you have an existing cluster that has names that overlap with the ones in this manifests, you can
+work around that by doing the following:
+
+- Use `- nameSuffix: $suffix` in the kustomization file where you import the base. This
+  will suffix the names of all services, deployments, etc with `$suffix`.
+- Patch the `KIBANA_ELASTICSEARCH_URL` in the kibana deployment so that it points to the service
+  with the applied suffix. For example, if you used `-v2` in the above, `KIBANA_ELASTICSEARCH_URL`
+  should be `http://elasticsearch-v2:9200`.
+- Patch the configmap so that the `elasticsearch.hosts` points to the same url as the one in the
+  kibana deployment.
+- Patch `ELASTICSEARCH_CLUSTER_HOSTS`, `ELASTICSEARCH_CLUSTER_MASTER_HOSTS` and
+  `ELASTICSEARCH_ADVERTISED_HOSTNAME` in the elastic statefulset in the same way as you patched the
+  kibana deployment.
+
+You can use [this](https://github.com/utilitywarehouse/kubernetes-manifests/tree/d9cf6e952751b708910c9cfed795357df8f59e1f/dev-merit/cbc/elastic-v2) as an example
+
 ### Scaling
 
 In order to add nodes to cluster, first scale down to 0 replicas
