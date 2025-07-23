@@ -19,7 +19,16 @@ patches:
       kind: StatefulSet
       name: elasticsearch-master
 
-
 components:
   - ../../components/bitnami-common
   - ../../components/opslevel
+
+# Patch bitnami repo to bitnamilegacy to continue working after the 28th of
+# August 2025
+images:
+  - name: docker.io/bitnami/kibana
+    newName: docker.io/bitnamilegacy/kibana
+  - name: docker.io/bitnami/elasticsearch
+    newName: docker.io/bitnamilegacy/elasticsearch
+  - name: docker.io/bitnami/elasticsearch-exporter
+    newName: docker.io/bitnamilegacy/elasticsearch-exporter
