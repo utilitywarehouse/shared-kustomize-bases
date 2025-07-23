@@ -7,3 +7,11 @@ resources:
 components:
   - ../../components/bitnami-common
   - ../../components/opslevel
+
+# Patch bitnami repo to bitnamilegacy to continue working after the 28th of
+# August 2025
+images:
+  - name: docker.io/bitnami/redis
+    newName: docker.io/bitnamilegacy/redis
+  - name: docker.io/bitnami/redis-exporter
+    newName: docker.io/bitnamilegacy/redis-exporter
