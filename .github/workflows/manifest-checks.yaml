@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # Fetch both the merge commit GitHub generates for the pull request
           # and both its parents, i.e. the tip of the branch and the tip of main
