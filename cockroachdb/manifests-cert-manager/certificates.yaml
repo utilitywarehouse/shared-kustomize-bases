@@ -15,6 +15,8 @@ spec:
   commonName: cockroachdb-ca
   dnsNames:
     - cockroachdb-ca
+  privateKey:
+    rotationPolicy: Never
   secretName: cockroachdb-ca
   issuerRef:
     name: cockroachdb-selfsigned-issuer
