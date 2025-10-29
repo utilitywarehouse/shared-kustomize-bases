@@ -2,15 +2,26 @@ name: Check manifests
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   # run `kustomize build` over changed kustomize directories
   # powered by https://github.com/utilitywarehouse/manifest-checkers/tree/main/cmd/kustomize-build-dirs
   # reach out on #help-dev-enablement if you encounter any issues
   run-kustomize-build:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
+      pull-requests: write  # for marocchino/sticky-pull-request-comment to create or update PR comment
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           # Fetch both the merge commit GitHub generates for the pull request
           # and both its parents, i.e. the tip of the branch and the tip of main
@@ -89,7 +100,7 @@ jobs:
           fi
       - name: Diff as PR comment
         if: steps.diff.outputs.diff-output != ''
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
         with:
           header: k8s-diff
           recreate: true
@@ -101,13 +112,13 @@ jobs:
             ```
       - name: Remove diff as PR comment
         if: steps.diff.outputs.diff-output == ''
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
         with:
           header: k8s-diff
           delete: true
       - name: Warnings as PR comment
         if: steps.check-errors.outputs.build-errs != ''
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
         with:
           header: k8s-warnings
           recreate: true
@@ -119,12 +130,12 @@ jobs:
             ```
       - name: Remove diff as PR comment
         if: steps.check-errors.outputs.build-errs == ''
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
         with:
           header: k8s-warnings
           delete: true
       - name: Upload manifests
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: manifests
           path: built-manifests/
