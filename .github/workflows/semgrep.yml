@@ -1,0 +1,29 @@
+# Name of this GitHub Actions workflow.
+name: Semgrep
+
+on:
+  # Scan changed files in PRs (diff-aware scanning):
+  pull_request: {}
+  # Scan on-demand through GitHub Actions interface:
+  workflow_dispatch: {}
+  # Scan mainline branches and report all findings:
+  push:
+    branches: ["main"]
+  # Schedule the CI job (this method uses cron syntax):
+  schedule:
+    - cron: '50 14 * * *'
+    # It is recommended to change the schedule to a random time.
+
+jobs:
+  semgrep-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Semgrep
+        uses: utilitywarehouse/semgrep-rules/setup-semgrep@latest
+        with:
+          # <required> Github token used to checkout private rules
+          token: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
+          # <optional> Enable verbose output to help debug rules
+          verbose: true
