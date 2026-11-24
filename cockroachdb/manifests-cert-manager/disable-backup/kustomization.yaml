@@ -8,6 +8,6 @@ patches:
       name: cockroachdb
     patch: |
       - op: remove
-        path: /spec/template/metadata/annotations/uw.systems~1kyverno-inject-sidecar-request
+        path: /spec/template/metadata/annotations/vault.uw.systems~1aws-credentials
       - op: remove
         path: /spec/template/spec/serviceAccountName

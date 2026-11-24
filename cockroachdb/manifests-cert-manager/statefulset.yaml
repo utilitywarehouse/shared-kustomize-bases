@@ -22,7 +22,7 @@ spec:
         policy.semaphore.uw.io/name: cockroachdb
       annotations:
         # for sake of backup
-        "uw.systems/kyverno-inject-sidecar-request": vault-sidecar-aws
+        "vault.uw.systems/aws-credentials": "sts-http"
     spec:
       serviceAccountName: cockroachdb
       shareProcessNamespace: true
